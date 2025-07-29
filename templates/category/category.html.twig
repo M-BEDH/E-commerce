@@ -4,33 +4,46 @@
 
 {% block body %}
 
-{% for message in app.flashes('success')%}
+{# {% for message in app.flashes('success')%}
       <div class="alert alert-success">
             {{message}}
       </div>
-{% endfor %}
+{% endfor %} #}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/category.css') }}">
 {% endblock %}
 
-    <h1>Toutes les categories ✅</h1>
+    <h1>Toutes les categories </h1>
 
  <div class="category-item">
-        
-   {% for category in categories%}
-       
 
- <div class="card w-75 mb-3">
-   <div class="card-body">
-    <h5 class="card-title">{{ category.name }}</h5>    
-      <a href="{{ path('app_category_update', {'id': category.id}) }}" class="btn btn-warning">Modifier</a>
-      <a href="{{ path('app_category_delete', {'id': category.id}) }}" class="btn btn-danger">Supprimer</a>
-  </div>
-</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Categories</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+
+   {% for category in categories%}
+    <tr>
+      <th scope="row"></th>
+      <td>{{category.name}}</td>
+      <td id="btn"><a href="{{ path('app_category_update', {'id': category.id}) }}" class="btn btn-warning">Modifier</a>
+      <a href="{{ path('app_category_delete', {'id': category.id}) }}" class="btn btn-danger">Supprimer</a></td>
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
     
-   {% endfor %}
+   
+     <a href="{{ path('app_category_new', { 'categories': categories }) }}" class="btn btn-success">Ajouter</a>
            
 </div>
 

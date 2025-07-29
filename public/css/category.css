@@ -3,6 +3,15 @@
 }
 
 .category-item {
-    width: 50vw;
+    width: 55vw;
     margin: 0 auto;
+}
+
+.table {
+    border: 1px solid #808080a6;
+}
+
+#btn {
+    display: flex;
+    justify-content: space-around;
 }

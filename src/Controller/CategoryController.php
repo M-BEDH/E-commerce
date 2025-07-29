@@ -41,18 +41,16 @@ final class CategoryController extends AbstractController
         return $this->redirectToRoute('app_category');
 
     }
-
      return $this->render('category/newCategory.html.twig', [
             'form' => $form->createview()
-
     ]);
 
     }
      
-    #[Route('/category/update/{id}', name: 'app_category_update')]
-    public function editCategory(Request $request, $id,  EntityManagerInterface $entityManager): Response
+    #[Route('/category/{id}/update', name: 'app_category_update')]
+    public function editCategory(Request $request, Categories $category,  EntityManagerInterface $entityManager): Response
     {
-        $category = $entityManager->getRepository(Categories::class)->find($id);
+        // $category = $entityManager->getRepository(Categories::class)->find($id);
         $form = $this->createForm(CategoryFromType::class, $category);
 
         $form->handleRequest($request);     
@@ -62,16 +60,19 @@ final class CategoryController extends AbstractController
             $this->addFlash('success', 'Categorie modifiée avec succès !');
 
             return $this->redirectToRoute('app_category');
+
         }
         return $this->render('category/updateCategory.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+   
        
     #[Route('/category/delete/{id}', name: 'app_category_delete')]
-    public function deleteCategory($id, EntityManagerInterface $entityManager): Response
+    public function deleteCategory(Categories $category, EntityManagerInterface $entityManager): Response
     {
-        $category = $entityManager->getRepository(Categories::class)->find($id);    
+        // $category = $entityManager->getRepository(Categories::class)->find($id);    
           $entityManager->remove($category);
             $entityManager->flush();
             
