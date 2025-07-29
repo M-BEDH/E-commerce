@@ -3,22 +3,34 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+{% endblock %}
+
+<div class="container containerRegister"> 
+
+    <h1>Inscription</h1>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
+
+     {# {{ csrf_token('intention') }} #}
         
-        {{ form_row(registrationForm.firstName) }}
-        {{ form_row(registrationForm.lastName) }}
-        {{ form_row(registrationForm.phoneNumber) }}
-        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.firstName, {'attr':{'class':'form form-control'}}) }}
+        {{ form_row(registrationForm.lastName, {'attr':{'class':'form form-control'}}) }}
+        {{ form_row(registrationForm.phoneNumber, {'attr':{'class':'form form-control'}}) }}
+        {{ form_row(registrationForm.email, {'attr':{'class':'form form-control'}}) }}
 
          {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registrationForm.agreeTerms, {'label': 'Veuillez accepter les conditions'}) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn btn-info">S'inscrire</button>
     {{ form_end(registrationForm) }}
+
+    </div>
 {% endblock %}
