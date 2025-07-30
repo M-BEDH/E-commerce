@@ -3,15 +3,20 @@
 }
 
 .category-item {
-    width: 55vw;
+    width: 50vw;
     margin: 0 auto;
 }
 
 .table {
-    border: 1px solid #808080a6;
+    border-left: 1px solid #DEE2E6;
+    border-right: 1px solid #DEE2E6;
+    border-top: 1px solid #DEE2E6;
 }
+
+
+
 
 #btn {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }

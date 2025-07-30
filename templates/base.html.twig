@@ -17,7 +17,16 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+
+          {% include 'layouts/_flash_message.html.twig' %}
+
+          {% block nav %}
+            {% include 'layouts/navbar.html.twig' %}
+        {% endblock %}
+             
+
+        {% block body %}
+        {% endblock %}
         
     </body>
 </html>

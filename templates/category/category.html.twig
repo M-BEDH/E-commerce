@@ -4,18 +4,14 @@
 
 {% block body %}
 
-{# {% for message in app.flashes('success')%}
-      <div class="alert alert-success">
-            {{message}}
-      </div>
-{% endfor %} #}
-
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/category.css') }}">
 {% endblock %}
 
     <h1>Toutes les categories </h1>
+
+    {# {% include 'layouts/_flash_message.html.twig'%}  ---> dans le base.twig avant le bloc body    #} 
 
  <div class="category-item">
 
@@ -30,12 +26,17 @@
   
   <tbody>
 
-   {% for category in categories%}
+   {% for category in categories %}
     <tr>
       <th scope="row"></th>
+
       <td>{{category.name}}</td>
-      <td id="btn"><a href="{{ path('app_category_update', {'id': category.id}) }}" class="btn btn-warning">Modifier</a>
-      <a href="{{ path('app_category_delete', {'id': category.id}) }}" class="btn btn-danger">Supprimer</a></td>
+
+      <td id="btn"> 
+      <a class="btn btn-outline btn-warning" href="{{ path('app_category_update', {'id': category.id}) }}">Modifier</a>
+      <a onclick="return confirm('Etes-vous sûr de vouloir supprimer cette catégorie ?');" class="btn btn-danger" href="{{ path('app_category_delete', {'id': category.id}) }}">Supprimer</a>
+      </td>
+      
     </tr>
 {% endfor %}
 

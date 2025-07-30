@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class CategoryController extends AbstractController
 {
-    #[Route('/category', name: 'app_category')]
+    #[Route('/admin/category', name: 'app_category')]
     public function category(CategoriesRepository $categoryRepo): Response
     {
          $categories = $categoryRepo->findAll();
@@ -37,28 +37,28 @@ final class CategoryController extends AbstractController
             $entityManager->persist($category);
             $entityManager->flush();
          
-        $this->addFlash('success', 'Categorie créée avec succes !');
+        $this->addFlash('info', 'Categorie créée avec succès !');
         return $this->redirectToRoute('app_category');
 
     }
      return $this->render('category/newCategory.html.twig', [
-            'form' => $form->createview()
+            'form' => $form->createView()
     ]);
 
     }
      
     #[Route('/category/{id}/update', name: 'app_category_update')]
-    public function editCategory(Request $request, Categories $category,  EntityManagerInterface $entityManager): Response
+    public function editCategory(Request $request, Categories $category, EntityManagerInterface $entityManager): Response
     {
-        // $category = $entityManager->getRepository(Categories::class)->find($id);
+        // $category = $entityManager->getRepository(Categories::class)->find($id); 
         $form = $this->createForm(CategoryFromType::class, $category);
 
         $form->handleRequest($request);     
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            $this->addFlash('success', 'Categorie modifiée avec succès !');
 
+            $this->addFlash('success', 'Modification réussie!');
             return $this->redirectToRoute('app_category');
 
         }
@@ -76,7 +76,7 @@ final class CategoryController extends AbstractController
           $entityManager->remove($category);
             $entityManager->flush();
             
-            $this->addFlash('notice','suppression réussie !!');
+            $this->addFlash('danger','Suppression réussie !');
             
             return $this->redirectToRoute('app_category');
           }

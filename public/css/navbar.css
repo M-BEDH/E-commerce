@@ -1,0 +1,11 @@
+.navbar {
+    background-color: #0f70d1!important;
+}
+
+.navbar a {
+    color: white!important;
+}
+
+.dropdown-menu li a{
+    color: #000000!important;
+}
