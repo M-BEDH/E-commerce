@@ -51,7 +51,19 @@ final class UserController extends AbstractController
         $user->setRoles(['ROLE_EDITOR']);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Le rôle de l’utilisateur a été modifié.');
+        $this->addFlash('success', 'Rôle de l’utilisateur ajouté.');
+
+        return $this->redirectToRoute('app_user');
+    }
+
+
+      #[Route('admin/user/{id}/deleteRole', name: 'app_user_delete_role')]
+    public function removeRole(User $user, EntityManagerInterface $entityManager): Response
+    {
+        $user->setRoles(['']);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Rôle de l’utilisateur supprimé.');
 
         return $this->redirectToRoute('app_user');
     }
@@ -65,7 +77,7 @@ final class UserController extends AbstractController
         $entityManager->remove($user);
         $entityManager->flush(); 
      
-        $this->addFlash('danger','Suppression réussie !');
+        $this->addFlash('danger','Utilisateur supprimé !');
             
         return $this->redirectToRoute('app_user');
     }

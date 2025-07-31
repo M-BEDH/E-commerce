@@ -1,5 +1,5 @@
 .form-control {
-    width: 60%;
+    width: 90%;
 }
 
 .category-item {
@@ -12,9 +12,6 @@
     border-right: 1px solid #DEE2E6;
     border-top: 1px solid #DEE2E6;
 }
-
-
-
 
 #btn {
     display: flex;
