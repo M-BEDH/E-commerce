@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Product{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <h1>Modifier le produit</h1>
+
+    {{ include('product/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+    <a class="btn btn-outline-secondary" href="{{ path('app_product_index') }}">back to list</a>
+
+    {{ include('product/_delete_form.html.twig') }}
+{% endblock %}

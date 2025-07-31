@@ -11,13 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
+#[Route('/admin/sub/category')]
 #[Route('/sub/category')]
 final class SubCategoryController extends AbstractController
 {
-    #[Route(name: 'app_sub_category_index', methods: ['GET'])]
+    #[Route(name: 'app_sub_category_subCategory', methods: ['GET'])]
     public function index(SubCategoryRepository $subCategoryRepository): Response
     {
-        return $this->render('sub_category/index.html.twig', [
+        return $this->render('sub_category/subCategory.html.twig', [
             'sub_categories' => $subCategoryRepository->findAll(),
         ]);
     }
@@ -33,7 +35,8 @@ final class SubCategoryController extends AbstractController
             $entityManager->persist($subCategory);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_sub_category_index', [], Response::HTTP_SEE_OTHER);
+             $this->addFlash('info', 'Sous catégorie ajoutée avec succès !');
+            return $this->redirectToRoute('app_sub_category_subCategory', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('sub_category/new.html.twig', [
@@ -59,7 +62,8 @@ final class SubCategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_sub_category_index', [], Response::HTTP_SEE_OTHER);
+             $this->addFlash('info', 'Sous catégorie modifiée avec succès !');
+            return $this->redirectToRoute('app_sub_category_subCategory', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('sub_category/edit.html.twig', [
@@ -76,6 +80,7 @@ final class SubCategoryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_sub_category_index', [], Response::HTTP_SEE_OTHER);
+         $this->addFlash('info', 'Sous catégorie supprimée avec succès !');
+        return $this->redirectToRoute('app_sub_category_subCategory', [], Response::HTTP_SEE_OTHER);
     }
 }

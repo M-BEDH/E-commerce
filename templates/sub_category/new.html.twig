@@ -1,15 +1,18 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 {% endblock %}
 
-{% block title %}New SubCategory{% endblock %}
+{% block title %}Nouvelle sous catégorie{% endblock %}
 
 {% block body %}
     <h1>Créé une nouvelle catégorie</h1>
 
+<div class="containerForm">
     {{ include('sub_category/_form.html.twig') }}
 
-    <a href="{{ path('app_sub_category_index') }}">back to list</a>
+    <a class="btn btn-outline-secondary" class="btn btn-secondary"href="{{ path('app_sub_category_subCategory') }}">back to list</a>
+
+    </div>
 {% endblock %}

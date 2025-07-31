@@ -1,14 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit SubCategory{% endblock %}
+{% block title %}Edit sub category{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
 
 
 {% block body %}
-    <h1>Edit SubCategory</h1>
+    <h1>Modifier la sous catégorie</h1>
 
-    {{ include('sub_category/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_sub_category_index') }}">back to list</a>
-
+    {{ include('sub_category/_form.html.twig', {'button_label': 'Modifier'}) }}
     {{ include('sub_category/_delete_form.html.twig') }}
+    <a class="btn btn-outline-secondary" href="{{ path('app_sub_category_subCategory') }}">back to list</a>
+  
 {% endblock %}

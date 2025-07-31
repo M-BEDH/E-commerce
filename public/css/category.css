@@ -15,5 +15,17 @@
 
 #btn {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+#actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.btn {
+    width: 120px;
+    margin-top: 0.2rem;
 }

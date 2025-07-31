@@ -16,19 +16,20 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <th>Nom</th>
+                <th>catégorie</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for sub_category in sub_categories %}
             <tr>
-                <td>{{ sub_category.id }}</td>
                 <td>{{ sub_category.name }}</td>
-                <td>
-                    <a href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">show</a>
-                    <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">edit</a>
+                <td>{{ sub_category.category.name }}</td>
+
+                <td id=btn>
+                    <a class="btn btn-info" href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">Afficher</a>
+                    <a class="btn btn-warning" href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
