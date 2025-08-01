@@ -13,14 +13,15 @@
 <div class="container">
     <h1>Produits</h1>
 
-    <table class="table">
+    <table class="table">an
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
-                <th>actions</th>
+                <th>Stock</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -28,11 +29,19 @@
             <tr>
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
+                <td>{{ product.description  |slice(0,100) }}...</td>
                 <td>{{ product.price }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ path('app_product_show', {'id': product.id}) }}">Afficher</a>
-                    <a class="btn btn-warning"href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+                {% if product.stock > 0 %}
+                   {{ product.stock}}  
+                {% else %}
+                <span class="text-danger fw-bold">Rupture de stock</span>
+                {% endif %}
+                </td> 
+                <td>
+                    <a class="btn btn-outline-success" href="{{ path('app_product_show', {'id': product.id}) }}">Afficher</a>
+                    <a class="btn btn-outline-warning"href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+                    <a class="btn btn-outline-info" href="{{ path('app_add_product_stock_history', {'id': product.id}) }}">Ajouter au stock</a>
                 </td>
             </tr>
         {% else %}

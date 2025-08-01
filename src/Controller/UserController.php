@@ -45,6 +45,8 @@ final class UserController extends AbstractController
 
 
 
+    #region editRole
+
        #[Route('admin/user/{id}/editRole', name: 'app_user_edit_role')]
     public function updateRole(User $user, EntityManagerInterface $entityManager): Response
     {
@@ -67,6 +69,7 @@ final class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user');
     }
+    #endregion
 
 
 

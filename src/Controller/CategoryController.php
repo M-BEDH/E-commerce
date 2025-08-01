@@ -26,6 +26,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
+#region add
 
     // Route pour créer une nouvelle catégorie
     #[Route('/category/new', name: 'app_category_new')]
@@ -56,7 +57,12 @@ final class CategoryController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-     
+#endregion
+
+
+ 
+#region edit
+
     // Route pour modifier une catégorie existante
     #[Route('/category/{id}/update', name: 'app_category_update')]
     public function editCategory(Request $request, Categories $category, EntityManagerInterface $entityManager): Response
@@ -86,8 +92,12 @@ final class CategoryController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    #endregion
 
    
+
+   #region delete
+
     // Route pour supprimer une catégorie
     #[Route('/category/delete/{id}', name: 'app_category_delete')]
     public function deleteCategory(Categories $category, EntityManagerInterface $entityManager): Response
@@ -105,4 +115,5 @@ final class CategoryController extends AbstractController
         // Redirection vers la liste
         return $this->redirectToRoute('app_category');
     }
+    #endregion
 }
