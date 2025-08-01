@@ -9,12 +9,19 @@
 {{ form_start(form) }}
 <label for="">Nom du produit</label>
     {{ form_widget(form.name, {attr:{'class': 'form form-control'}}) }}
+
     <label for="">Description</label>
     {{ form_widget(form.description, {attr:{'class': 'form form-control'}}) }}
+
     <label for="">Prix</label>
     {{ form_widget(form.price, {attr:{'class': 'form form-control'}}) }}
+
+    <label for="">Sous-catégorie</label>
     {{ form_widget(form.SubCategory, {attr:{'class': 'form form-control'}}) }}
-    <button class="btn btn-info">{{ button_label|default('Save') }}</button>
+
+    <label for="">Image</label>
+    {{ form_widget(form.image, {attr:{'class': 'form'}}) }}
+    <button class="btn btn-outline-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
 
 <div>

@@ -6,10 +6,12 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/product')]
 final class ProductController extends AbstractController
@@ -22,14 +24,48 @@ final class ProductController extends AbstractController
         ]);
     }
 
+
+
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // premet de recuperer l'image unploadée
+            $image = $form->get('image')->getData();
+            
+            //on verifie que l'image existe
+            if($image) {
+                // on recupere le nom sans l'extention jpg, png ......
+                $originalImageName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+
+                 // on slugg le nom pour remplacer accent, espaces, ... par un tiret (-)
+                $saveImageName = $slugger->slug($originalImageName);
+            
+                // ajoute un id unique et donc l'extention
+                $newFileImageName = $saveImageName.'_'.uniqid().'.'.$image->guessExtension();
+
+                try { //  on deplace l'image dans le dossier defini dans le parametres im_ages directory qui est dans yaml
+                    // le parametre images_directory est defini dans config/services.yaml
+                    $image->move(
+                        $this->getParameter('images_directory'),
+                        $newFileImageName);
+
+                       
+                } catch (FileException $exception) {
+                    
+                     // messages d'erreurs si besoin
+                } 
+
+                 // on on sauvegarde le nom du fichier dans l'entity
+                    $product->setImage($newFileImageName);
+                
+            }
+
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -42,6 +78,9 @@ final class ProductController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
+
 
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
