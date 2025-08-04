@@ -16,7 +16,7 @@
         <tr>
             <td>Nom</td>
             <td>Quantity</td>
-            {# <td>Date d'ajout</td> #}
+            <td>Date d'ajout</td>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
       <tr> 
        <td>{{ productAdded.product.name}}</td>
        <td>{{ productAdded.quantity}}</td>
-       <td>{{ productAdded.createdAt | date('y-m-d H:i')}}</td>
+       <td>{{ productAdded.createdAt | date('d-m-y H:i')}}</td>
         </tr>
      {% endfor %}
     </tbody>

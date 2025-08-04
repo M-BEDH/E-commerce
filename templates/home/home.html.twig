@@ -3,11 +3,27 @@
 {% block title %}Accueil{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 {% endblock %}
 
 {% block body %}
 
-         <h2> Bienvenue sur la page d'accueil </h2>
+<div class="container mt-5">
+
+         <h1> Bienvenue sur la page d'accueil </h1>
+
+ {% for product in products %}
+<div class="card">
+  <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
+  <div class="card-body
+  ">
+    <h5 class="card-title">{{ product.name }}</h5>
+    <p class="card-text">{{ product.description }}</p>
+    {# <a href="#" class="btn btn-primary">Voir produit</a> #}
+  </div>
+</div>
+{% endfor %}
+
   
+  </div>
 {% endblock %}

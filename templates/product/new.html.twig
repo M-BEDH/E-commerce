@@ -11,7 +11,7 @@
 {% block body %}
     <h1>Créer un nouveau produit</h1>
 
-    {{ include('product/_form.html.twig') }}
+    {{ include('product/_form.html.twig',{'button_label': 'Ajouter'}) }}
 
     <a class="btn btn-outline-secondary" href="{{ path('app_product_index') }}">back to list</a>
 {% endblock %}

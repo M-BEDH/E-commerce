@@ -30,7 +30,7 @@
                 <td>{{ product.price }}</td>
             </tr>
             <th>Image</th>
-            <td> {{ product.image }}</td>
+            <td> <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo"> </td>
 
         </tbody>
     </table>
