@@ -11,7 +11,7 @@
 {% block body %}
 
 <div class="container">
-    <h1>Produits</h1>
+    <h1>Tous les produits</h1>
 
     <table class="table">an
         <thead>
@@ -41,7 +41,7 @@
                 <td>
                     <a class="btn btn-outline-success" href="{{ path('app_product_show', {'id': product.id}) }}">Afficher</a>
                     <a class="btn btn-outline-warning"href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
-                    <a class="btn btn-outline-info" href="{{ path('app_add_product_stock_history', {'id': product.id}) }}">Ajouter au stock</a>
+                    <a class="btn btn-outline-info" href="{{ path('app_add_product_stock', {'id': product.id}) }}">Ajouter au stock</a>
                 </td>
             </tr>
         {% else %}

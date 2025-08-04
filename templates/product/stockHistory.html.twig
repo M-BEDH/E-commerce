@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1>Historique du stock</h1>
+    <table class="table">
+    <thead>
+        <tr>
+            <td>Nom</td>
+            <td>Quantity</td>
+            {# <td>Date d'ajout</td> #}
+        </tr>
+    </thead>
+    <tbody>
+     {% for productAdded in productsAdded %}    
+      <tr> 
+       <td>{{ productAdded.product.name}}</td>
+       <td>{{ productAdded.quantity}}</td>
+       <td>{{ productAdded.createdAt | date('y-m-d H:i')}}</td>
+        </tr>
+     {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -6,11 +6,14 @@ use DateTimeImmutable;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Entity\AddProductHistory;
+use App\Form\AddProductHistoryType;
 use App\Repository\ProductRepository;
+use Symfony\Component\Clock\DatePoint;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\AddProductHistoryRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -71,7 +74,7 @@ final class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
             
-            // On crée un hisorique de l'ajout des produits
+            // On crée un historique de l'ajout des produits
             $stockHistory = new AddProductHistory();
             $stockHistory->setQuantity($product->getStock());
             $stockHistory->setProduct($product);
@@ -91,15 +94,8 @@ final class ProductController extends AbstractController
 #endregion
 
 
-#region show
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
-    {
-        return $this->render('product/show.html.twig', [
-            'product' => $product,
-        ]);
-    }
 
+#region edit
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
@@ -136,18 +132,74 @@ final class ProductController extends AbstractController
 #endregion
 
 #region addProductHistory
-
-#[Route('add/product/{id}', name: 'app_add_product_stock_history', methods: ['GET', 'POST'])]
-    public function stockAdd(Request $request, EntityManagerInterface $entityManager) : Response 
+#[Route('add/product/{id}', name: 'app_add_product_stock', methods: ['GET', 'POST'])]
+    public function stockAdd($id, Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository) : Response 
     {
         $stockAdd = new AddProductHistory();
         $form = $this->createForm(AddProductHistoryType::class, $stockAdd);
         $form->handleRequest($request); 
+        $product = $productRepository->find($id);
 
-        return $this->render('product/add_product_history.html.twig', [
+          if ($form->isSubmitted() && $form->isValid()) {
+
+            if($stockAdd->getQuantity() > 0) {
+              $newQuantity = $product->getStock() + $stockAdd->getQuantity();
+              $product-> setStock($newQuantity);
+
+            // $dateType = new DatePoint();
+            $stockAdd->setCreatedAt(new DateTimeImmutable());
+            $stockAdd->setProduct($product);
+            $entityManager->persist($stockAdd);
+            $entityManager->flush();
+
+              $this->addFlash('success', 'Stock ajouté avec succès !');
+                return $this->redirectToRoute('app_product_index');
+            } else {
+                $this->addFlash('danger', 'La quantité doit être supérieure à 0 !');
+                return $this->redirectToRoute('app_add_product_stock', ['id' => $product->getId()]);
+                        
+            }}
+
+
+        return $this->render('product/addStock.html.twig', [
             'form' => $form->createView(),
+            'product' => $product,
+            'stockAdd' => $stockAdd,
         ]);
+
+        $this->addFlash('success', 'Le stock du produit à été modifié !');
+        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
     #endregion
+
+
+#regionShowProductsHistory
+    #[Route('/add/product/{id}/stock/history', name: 'app_product_stock_add_history', methods: ['GET'])] 
+    public function showStockHistory($id, ProductRepository $productRepository, AddProductHistoryRepository $addProductHistoryRepository): Response
+
+    {
+        $product = $productRepository->find($id);
+        $productAddHistory = $addProductHistoryRepository->findBy(['product' =>$product],['id' => 'DESC']);
+        
+        return $this->render('product/stockHistory.html.twig',[
+            'productsAdded'=>$productAddHistory
+        ]);
+    }
+#endregion
+
+
+
+
+
+#region show
+    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
+    public function show(Product $product): Response
+    {
+        return $this->render('product/show.html.twig', [
+            'product' => $product,
+        ]);
+    }
+#endregion
+
 
 }
