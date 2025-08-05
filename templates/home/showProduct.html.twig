@@ -9,18 +9,11 @@
 
 {% block body %}
 
-   <d iv class="container mt-5">
+<div class="container containerProduct mt-5">
 
-         <h1> Bienvenue sur la page d'accueil </h1>
-
-            {% for product in products %}
-               <div class="card">
-
+ <div class="card">
                  <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
-                 
                      <div class="card-body">
-
-                         <a href="{{ path('app_home_product_show', {'id': product.id} )}}" class="btn btn-outline-primary">Voir produit</a>
 
                            <h5 class="card-title">{{ product.name }}</h5>
 
@@ -28,8 +21,8 @@
  
                              <a href="" class="btn btn-success">Ajouter au panier</a>
                </div>
-           </div>
-         {% endfor %}
+               <a class="btn btn-outline-secondary" style="border:none" href="{{ path('app_home') }}">retour à la liste des produits</a>
+</div>
 
   </div>
 {% endblock %}

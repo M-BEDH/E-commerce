@@ -4,7 +4,7 @@
 {% endblock %}
 
 
-<div class="container containerRegister"> 
+<div class="containerForm containerRegister"> 
 
 {{ form_start(form) }}
 <label for="">Nom du produit</label>
@@ -27,7 +27,7 @@
     <label for="">Image</label>
     {{ form_widget(form.image, {attr:{'class': 'form'}}) }}
 
-    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
 
 <div>

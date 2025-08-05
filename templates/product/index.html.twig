@@ -5,6 +5,7 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
 {% endblock %}
 
 
@@ -13,7 +14,7 @@
 <div class="container">
     <h1>Tous les produits</h1>
 
-    <table class="table">an
+    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -39,9 +40,9 @@
                 {% endif %}
                 </td> 
                 <td>
-                    <a class="btn btn-outline-success" href="{{ path('app_product_show', {'id': product.id}) }}">Afficher</a>
-                    <a class="btn btn-outline-warning"href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
-                    <a class="btn btn-outline-info" href="{{ path('app_add_product_stock', {'id': product.id}) }}">Ajouter au stock</a>
+                    <a class="btn btn-outline-success fw-bold" href="{{ path('app_product_show', {'id': product.id}) }}">Afficher</a>
+                    <a class="btn btn-outline-warning fw-bold"href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+                    <a class="btn btn-outline-info fw-bold" href="{{ path('app_add_product_stock', {'id': product.id}) }}">Ajouter au stock</a>
                 </td>
             </tr>
         {% else %}
@@ -52,6 +53,6 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('app_product_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('app_product_new') }}">Nouveau produit</a>
     </div>
 {% endblock %}
