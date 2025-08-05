@@ -9,11 +9,33 @@
 
 {% block body %}
 
-<div class="container containerProduct mt-5">
+<div class="container  mt-5">
 
- <div class="card">
+ <div class="card containerProduct">
+            <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
+                <div class="card-body">
+
+                    <h5 class="card-title">{{ product.name }}</h5>
+
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">{{ product.price }} euros</p>
+ 
+                <a href="" class="btn btn-success">Ajouter au panier</a>
+               </div>
+               <a class="btn btn-outline-secondary" style="border:none" href="{{ path('app_home') }}">Retour aux produits</a>
+</div>
+
+<h2 class="mt-5">Dernier produits ajoutés</h2>
+
+<div class="row">
+ {% for product in products %}
+               <div class="card">
+
                  <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
+                 
                      <div class="card-body">
+
+                         <a href="{{ path('app_home_product_show', {'id': product.id} )}}" class="btn btn-outline-primary">Voir produit</a>
 
                            <h5 class="card-title">{{ product.name }}</h5>
 
@@ -21,8 +43,10 @@
  
                              <a href="" class="btn btn-success">Ajouter au panier</a>
                </div>
-               <a class="btn btn-outline-secondary" style="border:none" href="{{ path('app_home') }}">retour à la liste des produits</a>
-</div>
+           </div>
+         {% endfor %}
 
+
+</div>
   </div>
 {% endblock %}

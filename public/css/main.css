@@ -3,3 +3,7 @@ h1, h2{
     text-align: center;
     margin-top: 2rem;
 }
+
+body {
+    background: radial-gradient(circle, #ebebeb 56%, #d2b4de8a 80%);
+}

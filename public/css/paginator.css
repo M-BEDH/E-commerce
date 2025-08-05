@@ -1,0 +1,13 @@
+/* Style général pour tous les liens de pagination */
+.pagination .page-link {
+    border-color: #facdff !important;
+    color: #6e0e79 !important;
+}
+
+/* Style spécifique quand un élément est actif */
+.pagination .active .page-link {
+    background-color: #6e0e79 !important;
+    border-color: #6e0e79 !important;
+    color: white !important;
+}
+

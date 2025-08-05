@@ -11,8 +11,11 @@
 {% block body %}
     <h1>Modifier la sous catégorie</h1>
 
+    <div class="container">
     {{ include('sub_category/_form.html.twig', {'button_label': 'Modifier'}) }}
     {{ include('sub_category/_delete_form.html.twig') }}
     <a class="btn btn-outline-secondary" href="{{ path('app_sub_category_subCategory') }}">back to list</a>
   
+  </div>
+
 {% endblock %}

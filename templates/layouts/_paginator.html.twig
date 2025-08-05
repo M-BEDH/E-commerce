@@ -1,0 +1,43 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/paginator.css') }}">
+{% endblock %}
+
+{% if pageCount > 1 %}
+<nav aria-label="Pagination">
+  <ul class="pagination">
+
+    {# Lien précédent #}
+    {% if previous is defined %}
+      <li class="page-item">
+        <a class="page-link" href="{{ path(route, query | merge({(pageParameterName): previous})) }}" aria-label="Précédent">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Précédent</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {# Boucle sur les pages #}
+    {% for page in pagesInRange %}
+      {% if page == current %}
+        <li class="page-item active"><a class="page-link" href="#">{{ page }}</a>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="{{ path(route, query | merge({(pageParameterName): page})) }}">{{ page }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {# Lien suivant #}
+    {% if next is defined %}
+      <li class="page-item">
+        <a class="page-link" href="{{ path(route, query | merge({(pageParameterName): next})) }}" aria-label="Suivant">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Suivant</span>
+        </a>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>
+{% endif %}

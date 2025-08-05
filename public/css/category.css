@@ -16,7 +16,7 @@
 #btn {
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
+    /* padding-top: 20px; */
 }
 
 #actions {
@@ -34,3 +34,35 @@
  display: flex;
  justify-content: space-evenly
 }
+
+.btn-primary {
+    background-color: #6e0e79;
+    border-color: #6e0e79;
+}
+
+.btn-primary:hover {
+    background-color: #f3def5;
+    color:#6e0e79;
+    border-color: #6e0e79;
+}
+
+.btn-outline-info {
+    color:#6e0e79;
+    border-color: #6e0e79;
+}
+
+.btn-outline-info:hover {
+    background-color: #f3def5;
+    border-color: #6e0e79;
+}
+
+.btn-warning {
+    background-color: #6e0e79;
+    color: #fff;
+    border-color: #6e0e79;
+}
+
+.btn-outline-secondary {
+    color: #575555;
+}
+
