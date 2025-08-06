@@ -28,11 +28,13 @@
 
 .btn-success {
     background-color: #6e0e79;
+    border-color: #6e0e79;
 }
 
 .btn-success:hover {
     background-color: #facdff;
     color: #6e0e79;
+    border-color: #6e0e79;
 }
 
 .btn-outline-primary {
