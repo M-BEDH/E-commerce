@@ -26,7 +26,7 @@
             <tr>
                 <td>{{ city.id }}</td>
                 <td>{{ city.name }}</td>
-                <td>{{ city.shippingCost }}</td>
+                <td>{{ city.shippingCost }} €</td>
                 <td>
                     <a class="btn btn-outline-primary" href="{{ path('app_city_show', {'id': city.id}) }}">voir</a>
                     <a class="btn btn-warning" href="{{ path('app_city_edit', {'id': city.id}) }}">modifier</a>

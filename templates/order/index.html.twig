@@ -11,18 +11,32 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-8">
+            <div>
              <h1 class="mt-4 m-b-4">Commandes</h1>
             
             {{ form_start(form) }}
-                <input type="submit" value="Continuer">
+                <input class="btn-outline-primary" type="submit" value="Continuer">
             {{ form_end(form)}}
 
             </div>
             <div class="col-4">
-            
+               <span class="mb-2">Montant à payer :</span>
+                  <h3>
+                    <span id="card-price">{{total}}</span>€
+                  </h3>
+                  <span>Frais de livraison</span>
             </div>
         </div>
        
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <script>
+    $(document).ready(function() {
+        // alert('jquery chargé')
+        const citySelector = $('#order_city'); // selectionne l'element html qui à pour id order_city on la stock dans la const citySelector
+        const cityValue = citySelector.val(); // recupere la valeur actuelle de cituySelestor (le select - liste deroulante) la stock dans la const cityValue
+    })
+    </script>
+
 {% endblock %}
