@@ -28,7 +28,7 @@
                             <p class="card-text">{{ product.price }} euros</p>
 
  
-                             <a href="" class="btn btn-success">Ajouter au panier</a>
+                             <a href="{{path('app_shopping_cart_add', {'id': product.id})}}" class="btn btn-success">Ajouter au panier</a>
                </div>
            </div>
          {% endfor %}

@@ -16,7 +16,6 @@
 #btn {
     display: flex;
     justify-content: space-around;
-    /* padding-top: 20px; */
 }
 
 #actions {
@@ -26,8 +25,7 @@
 }
 
 .btn {
-    width: 180px;
-    margin-top: 0.2rem;
+    width: 200px;
 }
 
 .showProduct{
@@ -38,6 +36,7 @@
 .btn-primary {
     background-color: #6e0e79;
     border-color: #6e0e79;
+    /* margin-right: 0.3rem; */
 }
 
 .btn-primary:hover {
@@ -46,14 +45,15 @@
     border-color: #6e0e79;
 }
 
-.btn-outline-info {
+.btn-outline-info, .btn-outline-success {
     color:#6e0e79;
     border-color: #6e0e79;
 }
 
-.btn-outline-info:hover {
+.btn-outline-info:hover, .btn-outline-success:hover {
     background-color: #f3def5;
     border-color: #6e0e79;
+    color: #6e0e79;
 }
 
 .btn-warning {
