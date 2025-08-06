@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Villes{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Villes</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Frais de livraison</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for city in cities %}
+            <tr>
+                <td>{{ city.id }}</td>
+                <td>{{ city.name }}</td>
+                <td>{{ city.shippingCost }}</td>
+                <td>
+                    <a class="btn btn-outline-primary" href="{{ path('app_city_show', {'id': city.id}) }}">voir</a>
+                    <a class="btn btn-warning" href="{{ path('app_city_edit', {'id': city.id}) }}">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('app_city_new') }}">Ajouter une ville</a>
+    </div>
+{% endblock %}

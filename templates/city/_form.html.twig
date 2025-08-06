@@ -1,0 +1,10 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-warning">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

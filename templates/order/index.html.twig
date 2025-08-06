@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commandes{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+             <h1 class="mt-4 m-b-4">Commandes</h1>
+            
+            {{ form_start(form) }}
+                <input type="submit" value="Continuer">
+            {{ form_end(form)}}
+
+            </div>
+            <div class="col-4">
+            
+            </div>
+        </div>
+       
+    </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 .form-control {
-    width: 90%;
+    width: 96%;
 }
 
 .category-item {
@@ -16,6 +16,11 @@
 #btn {
     display: flex;
     justify-content: space-around;
+}
+#btn-city {
+    /* display: block; */
+    width: 222px;
+    justify-content: center;
 }
 
 #actions {

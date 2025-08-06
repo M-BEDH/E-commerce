@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Ville</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ city.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ city.name }}</td>
+            </tr>
+            <tr>
+                <th>Frais de port</th>
+                <td>{{ city.shippingCost }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<div id="btn">
+    <a class="btn btn-outline-secondary" href="{{ path('app_city_index') }}">back to list</a>
+
+    <a class="btn btn-success" href="{{ path('app_city_edit', {'id': city.id}) }}">modifier</a>
+
+    {{ include('city/_delete_form.html.twig') }}
+    </div>
+    </div>
+{% endblock %}
