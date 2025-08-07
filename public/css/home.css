@@ -75,3 +75,7 @@ a.titleProductLink:hover{
     top: 30rem;
     left: 17rem
 }
+
+.badge {
+    margin-bottom: 0.5rem;
+}
