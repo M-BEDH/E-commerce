@@ -28,13 +28,12 @@
                             <p class="card-text">{{ product.price }} €</p>
 
                                {% if product.stock > 0 %}
-  <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-{# {% elseif product.stock > 0 %} #}
-  {# <span class="badge bg-warning">Derniers exemplaires : {{ product.stock }}</span> #}
-{% else %}
-  <span class="badge bg-danger">Rupture de stock</span>
-{% endif %}
- 
+                                   <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
+                                    {# {% elseif product.stock > 0 %} #}
+                                     {# <span class="badge bg-warning">Derniers exemplaires : {{ product.stock }}</span> #}
+                                {% else %}
+                                     <span class="badge bg-danger">Rupture de stock</span>
+                                {% endif %}
                </div>
            </div>
          {% endfor %}
