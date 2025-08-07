@@ -12,6 +12,17 @@
     border: 2mm ridge #facdff;
 }
 
+.card-body {
+   display: flex !important;
+   flex-direction: column !important;
+}
+
+.card-title{
+    color: #6e0e79;
+    text-decoration: #6e0e79;
+    margin-top: 1rem;
+}
+
 .containerProduct {
     width: 100%;
     max-width: 400px;
@@ -49,11 +60,6 @@
     background-color: #6e0e79;
     color: #fff;
     border-color: #6e0e79;
-}
- 
-.card-title{
-    color: #6e0e79;
-    text-decoration: #6e0e79;
 }
 
 a.titleProductLink{
