@@ -64,7 +64,7 @@
                 const cardPrice = parseInt($('#card-price').text());
                 const shippingCost = parseInt($('#shippingCost').text());
 
-                $('.total-price').text(cardPrice + shippingCost);
+                $('.total-price').text(cardPrice + shippingCost); // calcul du prix total pour la premiere ville (url)
             }
                },
 
@@ -76,14 +76,15 @@
             
             }
 
-                 ajaxRequest(url)
+                 ajaxRequest(url)  // appel de la requete pour afficher prix des produit et prix des frais de port
 
-// nouvel URL pour les differentes villes -- rappel de la requette ajax avec newUrl
+
+// nouvel URL pour les differentes villes --
                  citySelector.on('change', function() {
                     const newCityValue = $(this).val();
                     const newUrl = `/city/${newCityValue}/shipping/cost`;
 
-                    ajaxRequest(newUrl)
+                    ajaxRequest(newUrl) //  rappel de la requette ajax avec newUrl et donc ajoustement du prix total
         });
     })
 
