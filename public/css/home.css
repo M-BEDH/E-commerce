@@ -37,7 +37,7 @@
 
 .btn {
     padding: 0.2rem 1rem;
-    margin-top: 0.3rem 0 0.5rem 0;
+    margin: 0.3rem auto !important;
 }
 
 .btn-success {
@@ -70,12 +70,17 @@ a.titleProductLink:hover{
     text-decoration: underline #24bb24 !important;
 }
 
-.inputContinuer {
+.inputOrder {
     position: relative;
     top: 30rem;
     left: 17rem
 }
 
 .badge {
-    margin-bottom: 0.5rem;
+    margin: 0 auto 0.5rem auto;
+    width: 200px;
+}
+
+.span {
+    border: 1px solid;
 }

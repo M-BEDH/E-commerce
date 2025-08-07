@@ -12,29 +12,28 @@
     <div class="container">
         <div class="row">
             <div>
-             <h1 class="mt-4 m-b-4">Commandes</h1>
+             <h1 class="mt-4 m-b-4">Commande</h1>
             
             {{ form_start(form) }}
-                <input class="btn-outline-primary inputContinuer" type="submit" value="Continuer">
+                <input class="btn-outline-primary inputOrder" type="submit" value="Continuer">
             {{ form_end(form)}}
 
             </div>
-            <div class="col-4">
+            <div class="col-5">
                <span class="mb-2">Montant à payer :</span>
                   <h3>
-                   <span id="card-price">{{total}}</span>€
-                  </h3>
+                   <span id="card-price">{{total}}</span>€ </h3>
 
                 <span>Frais de livraison :</span>
-                  <h3> <span id="shippingCost"></span>€</h3>
+                  <h3> <span id="shippingCost"></span>€ </h3>
 
                 <span>Total à payer : </span>
-                  <h3> <span class="total_price"></span>€
-                 </h3>
+                  <h3> <span class="total-price"> </span>€ </h3>
             </div>
         </div>
        
     </div>
+
     <script src="http://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
     <script>
@@ -46,46 +45,45 @@
         
         const url = `/city/${cityValue}/shipping/cost`;   ///// probleme ici avec localhost ?? 
 
+
         //requete Ajax
-        $.ajax({
+        function ajaxRequest(url) 
+        {
+
+        $.ajax
+        ({
             url:url,
             type:'GET',
             success:function(response) {
              
              const newResponse = JSON.parse(response)
-             if(parseInt(newResponse.status) === 200){
-
-                // console.log(newResponse.status)
+             if(parseInt(newResponse.status) === 200)
+            {
 
                 $("#shippingCost").text(newResponse.content)
+                const cardPrice = parseInt($('#card-price').text());
+                const shippingCost = parseInt($('#shippingCost').text());
 
-             }
-            
-            },
-
-            error: function(xhr,status,error) {
-                console.error('Erreur Ajax',error);
+                $('.total-price').text(cardPrice + shippingCost);
             }
-        })
-             
+               },
+
+            error: function(xhr,status,error)
+                {
+                console.error('Erreur Ajax',error);
+                }           
+            }) 
+            
+            }
+
+                 ajaxRequest(url)
+
+// nouvel URL pour les differentes villes -- rappel de la requette ajax avec newUrl
                  citySelector.on('change', function() {
                     const newCityValue = $(this).val();
                     const newUrl = `/city/${newCityValue}/shipping/cost`;
 
-                    $.ajax({
-                        url:newUrl,
-                        type:'GET',
-                        success: function(response){
-                            const newResponse = JSON.parse(response)
-                            if(parseInt(newResponse.status) === 200){
-                                $("#shippingCost").text(newResponse.content)
-                            }
-                        }, 
-                        error: function(xhr, status,error){
-                            console.error('Erreur AJAX', error);
-                        }
-                    })
-               
+                    ajaxRequest(newUrl)
         });
     })
 
