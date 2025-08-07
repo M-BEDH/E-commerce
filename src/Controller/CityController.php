@@ -68,6 +68,7 @@ final class CityController extends AbstractController
         ]);
     }
 
+  
     #[Route('/{id}', name: 'app_city_delete', methods: ['POST'])]
     public function delete(Request $request, City $city, EntityManagerInterface $entityManager): Response
     {

@@ -9,10 +9,6 @@
 
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
 <div class="container">
     <h1>Panier</h1>
@@ -42,7 +38,7 @@
     <h2>Total: {{total}} €</h2>
 
     <div>
-      <a data-turbo="false" href="" class="btn btn-primary">Valider la commande</a>
+      <a data-turbo="false" href="{{ path('app_order')}}" class="btn btn-primary">Valider la commande</a>
       <a href="{{ path('app_cart_delete') }}" class="btn btn-outline-danger">Supprimer le panier</a>
     </div>
     {% endif %}

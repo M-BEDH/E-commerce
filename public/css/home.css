@@ -63,3 +63,9 @@ a.titleProductLink{
 a.titleProductLink:hover{
     text-decoration: underline #24bb24 !important;
 }
+
+.inputContinuer {
+    position: relative;
+    top: 30rem;
+    left: 17rem
+}

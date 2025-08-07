@@ -15,28 +15,80 @@
              <h1 class="mt-4 m-b-4">Commandes</h1>
             
             {{ form_start(form) }}
-                <input class="btn-outline-primary" type="submit" value="Continuer">
+                <input class="btn-outline-primary inputContinuer" type="submit" value="Continuer">
             {{ form_end(form)}}
 
             </div>
             <div class="col-4">
                <span class="mb-2">Montant à payer :</span>
                   <h3>
-                    <span id="card-price">{{total}}</span>€
+                   <span id="card-price">{{total}}</span>€
                   </h3>
-                  <span>Frais de livraison</span>
+
+                <span>Frais de livraison :</span>
+                  <h3> <span id="shippingCost"></span>€</h3>
+
+                <span>Total à payer : </span>
+                  <h3> <span class="total_price"></span>€
+                 </h3>
             </div>
         </div>
        
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
     <script>
     $(document).ready(function() {
         // alert('jquery chargé')
         const citySelector = $('#order_city'); // selectionne l'element html qui à pour id order_city on la stock dans la const citySelector
-        const cityValue = citySelector.val(); // recupere la valeur actuelle de cituySelestor (le select - liste deroulante) la stock dans la const cityValue
+        
+        const cityValue = citySelector.val(); // recupere la valeur actuelle de citySelector (le select - liste deroulante) la stock dans la const cityValue
+        
+        const url = `/city/${cityValue}/shipping/cost`;   ///// probleme ici avec localhost ?? 
+
+        //requete Ajax
+        $.ajax({
+            url:url,
+            type:'GET',
+            success:function(response) {
+             
+             const newResponse = JSON.parse(response)
+             if(parseInt(newResponse.status) === 200){
+
+                console.log(newResponse.status)
+
+                $("#shippingCost").text(newResponse.content)
+
+             }
+            
+            },
+
+            error: function(xhr,status,error) {
+                console.error('Erreur Ajax',error);
+            }
+        })
+             
+                 citySelector.on('change', function() {
+                    const newCityValue = $(this).val();
+                    const newUrl = `/city/${newCityValue}/shipping/cost`;
+
+                    $.ajax({
+                        url:newUrl,
+                        type:'GET',
+                        success: function(response){
+                            const newResponse = JSON.parse(response)
+                            if(parseInt(newResponse.status) === 200){
+                                $("#shippingCost").text(newResponse.content)
+                            }
+                        }, 
+                        error: function(xhr, status,error){
+                            console.error('Erreur AJAX', error);
+                        }
+                    })
+               
+        });
     })
+
     </script>
 
 {% endblock %}

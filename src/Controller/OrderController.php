@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Repository\ProductRepository;
@@ -11,8 +12,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
+
 final class OrderController extends AbstractController
 {
+
     #[Route('/order', name: 'app_order')]
     public function index(Request $request, SessionInterface $sessionInterface, ProductRepository $productRepository): Response
     {
@@ -41,6 +45,17 @@ final class OrderController extends AbstractController
         ]);
     }
 
-       
+
+
+        #[Route('/city/{id}/shipping/cost', name: 'app_city_shippng/cost', methods:['GET', 'POST'])]
+        public function cityShippingCost(City $city): Response
+    {
+
+        $cityShippingPrice = $city->getShippingCost();
+
+        return new Response(json_encode(['status' => 200, "message"=> 'on', 'content'=>$cityShippingPrice]));
+
+    }
+
 
 }
