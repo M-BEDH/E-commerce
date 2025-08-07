@@ -42,7 +42,15 @@ class OrderType extends AbstractType
             ->add('city', EntityType::class, [
                 'class' => City::class,
                 'choice_label' => 'name',
+            ])
+
+            ->add('payOnDelivery', null, [
+                 'attr'=>[
+                    'class'=>'mx-20'
+                 ],
+                'label'=> 'Payez à la livraison'
             ]);
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
