@@ -9,6 +9,7 @@ use App\Form\OrderType;
 use App\Entity\OrderProducts;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,6 @@ final class OrderController extends AbstractController
     public function index(
         Request $request,
         SessionInterface $session,
-        ProductRepository $productRepository,
         EntityManagerInterface $entityManager,
         Cart $cart
     ): Response {
@@ -61,7 +61,6 @@ final class OrderController extends AbstractController
                     //redirection vers la page panier
                     return $this->redirectToRoute('order_message');
                 }
-                // message si panier vide ??????
             }
         }
 
@@ -76,7 +75,6 @@ final class OrderController extends AbstractController
     #[Route('order/message', name: 'order_message')]
     public function orderMessage(): Response
     {
-
         return $this->render('order/order_message.html.twig');
     }
 
@@ -85,23 +83,21 @@ final class OrderController extends AbstractController
     #[Route('/city/{id}/shipping/cost', name: 'app_city_shippng/cost', methods: ['GET', 'POST'])]
     public function cityShippingCost(City $city): Response
     {
-
         $cityShippingPrice = $city->getShippingCost();
-
         return new Response(json_encode(['status' => 200, "message" => 'on', 'content' => $cityShippingPrice]));
     }
+
 
 
     #[Route('/editor/order/show', name: 'app_orders_show')]
     public function getAllOrder(OrderRepository $orderRepository, PaginatorInterface $paginator, Request $request): Response
     {
 
-        $orders = $orderRepository->findAll();
-           $orders = $paginator->paginate(
+        $orders = $orderRepository->findBy([], ['id' => 'DESC'] );
+        $orders = $paginator->paginate(
             $orders,
             $request->query->getInt('page', 1), //met en place la pagination
-            6 // je choisi d'afficher 6 commandes par page
-            
+            4 // je choisi d'afficher 6 commandes par page
         );
 
         return $this->render('order/orders.html.twig', [
@@ -109,8 +105,27 @@ final class OrderController extends AbstractController
         ]);
     }
 
+    
+
+    #[Route('/editor/order/{id}/isCompleted/update', name: 'app_orders_is-completed-udapte')]
+    public function isCompleted($id, OrderRepository $orderRepository, EntityManagerInterface $entityManager)
+    {
+        $order = $orderRepository->find($id);
+        $order->setIsCompleted(true);
+        $entityManager->flush();
+        $this->addFlash('success', 'Commande livrée');
+        return $this->redirectToRoute('app_orders_show');
+    }
 
 
 
-
+    #[Route('/editor/order/{id}/isCompleted/delete', name: 'app_orders_delete')]
+    public function deleteOrder($id, OrderRepository $orderRepository, EntityManagerInterface $entityManager)
+    {
+        $order = $orderRepository->find($id);
+        $entityManager->remove($order);
+        $entityManager->flush();
+        $this->addFlash('danger', 'Commande supprimée');
+        return $this->redirectToRoute('app_orders_show');
+    }
 }

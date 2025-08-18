@@ -30,7 +30,7 @@
             <td><a href="{{ path('app_shopping_cart_delete', {'id': item.product.id}) }}" class='text-danger text-decoration-none'>Supprimer du panier</a></td>
           </tr>
         {% else %}
-           <p>Votre panier est vide</p>
+           <p class='text-danger'>Votre panier est vide</p>
          {% endfor %}
     </table>
     

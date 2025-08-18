@@ -12,25 +12,53 @@
 	<div class='container'>
 		<h1>Commandes passées</h1>
 
+		{% for order in orders %}
 
-		<table class="table table-bordered">
-			<tr>
-				<th>Nom</th>
-				<th>Prénom</th>
-				<th>Téléphone</th>
-				<th>Adresse</th>
-				<th>Ville</th>
-			</tr>
-			{% for order in orders %}
+			<table class="table table-bordered">
+				<tr>
+					<th>Nom</th>
+					<th>Prénom</th>
+					<th>Téléphone</th>
+					<th>Adresse</th>
+					<th>Ville</th>
+					<th>Crée le :
+					</th>
+				</tr>
+
+				<h2>Commande n°
+					{{order.id }}</h2>
+				{% if order.isCompleted == true %}
+					<span class="text-success">Commande livrée</span>
+				{% else %}
+					<span class="text-danger">Commande non livrée</span>
+				{% endif %}
+				<br>
+				<span class="text-primary">Informations du client</span>
+
 				<tr>
 					<td>{{ order.firstName }}</td>
 					<td>{{ order.lastName }}</td>
 					<td>{{ order.phone }}</td>
 					<td>{{ order.adress }}</td>
 					<td>{{ order.city.name }}</td>
+
+					<td>{{ order.createdAt | date('d-m-y H:i')}}</td>
 				</tr>
-			{% endfor %}
-		</table>
+
+			</table>
+			<h5>Frais de livraison :
+				{{ order.city.shippingCost}}</h5>
+			<h5 class='mb-5'>Total à payer :
+				{{order.totalPrice + order.city.shippingCost}}
+			</h5>
+
+			{% if order.isCompleted != true %}
+				<a href="{{ path('app_orders_is-completed-udapte', {'id':order.id}) }}" class='btn btn-outline-primary col-2 m-lg-1'>Marquer comme livrée</a>
+			{% endif %}
+
+
+			<a onclick="return confirm('Etes-vous sûr de vouloir supprimer cette commande ?');" class='btn btn-danger col-2 m-lg-1' href="{{ path('app_orders_delete', {'id':order.id}) }}">Supprimer la commande</a>
+		{% endfor %}
 
 		{{ knp_pagination_render(orders, 'layouts/_paginator.html.twig') }}
 
