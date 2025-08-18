@@ -1,93 +1,124 @@
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
-
+	<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/category.css') }}">
 {% endblock %}
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container">
-        <a class="navbar-brand title" href="{{ path('app_home') }}">Soin de Sois</a>
+	<div class="container">
+		<a class="navbar-brand title" href="{{ path('app_home') }}">Soin de Sois</a>
 
-        <!-- Bouton burger -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+		<!-- Bouton burger -->
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+		<div class="collapse navbar-collapse" id="navbarScroll">
+			<ul
+				class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
 
-                <!-- Accueil -->
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ path('app_home') }}">Accueil</a>
-                </li>
+				<!-- Accueil -->
+				<li class="nav-item">
+					<a class="nav-link active" href="{{ path('app_home') }}">Accueil</a>
+				</li>
 
-                <!-- Catégories (si définies) -->
-                {% if categories is defined %}
+				<!-- Catégories (si définies) -->
+				{% if categories is defined %}
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Catégories</a>
-                    <ul class="dropdown-menu">
-                    
-                        {% for category in categories %}
-{# {{ dump(category)}} #}
-                            <li><a class="dropdown-item text-primary fw-bold categoryTitle" href="#">{{ category.name }}</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Catégories</a>
+						<ul class="dropdown-menu">
 
-                           {% for subCategory in category.SubCategories %}
+							{% for category in categories %}
+								{# {{ dump(category)}} #}
+								<li>
+									<a class="dropdown-item text-primary fw-bold categoryTitle" href="#">{{ category.name }}</a>
+								</li>
 
-                           <li><a class="dropdown-item text-secondary" href="{{ path('app_home_product_filter', {'id': subCategory.id} )}} "> {{ subCategory.name }}</a></li>
+								{% for subCategory in category.SubCategories %}
 
-                           {% endfor %}
-                             
-                             <li class="dropdown-divider"></li>
+									<li>
+										<a class="dropdown-item text-secondary" href="{{ path('app_home_product_filter', {'id': subCategory.id} )}} ">
+											{{ subCategory.name }}</a>
+									</li>
 
-                        {% endfor %}
-                    </ul>
-                </li>
-                {% endif %}
-                
+								{% endfor %}
 
-                <!-- Si ADMIN -->
-                {% if is_granted('ROLE_ADMIN') %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Admin</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item text-secondary" href="{{ path('app_category') }}">Catégories</a></li>
-                        <li><a class="dropdown-item text-secondary" href="{{ path('app_category_new') }}">Ajouter une catégorie</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-secondary" href="{{ path('app_sub_category_subCategory')}}">Sous-catégories</a></li>
-                        <li><a class="dropdown-item text-secondary" href="{{ path('app_sub_category_new')}}">Ajouter une sous-catégorie</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-secondary" href="{{ path('app_product_index')}}">Produits</a></li>
-                        <li><a class="dropdown-item text-secondary" href="{{ path('app_product_new')}}">Ajouter un produit</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-secondary" href="{{ path('app_user') }}">Utilisateurs</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-secondary" href="{{ path('app_city_index') }}">Frais de port</a></li>
-                    </ul>
-                </li>
-                {% endif %}
+								<li class="dropdown-divider"></li>
 
-                <!-- Si CONNECTÉ -->
-                {% if app.user %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                </li>
-                {% else %}
-                <!-- Si NON CONNECTÉ -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
-                </li>
-                {% endif %}
-                    
-                <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_order')}}">Panier</a>
-                </li>
-            </ul>
+							{% endfor %}
+						</ul>
+					</li>
+				{% endif %}
 
-        </div>
-    </div>
+
+				<!-- Si ADMIN -->
+				{% if is_granted('ROLE_ADMIN') %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Admin</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_category') }}">Catégories</a>
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_category_new') }}">Ajouter une catégorie</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_sub_category_subCategory')}}">Sous-catégories</a>
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_sub_category_new')}}">Ajouter une sous-catégorie</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_product_index')}}">Produits</a>
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_product_new')}}">Ajouter un produit</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_user') }}">Utilisateurs</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_city_index') }}">Frais de port</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							{# <li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_orders_show') }}">Voir les commandes</a>
+							</li> #}
+
+						</ul>
+					</li>
+				{% endif %}
+
+				<!-- Si CONNECTÉ -->
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+					</li>
+
+					 <li class="nav-item">
+						<a class="nav-link" href="{{ path('app_orders_show') }}">Voir les commandes</a>
+					</li> 
+
+                    <li class="nav-item">
+						<a class="nav-link" href="{{ path('app_order')}}">Panier</a>
+					</li>
+				{% else %}
+					<!-- Si NON CONNECTÉ -->
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+					</li>
+				{% endif %}
+
+			</ul>
+
+		</div>
+	</div>
 </nav>
