@@ -51,6 +51,7 @@
 			<h5 class='mb-5'>Total à payer :
 				{{order.totalPrice + order.city.shippingCost}}
 			</h5>
+			<a class='btn btn-outline-info' href="{{ path('app_bill',{'id':order.id}) }}">Imprimer la facture</a>
 
 			{% if order.isCompleted != true %}
 				<a href="{{ path('app_orders_is-completed-udapte', {'id':order.id}) }}" class='btn btn-outline-primary col-2 m-lg-1'>Marquer comme livrée</a>

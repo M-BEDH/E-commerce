@@ -9,12 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class BillController extends AbstractController
 {
-    #[Route('/bill', name: 'app_bill')]
+    #[Route('/bill/{id}', name: 'app_bill')]
     public function index($id, OrderRepository $orderReposotory): Response
     {
         $order = $orderReposotory->find($id);
         return $this->render('bill/index.html.twig', [
-            'order'=>$order
+            'order'=>$order,
+            'id'=>$id,
         ]);
     }
 }
