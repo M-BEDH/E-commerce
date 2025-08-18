@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -12,15 +12,16 @@
 	<div class='container'>
 		<h1>Commandes passées</h1>
 
-		{% for order in orders %}
-			<table class="table table-bordered">
-				<tr>
-					<th>Nom</th>
-					<th>Prénom</th>
-					<th>Téléphone</th>
-					<th>Adresse</th>
-					<th>Ville</th>
-				</tr>
+
+		<table class="table table-bordered">
+			<tr>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Téléphone</th>
+				<th>Adresse</th>
+				<th>Ville</th>
+			</tr>
+			{% for order in orders %}
 				<tr>
 					<td>{{ order.firstName }}</td>
 					<td>{{ order.lastName }}</td>
@@ -28,9 +29,10 @@
 					<td>{{ order.adress }}</td>
 					<td>{{ order.city.name }}</td>
 				</tr>
-			</table>
-		{% endfor %}
-        {{ knp_pagination_render(orders, 'layouts/_paginator.html.twig') }}     
+			{% endfor %}
+		</table>
+
+		{{ knp_pagination_render(orders, 'layouts/_paginator.html.twig') }}
 
 	</div>
 
