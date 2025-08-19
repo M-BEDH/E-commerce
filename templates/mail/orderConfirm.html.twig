@@ -1,0 +1,20 @@
+<div class="container">
+
+	<h1>Merci pour votre commande</h1>
+
+	<p>Merci pour votre commande elle sera traitée dans les plus brefs délais</p>
+	<p class='text-primary'>Détails de la commande :</p>
+
+	<div>Commande du :
+		{{ order.createdAt | date('d-m-y H:i')}}</div>
+
+	<table class='table table-bordered'>
+		<tr>
+			<th>Frais de livraison :
+				{{ order.city.shippingCost}}€</th>
+		</tr>
+		<tr>
+			<th>Total à payer :
+				{{ order.totalPrice + order.city.shippingCost }}€</th>
+		</tr>
+		<table
