@@ -7,10 +7,9 @@ use App\Entity\Order;
 use App\Service\Cart;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Mime\Email;
 use App\Repository\OrderRepository;
-use App\Repository\ProductRepository;
+use App\Service\StripePayment;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class OrderController extends AbstractController
 {
 
-     public function __construct(private MailerInterface $mailer) {
-        
-    }
+    public function __construct(private MailerInterface $mailer) {}
 
     #[Route('/order', name: 'app_order')]
     public function index(
@@ -44,40 +41,52 @@ final class OrderController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($order->isPayOnDelivery()) {
+            // if ($order->isPayOnDelivery()) {
 
-                if (!empty($data['total'])) {
+            if (!empty($data['total'])) {
 
-                    $order->setTotalPrice(($data['total']));
-                    $order->setCreatedAt(new \DateTimeImmutable());
-                    $entityManager->persist($order);
+                $order->setTotalPrice(($data['total']));
+                $order->setCreatedAt(new \DateTimeImmutable());
+                $entityManager->persist($order);
+                $entityManager->flush();
+                // dd($data['cart']); pour afficher le console log du panier une fois la commande validé
+                foreach ($data['cart'] as $value) {
+                    $orderProduct = new OrderProducts();
+                    $orderProduct->setOrder($order);
+                    $orderProduct->setProduct($value['product']);
+                    $orderProduct->setQuantity($value['quantity']);
+
+                    $entityManager->persist($orderProduct);
                     $entityManager->flush();
-                    // dd($data['cart']); pour afficher le console log du panier une fois la commande validé
-                    foreach ($data['cart'] as $value) {
-                        $orderProduct = new OrderProducts();
-                        $orderProduct->setOrder($order);
-                        $orderProduct->setProduct($value['product']);
-                        $orderProduct->setQuantity($value['quantity']);
+                }
 
-                        $entityManager->persist($orderProduct);
-                        $entityManager->flush();
-                    }
-                    $session->set('cart', []); //mise à jour du contenu du panier
-                    //redirection vers la page panier
-                    $html = $this->renderView('mail/orderConfirm.html.twig', [
-                        'order'=>$order
-                    ]);
+                $paymentStripe = new StripePayment(); //import du service avec le classe
+                $shippingCost = $order->getCity()->getShippingCost();
+                $paymentStripe->startPayment($data, $shippingCost); // import du panier donc : $data
+                $stripeRedirectUrl = $paymentStripe->getStripeRedirectUrl();
 
-                    $email = (new Email())
+                return $this->redirect($stripeRedirectUrl);
+
+                $session->set('cart', []); //mise à jour du contenu du panier
+                //redirection vers la page panier
+                $html = $this->renderView('mail/orderConfirm.html.twig', [
+                    'order' => $order,
+                    'orderProduct' => $data['cart']
+                ]);
+
+                $email = (new Email())
                     ->from('mel.b.ms@pm.me')
                     ->to($order->getEmail())
                     ->subject('Comfirmation de commande')
                     ->html($html);
-                    $this->mailer->send($email);
-                    
-                    return $this->redirectToRoute('order_message');
-                }
+                $this->mailer->send($email);
+
+
+
+                return $this->redirectToRoute('order_message');
             }
+
+            // }
         }
 
         return $this->render('order/index.html.twig', [
@@ -109,7 +118,7 @@ final class OrderController extends AbstractController
     public function getAllOrder(OrderRepository $orderRepository, PaginatorInterface $paginator, Request $request): Response
     {
 
-        $orders = $orderRepository->findBy([], ['id' => 'DESC'] );
+        $orders = $orderRepository->findBy([], ['id' => 'DESC']);
         $orders = $paginator->paginate(
             $orders,
             $request->query->getInt('page', 1), //met en place la pagination
@@ -121,7 +130,7 @@ final class OrderController extends AbstractController
         ]);
     }
 
-    
+
 
     #[Route('/editor/order/{id}/isCompleted/update', name: 'app_orders_is-completed-udapte')]
     public function isCompleted($id, OrderRepository $orderRepository, EntityManagerInterface $entityManager)
