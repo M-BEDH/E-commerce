@@ -74,13 +74,13 @@ final class StripeController extends AbstractController
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object;
 
-                $fileName = 'stripe-detail-' . uniqid() . '.txt';
+                // $fileName = 'stripe-detail-' . uniqid() . '.txt'; // permet d'avoir un fichier stripe avec details de la commande
 
                 $orderId = $paymentIntent->metadata->orderid;
                 $order = $orderRepo->find($orderId);
                 $order->setIsPaymentCompleted(1);
                 $entityManager->flush();
-                file_put_contents($fileName, $orderId);
+                // file_put_contents($fileName, $orderId);  
 
 
                 $order = $orderRepo->findOneBy(['id' => $orderId]);
