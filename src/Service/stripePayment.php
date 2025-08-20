@@ -17,13 +17,13 @@ class StripePayment
         Stripe::setApiVersion('2025-07-30.basil');
     }
 
-    public function startPayment($cart, $shippingCost)
+    public function startPayment($cart, $shippingCost, $orderId)
     {
         $cartProducts = $cart['cart'];
 
         $products = [
             [
-                'qte'=> 1,
+                'qte' => 1,
                 'price' => $shippingCost,
                 'name' => 'Frais de livraison'
             ]
@@ -31,9 +31,6 @@ class StripePayment
 
         foreach ($cartProducts as $value) {
             $productItem = [];
-
-            $productItem = [];
-
             $productItem['name'] = $value['product']->getName();
             $productItem['price'] = $value['product']->getPrice();
             $productItem['qte'] = $value['quantity'];
@@ -41,35 +38,34 @@ class StripePayment
             $products[] = $productItem;
         }
 
-        $session = Session::create(
-            [
-
-                'line_items' => [
-                    array_map(fn(array $products) => [
-                        'quantity' => $products['qte'],
-                        'price_data' => [
-                            'currency' => 'Eur',
-                            'product_data' => [
-                                'name' => $products['name']
-                            ],
-                            'unit_amount' => $products['price'] * 100,
+        $session = Session::create([
+            'line_items' => [
+                array_map(fn(array $product) => [
+                    'quantity' => $product['qte'],
+                    'price_data' => [
+                        'currency' => 'Eur',
+                        'product_data' => [
+                            'name' => $product['name']
                         ],
-                    ], $products)
-                ],
-                'mode' => 'payment',
+                        'unit_amount' => $product['price'] * 100,
+                    ],
+                ], $products)
 
-                'success_url' => 'https://127.0.0.1:8000/pay/success',
-                'cancel_url' => 'https://127.0.0.1:8000/pay/cancel',
-               
-                'billing_address_collection' => 'required',
-                'shipping_address_collection' => [
-                    'allowed_countries' => ['FR'],
-                ],
-                'metadata' => [
-                    // 'order_id' => $cart->id, // id de la commande 
-                ]
             ],
-        );
+            'mode' => 'payment',
+            'cancel_url' => 'http://127.0.0.1:8000/pay/cancel',
+            'success_url' => 'http://127.0.0.1:8000/pay/success',
+            'billing_address_collection' => 'required',
+            'shipping_address_collection' => [
+                'allowed_countries' => ['FR'],
+            ],
+            'payment_intent_data' => [
+                'metadata' => [
+                 'orderid' => $orderId,
+                ]
+            ]
+        ]);
+
         $this->redirectUrl = $session->url;
     }
     public function getStripeRedirectUrl()
