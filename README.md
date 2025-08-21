@@ -17,7 +17,7 @@ Installation :
 
     * composer Install
 
-3 - Configurer le fichier .env en ajoutant la congi mailtrap - la cle secrete stripe et son endpoint ansi que l'url de la database (pour obtenir l'endpoint il faut lancer l'ecoute stripe cf : 8 et recupérer le whsec_xxx)
+3 - Configurer le fichier .env en ajoutant la config mailtrap - la cle secrete stripe et son endpoint ansi que l'url de la database (pour obtenir l'endpoint il faut lancer l'ecoute stripe cf : 8 et recupérer le whsec_xxx)
 
 
     * MAILER_DSN=smtp: "xxxx"
