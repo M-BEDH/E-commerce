@@ -74,13 +74,15 @@ final class StripeController extends AbstractController
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object;
 
-                // $fileName = 'stripe-detail-' . uniqid() . '.txt'; // permet d'avoir un fichier stripe avec details de la commande
+                 $fileName = 'stripe-detail-' . uniqid() . '.txt'; // permet d'avoir un fichier stripe avec details de la commande
+
+                     file_put_contents($fileName, "payment_intent.succeeded : " . $paymentIntent->id);
 
                 $orderId = $paymentIntent->metadata->orderid;
                 $order = $orderRepo->find($orderId);
                 $order->setIsPaymentCompleted(1);
                 $entityManager->flush();
-                // file_put_contents($fileName, $orderId);  
+                     file_put_contents($fileName, $orderId);  
 
 
                 $order = $orderRepo->findOneBy(['id' => $orderId]);
@@ -100,6 +102,12 @@ final class StripeController extends AbstractController
                 break;
             default :
                     // ne rien faire pour les autres evenements
+
+                          // 🔎 log tous les autres événements
+                        $fileName = 'stripe-event-' . uniqid() . '.txt';
+                        file_put_contents($fileName, "Event reçu : " . $event->type);
+
+
             break;
         }
             return new Response('Evenement reçu avec succès', 200);
