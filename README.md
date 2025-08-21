@@ -3,7 +3,7 @@
 
 Projet d'application e-commerce développée avec Symfony (backend) et intégrant :  
 - Stripe pour la gestion des paiements en ligne. 
-- Mailtrap pour la gestion et les tests d’envoi d’e-mails en développement.
+- Mailtrap pour la gestion et les tests d’envoi d’e-mails.
 - Paginator 
 - PHP my admin
 
