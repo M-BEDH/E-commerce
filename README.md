@@ -42,6 +42,6 @@ Installation :
 
 8 - Lancer l'ecoute evenement stripe : stripe listen --forward-to http://127.0.0.1:8000/stripe/notify
 
-9 - Ouvrir le projet http://localhost:8000
+9 - Ouvrir le projet http://127.0.0.1:8000
 
 
