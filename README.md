@@ -1,5 +1,5 @@
 
-#Projet E-Commerce
+# Projet E-Commerce
 
 Projet d'application e-commerce développée avec Symfony (backend) et intégrant :  
 - Stripe pour la gestion des paiements en ligne. 
