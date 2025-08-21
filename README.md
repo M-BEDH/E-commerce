@@ -36,7 +36,7 @@ Installation :
     * symfony.exe console make:migration
     * symfony.exe console doctrine:migrations:migrate 
 
-6 - Lancer le server : symfony server:start ou php -S localhost:8000 -t public
+6 - Lancer le server : symfony server:start ou php -S 127.0.0.1:8000 -t public
 
 7 - Lancer l'envois des mails : php bin/console messenger:consume async -vv
 
