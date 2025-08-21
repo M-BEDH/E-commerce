@@ -2,8 +2,8 @@
 
 {% block title %}Sous Catégorie{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 
@@ -25,13 +25,11 @@
         </tbody>
     </table>
 
-<div id="actions">
-    <a class="btn btn-outline-secondary" href="{{ path('app_sub_category_subCategory') }}">back to list</a>
-
     <a class="btn btn-warning" href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">Modifier</a>
 
     {{ include('sub_category/_delete_form.html.twig') }}
 
-    </div>
-    </div>
+    <a class="btn btn-outline-secondary" href="{{ path('app_sub_category_subCategory') }}">back to list</a>
+
+</div>
 {% endblock %}

@@ -2,14 +2,14 @@
 
 {% block title %}Inscription{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 {% endblock %}
 
 
 {% block body %}
 
-<div class="container containerForm"> 
+<div class="container containerForm">
 
     <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
 
@@ -17,20 +17,20 @@
 
     {{ form_start(registrationForm) }}
 
-     {# {{ csrf_token('intention') }} #}
-        
-        {{ form_row(registrationForm.firstName, {'attr':{'class':'form form-control'}}) }}
-        {{ form_row(registrationForm.lastName, {'attr':{'class':'form form-control'}}) }}
-        {{ form_row(registrationForm.phoneNumber, {'attr':{'class':'form form-control'}}) }}
-        {{ form_row(registrationForm.email, {'attr':{'class':'form form-control'}}) }}
+    {# {{ csrf_token('intention') }} #}
 
-         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms, {'label': 'Veuillez accepter les conditions'}) }}
+    {{ form_row(registrationForm.firstName, {'attr':{'class':'form form-control'}}) }}
+    {{ form_row(registrationForm.lastName, {'attr':{'class':'form form-control'}}) }}
+    {{ form_row(registrationForm.phoneNumber, {'attr':{'class':'form form-control'}}) }}
+    {{ form_row(registrationForm.email, {'attr':{'class':'form form-control'}}) }}
 
-        <button type="submit" class="btn btn-info">S'inscrire</button>
+    {{ form_row(registrationForm.plainPassword, {
+    label: 'Password'
+    }) }}
+    {{ form_row(registrationForm.agreeTerms, {'label': 'Veuillez accepter les conditions'}) }}
+
+    <button type="submit" class="btn btn-info">S'inscrire</button>
     {{ form_end(registrationForm) }}
 
-    </div>
+</div>
 {% endblock %}

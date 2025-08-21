@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produits{% endblock %}
+{% block title %}Tous les produits{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 
@@ -26,33 +26,36 @@
             </tr>
         </thead>
         <tbody>
-        {% for product in products %}
+            {% for product in products %}
             <tr>
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.description  |slice(0,100) }}...</td>
+                <td>{{ product.description |slice(0,100) }}...</td>
                 <td>{{ product.price }} euros</td>
                 <td>
-                {% if product.stock > 0 %}
-                   {{ product.stock}}  
-                {% else %}
-                <span class="text-danger fw-bold">Rupture de stock</span>
-                {% endif %}
-                </td> 
+                    {% if product.stock > 0 %}
+                    {{ product.stock}}
+                    {% else %}
+                    <span class="text-danger fw-bold">Rupture de stock</span>
+                    {% endif %}
+                </td>
                 <td>
-                    <a class="btn btn-outline-success fw-bold" href="{{ path('app_product_show', {'id': product.id}) }}">Afficher</a>
-                    <a class="btn btn-outline-warning fw-bold"href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
-                    <a class="btn btn-outline-info fw-bold" href="{{ path('app_add_product_stock', {'id': product.id}) }}">Ajouter au stock</a>
+                    <a class="btn btn-outline-success fw-bold"
+                        href="{{ path('app_product_show', {'id': product.id}) }}">Afficher</a>
+                    <a class="btn btn-outline-warning fw-bold"
+                        href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+                    <a class="btn btn-outline-info fw-bold"
+                        href="{{ path('app_add_product_stock', {'id': product.id}) }}">Ajouter au stock</a>
                 </td>
             </tr>
-        {% else %}
+            {% else %}
             <tr>
                 <td colspan="5">no records found</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 
     <a class="btn btn-primary" href="{{ path('app_product_new') }}">Nouveau produit</a>
-    </div>
+</div>
 {% endblock %}

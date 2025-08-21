@@ -2,42 +2,42 @@
 
 {% block title %}Accueil{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 {% block body %}
 
-   <div class="container mt-5">
+<div class="container mt-5">
 
-         <h1> Bienvenue sur la page d'accueil </h1>
+  <h1> Bienvenue sur la page d'accueil </h1>
 
-            {% for product in products %}
-               <div class="card">
+  {% for product in products %}
+  <div class="card">
 
-                 <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
-                 
-                     <div class="card-body">
+    <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
 
-                         <a href="{{ path('app_home_product_show', {'id': product.id} )}}" class="btn btn-outline-primary">Voir produit</a>
+    <div class="card-body">
 
-                           <h5 class="card-title">{{ product.name }}</h5>
+      <a href="{{ path('app_home_product_show', {'id': product.id} )}}" class="btn btn-outline-primary">Voir produit</a>
 
-                            <p class="card-text">{{ product.description }}</p>
-                            <p class="card-text">{{ product.price }} €</p>
+      <h5 class="card-title">{{ product.name }}</h5>
 
-                               {% if product.stock > 0 %}
-                                   <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-                                     <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'id': product.id})}}">Ajouter au panier</a>
-                                    {# {% elseif product.stock > 0 %} #}
-                                     {# <span class="badge bg-warning">Derniers exemplaires : {{ product.stock }}</span> #}
-                                {% else %}
-                                     <span class="badge bg-danger">Rupture de stock</span>
-                                {% endif %}
-                     </div>
-              </div>
-{% endfor %}
-                 {{ knp_pagination_render(products, 'layouts/_paginator.html.twig') }}              
-   </div>
+      <p class="card-text">{{ product.description }}</p>
+      <p class="card-text">{{ product.price }} €</p>
+
+      {% if product.stock > 0 %}
+      <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
+      <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'id': product.id})}}">Ajouter au panier</a>
+      {# {% elseif product.stock > 0 %} #}
+      {# <span class="badge bg-warning">Derniers exemplaires : {{ product.stock }}</span> #}
+      {% else %}
+      <span class="badge bg-danger">Rupture de stock</span>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+  {{ knp_pagination_render(products, 'layouts/_paginator.html.twig') }}
+</div>
 {% endblock %}

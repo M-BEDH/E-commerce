@@ -1,0 +1,78 @@
+.btn.btn-lg {
+    margin-top: 1rem;
+    padding: 0.3rem 1.5rem;
+}
+
+.btn {
+    width: 200px;
+    margin-top: 0.5rem;
+}
+
+.btn-primary {
+    background-color: #6e0e79;
+    border-color: #6e0e79;
+    margin-top: 0.5rem; /* fusion avec la règle de .btn */
+}
+
+.btn-primary:hover {
+    background-color: #f3def5;
+    color: #6e0e79;
+    border-color: #6e0e79;
+}
+
+#actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.btn-outline-info,
+.btn-outline-success {
+    color: #6e0e79;
+    border-color: #6e0e79;
+}
+
+.btn-outline-info:hover,
+.btn-outline-success:hover {
+    background-color: #f3def5;
+    border-color: #6e0e79;
+    color: #6e0e79;
+}
+
+.btn-warning {
+    background-color: #6e0e79;
+    color: #fff;
+    border-color: #6e0e79;
+}
+
+.btn-outline-secondary {
+    color: #575555;
+}
+
+
+.btn {
+    padding: 0.2rem 1rem;
+    margin: 0.3rem auto !important;
+}
+
+.btn-success {
+    background-color: #6e0e79;
+    border-color: #6e0e79;
+}
+
+.btn-success:hover {
+    background-color: #facdff;
+    color: #6e0e79;
+    border-color: #6e0e79;
+}
+
+.btn-outline-primary {
+    color: #6e0e79;
+    border-color: #6e0e79;
+}
+
+.btn-outline-primary:hover {
+    background-color: #6e0e79;
+    color: #fff;
+    border-color: #6e0e79;
+}

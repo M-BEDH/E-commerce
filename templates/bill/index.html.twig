@@ -1,61 +1,61 @@
-{# {% extends 'base.html.twig' %} #}
-
-{% block title %} Facture n°
-			{{order.id}} {% endblock %}
-
+{# ici pas de block title ni d'extends de la base twig ou de block stylesheets car sert à la transformation en pdf en
+vue d'impression #}
 
 {% block body %}
 
+<div class="container">
+	<h1>Facture n°
+		{{order.id}}</h1>
 
-	<div class="container">
-		<h1>Facture n°
-			{{order.id}}</h1>
+	<div>Prénom : {{ order.firstName }}</div>
+	<div>Nom : {{ order.lastName }}</div>
+	<div>Telephone : {{ order.phone }}</div>
+	<div>Adresse : {{ order.adress }}</div>
+	<div>Ville : {{ order.city.name }}</div>
+	<div>Commande du : {{ order.createdAt | date('d-m-y H:i')}}</div>
+	<br>
+	<table class="table table-bordered">
+		<tr>
+			<th>Dénomination</th>
+			<th>prix</th>
+			<th>quantité</th>
+			<th>prix total</th>
+		</tr>
+		{% for orderProduct in order.orderProducts %}
+		<tr>
+			<td>{{ orderProduct.product.name }}</td>
+			<td>{{ orderProduct.product.price }}€</td>
+			<td>{{ orderProduct.quantity }}</td>
+			<td>{{ (orderProduct.product.price * orderProduct.quantity) }}€</td>
+		</tr>
+		{% endfor %}
+	</table>
+	<br>
 
-				<div>Prénom : {{ order.firstName }}</div>
-				<div>Nom : {{ order.lastName }}</div>
-				<div>Telephone : {{ order.phone }}</div>
-				<div>Adresse : {{ order.adress }}</div>
-				<div>Ville : {{ order.city.name }}</div>
-				<div>Commande du : {{ order.createdAt | date('d-m-y H:i')}}</div>
-                <br>
-		<table class="table table-bordered">
-			<tr>
-				<th>Dénomination</th>
-				<th>prix</th>
-				<th>quantité</th>
-				<th>prix total</th>
-			</tr>
-            {% for orderProduct in order.orderProducts %}
-                <tr>
-                    <td>{{ orderProduct.product.name }}</td>
-                    <td>{{ orderProduct.product.price }}€</td>
-                    <td>{{ orderProduct.quantity }}</td>
-                    <td>{{ (orderProduct.product.price * orderProduct.quantity) }}€</td>
-                </tr>
-            {% endfor %}
-		</table>
-		<br>
+	<div>Frais de livraison : {{ order.city.shippingCost}}€</div>
+	<h3>Total de la facture : {{ order.totalPrice + order.city.shippingCost }}€</dh3>
 
-				  <div>Frais de livraison : {{ order.city.shippingCost}}€</div>
-                <h3>Total de la facture : {{ order.totalPrice + order.city.shippingCost }}€</dh3>
-
-	</div>
+</div>
 {% endblock %}
 
 <style>
-table{
-	width:100%;
-	border-collapse:collapse;
-}
-th,td {
-	border:1px solid #ddd;
-	padding:8px;
-	text-align:left;
-}
-thead{
-	background-color:#f2f2f2
-}
-tbody tr:nth-child(odd) {
-	background-color: #f9f9f9
-}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	th,
+	td {
+		border: 1px solid #ddd;
+		padding: 8px;
+		text-align: left;
+	}
+
+	thead {
+		background-color: #f2f2f2
+	}
+
+	tbody tr:nth-child(odd) {
+		background-color: #f9f9f9
+	}
 </style>

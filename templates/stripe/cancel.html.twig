@@ -3,11 +3,14 @@
 {% block title %}ERROR{% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<h1> Paiement refusé !</h1>
+<h2 class="text-danger"> Paiement refusé !</h2>
 
+<p style="text-align: center; font-weight: bold; font-size: 22px;">
+	Veuillez renouveler votre paiement
+</p>
 {% endblock %}

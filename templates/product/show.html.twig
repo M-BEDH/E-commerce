@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product{% endblock %}
+{% block title %}Description du product{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -31,23 +31,21 @@
             </tr>
 
             <tr>
-            <th>Image</th>
-             <td class=""> <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo" style="width: 100px;"> </td>
+                <th>Image</th>
+                <td class=""> <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo"
+                        style="width: 100px;"> </td>
             </tr>
-           
-
         </tbody>
     </table>
 
-<div id="actions">
-    <a class="btn btn-outline-secondary" href="{{ path('app_product_index') }}">back to list</a>
-
     <a class="btn btn-warning" href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
-
-    <a class="btn btn-outline-primary" href="{{ path('app_product_stock_add_history', {'id': product.id}) }}">Historique du stock</a>
-
     {{ include('product/_delete_form.html.twig') }}
-    
-</div>    
+    <a class="btn btn-warning" style="background-color: #4caf50; border-color:#4caf50;"
+        href="{{ path('app_product_stock_add_history', {'id': product.id}) }}">Historique
+        du stock</a> <br>
+    <a class="btn btn-outline-secondary" style="font-weight: bold;" style="font-weight: bold;"
+        style="font-weight: bold;" href="{{ path('app_product_index') }}">back to
+        list</a>
+
 </div>
 {% endblock %}

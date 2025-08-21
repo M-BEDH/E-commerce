@@ -3,17 +3,17 @@
 {% block title %}New Product{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 
 {% endblock %}
 
 
 {% block body %}
-    <h1>Créer un nouveau produit</h1>
+<h1>Créer un nouveau produit</h1>
 
-    {{ include('product/_form.html.twig',{'button_label': 'Ajouter'}) }}
+{{ include('product/_form.html.twig',{'button_label': 'Ajouter'}) }}
 
-    <a class="btn btn-outline-secondary" href="{{ path('app_product_index') }}">back to list</a>
+<a class="btn btn-outline-secondary" style="font-weight: bold;" href="{{ path('app_product_index') }}">back to list</a>
 {% endblock %}

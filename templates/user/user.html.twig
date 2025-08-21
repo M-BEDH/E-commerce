@@ -2,7 +2,8 @@
 
 {% block title %}Utilisateurs{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -10,45 +11,50 @@
 <h1>Liste des utilisateurs</h1>
 
 <div class="container">
-<table class="table">
-  <tr>
-    <th>Id</th>
-    <th>Prénom</th>
-    <th>Nom</th>
-    <th>Email</th>
-    <th>Rôle</th>
-    <th>Action</th>
-    <th>Supprimer</th>
-  </tr>
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Action</th>
+            <th>Supprimer</th>
+        </tr>
 
-  {% for user in users %}
-    <tr>
-        <td>{{ user.id }}</td>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.email }}</td>
-        <td>
-           {% for role in user.roles %}
-               {{ role }}
-           {% endfor %}
-        </td> 
-   
-        <td>
-            {% if 'ROLE_ADMIN' not in user.roles %}
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                {% for role in user.roles %}
+                {{ role }}
+                {% endfor %}
+            </td>
+
+            <td>
+                {% if 'ROLE_ADMIN' not in user.roles %}
                 {% if 'ROLE_EDITOR' not in user.roles %}
-                    <a onclick="return confirm('Êtes-vous sûr de vouloir affecter ce rôle à cet utilisateur ?');" href="{{ path('app_user_edit_role', { 'id': user.id }) }}" class="btn btn-warning">Ajouter rôle éditeur</a>
+                <a onclick="return confirm('Êtes-vous sûr de vouloir affecter ce rôle à cet utilisateur ?');"
+                    href="{{ path('app_user_edit_role', { 'id': user.id }) }}" class="btn btn-warning">Ajouter rôle
+                    éditeur</a>
                 {% else %}
-                    <a onclick="return confirm('Êtes-vous sûr de vouloir retirer ce rôle à cet utilisateur ?');" href="{{ path('app_user_delete_role', { 'id': user.id }) }}" class="btn btn-warning">Retirer rôle éditeur</a>
+                <a onclick="return confirm('Êtes-vous sûr de vouloir retirer ce rôle à cet utilisateur ?');"
+                    href="{{ path('app_user_delete_role', { 'id': user.id }) }}" class="btn btn-warning">Retirer rôle
+                    éditeur</a>
                 {% endif %}
-            {% endif %}
-        </td> 
-        <td>
-            <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');" href="{{ path('app_user_delete_user', { 'id': user.id }) }}" class="btn btn-danger">Supprimer</a>
-        </td>
-    
-    </tr>
-  {% endfor %}
-</table>
+                {% endif %}
+            </td>
+            <td>
+                <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');"
+                    href="{{ path('app_user_delete_user', { 'id': user.id }) }}" class="btn btn-danger">Supprimer</a>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
 </div>
- 
+
 {% endblock %}

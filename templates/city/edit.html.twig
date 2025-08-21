@@ -2,10 +2,10 @@
 
 {% block title %}Modifier City{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
+<link rel="stylesheet" href="{{ asset('css/city.css') }}">
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -13,12 +13,11 @@
 <div class="container">
     <h1>Modifier la ville</h1>
 
-<div id="btn-city">
-    {{ include('city/_form.html.twig', {'button_label': 'Modifier'}) }}
-
-    <a class="btn btn-outline-secondary" href="{{ path('app_city_index') }}">back to list</a>
-
-    {{ include('city/_delete_form.html.twig') }}
-  </div> 
+    <div id="btn-city">
+        {{ include('city/_form.html.twig', {'button_label': 'Modifier'}) }}
+        {{ include('city/_delete_form.html.twig') }}
+        <a class="btn btn-outline-secondary" style="font-weight: bold;" href="{{ path('app_city_index') }}">back to
+            list</a>
     </div>
+</div>
 {% endblock %}

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sous catégories{% endblock %}
+{% block title %}Toutes les sous catégories{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 
@@ -12,7 +12,7 @@
 
 <div class="container">
 
-    <h1>Sous catégories</h1>
+    <h1>Toutes les sous catégories</h1>
 
     <table class="table">
         <thead>
@@ -23,21 +23,23 @@
             </tr>
         </thead>
         <tbody>
-        {% for sub_category in sub_categories %}
+            {% for sub_category in sub_categories %}
             <tr>
                 <td>{{ sub_category.name }}</td>
                 <td>{{ sub_category.category.name }}</td>
 
-                <td id=btn>
-                    <a class="btn btn-outline-info" href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">Afficher</a>
-                    <a class="btn btn-warning" href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">Modifier</a>
+                <td id="btn">
+                    <a class="btn btn-outline-info"
+                        href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">Afficher</a>
+                    <a class="btn btn-warning"
+                        href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">Modifier</a>
                 </td>
             </tr>
-        {% else %}
+            {% else %}
             <tr>
                 <td colspan="3">no records found</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 

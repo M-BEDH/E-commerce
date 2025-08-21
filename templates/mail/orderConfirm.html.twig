@@ -8,14 +8,13 @@
 	<div>Commande du :
 		{{ order.createdAt | date('d-m-y H:i')}}</div>
 
-		  {# <div>Détails de la commande : 
+	{# <div>Détails de la commande :
 		{{orderProduct.product.name}}
-		</div>   #}
-	
-			<p>Frais de livraison :
-				{{ order.city.shippingCost}}€</p>
-	
-		
-		<h1>Total à payer :
-				{{ order.totalPrice + order.city.shippingCost }}€</h1>
-		
+	</div> #}
+
+	<p>Frais de livraison :
+		{{ order.city.shippingCost}}€</p>
+
+
+	<h1>Total à payer :
+		{{ order.totalPrice + order.city.shippingCost }}€</h1>

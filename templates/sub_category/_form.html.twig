@@ -1,17 +1,17 @@
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/category.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 {% endblock %}
 
-<div class="container containerRegister"> 
+<div class="container containerRegister">
 
-{{ form_start(form) }}
-<label for="">Nom de la sous catégorie</label>
+    {{ form_start(form) }}
+    <label for="">Nom de la sous catégorie</label>
     {{ form_widget(form.name, {attr:{'class': 'form form-control'}}) }}
     <label for="">Catégorie</label>
     {{ form_widget(form.category, {attr:{'class': 'form form-control'}}) }}
     <button class="btn btn-primary fw-bold">{{ button_label|default('Enregistrer') }}</button>
-{{ form_end(form) }}
+    {{ form_end(form) }}
 
-<div>
+    <div>

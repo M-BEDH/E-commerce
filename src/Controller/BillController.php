@@ -20,12 +20,12 @@ final class BillController extends AbstractController
         $pdfOptions->set('defaultFont', 'Arial');
         $dompPdf = new DomPdf();
         $html = $this->renderView('bill/index.html.twig', [
-            'order'=>$order,
+            'order' => $order,
         ]);
         $dompPdf->loadHtml($html);
         $dompPdf->render();
-        $dompPdf->stream('bill-' .$order->getId().'.pdf', [
-            'Attachment'=>false,
+        $dompPdf->stream('bill-' . $order->getId() . '.pdf', [
+            'Attachment' => false,
         ]);
 
         return new Response('', 200, [

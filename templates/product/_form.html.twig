@@ -1,13 +1,13 @@
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 {% endblock %}
 
 
-<div class="containerForm containerRegister"> 
+<div class="containerForm containerRegister">
 
-{{ form_start(form) }}
-<label for="">Nom du produit</label>
+    {{ form_start(form) }}
+    <label for="">Nom du produit</label>
     {{ form_widget(form.name, {attr:{'class': 'form form-control'}}) }}
 
     <label for="">Description</label>
@@ -16,10 +16,10 @@
     <label for="">Prix</label>
     {{ form_widget(form.price, {attr:{'class': 'form form-control'}}) }}
 
-{% if button_label !='Enregistrer' %}
-     <label for="">Stock</label>
+    {% if button_label !='Enregistrer' %}
+    <label for="">Stock</label>
     {{ form_widget(form.stock, {attr:{'class': 'form form-control'}}) }}
-  {% endif %}  
+    {% endif %}
 
     <label for="">Sous-catégorie</label>
     {{ form_widget(form.SubCategory, {attr:{'class': 'form form-control'}}) }}
@@ -28,6 +28,6 @@
     {{ form_widget(form.image, {attr:{'class': 'form'}}) }}
 
     <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
-{{ form_end(form) }}
+    {{ form_end(form) }}
 
-<div>
+    <div>

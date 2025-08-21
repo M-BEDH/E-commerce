@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ville{% endblock %}
+{% block title %}show city{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -29,12 +29,10 @@
         </tbody>
     </table>
 
-<div id="btn">
-    <a class="btn btn-outline-secondary" href="{{ path('app_city_index') }}">back to list</a>
-
-    <a class="btn btn-success" href="{{ path('app_city_edit', {'id': city.id}) }}">modifier</a>
-
+    <a class="btn btn-success" href="{{ path('app_city_edit', {'id': city.id}) }}">Modifier</a>
     {{ include('city/_delete_form.html.twig') }}
-    </div>
-    </div>
+    <a class="btn btn-outline-secondary" style="font-weight: bold;" style="font-weight: bold;"
+        href="{{ path('app_city_index') }}">back to list</a>
+
+</div>
 {% endblock %}

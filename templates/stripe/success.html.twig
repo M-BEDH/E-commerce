@@ -3,11 +3,15 @@
 {% block title %}Success{% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<h1> Votre paiement a bien été effectué, votre commande est validée !</h1>
+<h2> Votre paiement a bien été effectué </h2>
+	<p class="text-success" style="text-align: center; font-weight: bold; font-size: 28px;">
+	Votre commande est validée !
+	</p>
+
 
 {% endblock %}

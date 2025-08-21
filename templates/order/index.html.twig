@@ -3,91 +3,90 @@
 {% block title %}Commande{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+<link rel="stylesheet" href="{{ asset('css/category.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div>
-             <h1 class="mt-4 m-b-4">Commande</h1>
-            
+<div class="container">
+    <div class="row">
+        <div>
+            <h1 class="mt-4 m-b-4">Commande</h1>
+
             {{ form_start(form) }}
-                <input class="btn-outline-primary inputOrder" type="submit" value="Continuer" data-turbo="false">
+            <input class="btn-outline-primary inputOrder" type="submit" value="Continuer" data-turbo="false">
             {{ form_end(form)}}
 
-            </div>
-            <div class="col-5">
-               <span class="mb-2">Montant à payer :</span>
-                  <h3>
-                   <span id="card-price">{{total}}</span>€ </h3>
-
-                <span>Frais de livraison :</span>
-                  <h3> <span id="shippingCost"></span>€ </h3>
-
-                <span>Total à payer : </span>
-                  <h3> <span class="total-price"> </span>€ </h3>
-            </div>
         </div>
-       
+        <div class="col-5">
+            <span class="mb-2">Montant à payer :</span>
+            <h3>
+                <span id="card-price">{{total}}</span>€
+            </h3>
+
+            <span>Frais de livraison :</span>
+            <h3> <span id="shippingCost"></span>€ </h3>
+
+            <span>Total à payer : </span>
+            <h3> <span class="total-price"> </span>€ </h3>
+        </div>
     </div>
 
-    <script src="http://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
-    <script>
-    $(document).ready(function() {
+</div>
+
+<script src="http://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
         // alert('jquery chargé')
         const citySelector = $('#order_city'); // selectionne l'element html qui à pour id order_city on la stock dans la const citySelector
-        
+
         const cityValue = citySelector.val(); // recupere la valeur actuelle de citySelector (le select - liste deroulante) la stock dans la const cityValue
-        
+
         const url = `/city/${cityValue}/shipping/cost`;   ///// probleme ici avec localhost ?? 
 
 
         //requete Ajax
-        function ajaxRequest(url) 
-        {
+        function ajaxRequest(url) {
 
-        $.ajax
-        ({
-            url:url,
-            type:'GET',
-            success:function(response) {
-             
-             const newResponse = JSON.parse(response)
-             if(parseInt(newResponse.status) === 200)
-            {
+            $.ajax
+                ({
+                    url: url,
+                    type: 'GET',
+                    success: function (response) {
 
-                $("#shippingCost").text(newResponse.content)
-                const cardPrice = parseInt($('#card-price').text());
-                const shippingCost = parseInt($('#shippingCost').text());
+                        const newResponse = JSON.parse(response)
+                        if (parseInt(newResponse.status) === 200) {
 
-                $('.total-price').text(cardPrice + shippingCost); // calcul du prix total pour la premiere ville (url)
-            }
-               },
+                            $("#shippingCost").text(newResponse.content)
+                            const cardPrice = parseInt($('#card-price').text());
+                            const shippingCost = parseInt($('#shippingCost').text());
 
-            error: function(xhr,status,error)
-                {
-                console.error('Erreur Ajax',error);
-                }           
-            }) 
-            
-            }
+                            $('.total-price').text(cardPrice + shippingCost); // calcul du prix total pour la premiere ville (url)
+                        }
+                    },
 
-                 ajaxRequest(url)  // appel de la requete pour afficher prix des produit et prix des frais de port
+                    error: function (xhr, status, error) {
+                        console.error('Erreur Ajax', error);
+                    }
+                })
+
+        }
+
+        ajaxRequest(url)  // appel de la requete pour afficher prix des produit et prix des frais de port
 
 
-// nouvel URL pour les differentes villes --
-                 citySelector.on('change', function() {
-                    const newCityValue = $(this).val();
-                    const newUrl = `/city/${newCityValue}/shipping/cost`;
+        // nouvel URL pour les differentes villes --
+        citySelector.on('change', function () {
+            const newCityValue = $(this).val();
+            const newUrl = `/city/${newCityValue}/shipping/cost`;
 
-                    ajaxRequest(newUrl) //  rappel de la requette ajax avec newUrl et donc ajoustement du prix total
+            ajaxRequest(newUrl) //  rappel de la requette ajax avec newUrl et donc ajoustement du prix total
         });
     })
 
-    </script>
+</script>
 
 {% endblock %}

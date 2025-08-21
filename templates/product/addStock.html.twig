@@ -2,21 +2,21 @@
 {% block title %}Ajouter au stock {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 
 {% block body %}
 <div class="container">
-   <h1 class="text-center mt-5 mb-4">Ajouter du stock pour : {{ product.name }}</h1>
+  <h1 class="text-center mt-5 mb-4">Ajouter du stock pour : {{ product.name }}</h1>
 
-   {{ include('layouts/_flash_message.html.twig') }}
+  {{ include('layouts/_flash_message.html.twig') }}
 
-      {{ form_start(form) }}
-      {{ form_row(form.quantity, {'label': 'Quantité à ajouter', 'attr': {'class': 'form-control'}}) }}
-        <input type="submit" class="btn btn-info">
-        {{ form_end(form) }}
+  {{ form_start(form) }}
+  {{ form_row(form.quantity, {'label': 'Quantité à ajouter', 'attr': {'class': 'form-control'}}) }}
+  <input type="submit" class="btn btn-primary">
+  {{ form_end(form) }}
 
 </div>
- {% endblock %}
+{% endblock %}
