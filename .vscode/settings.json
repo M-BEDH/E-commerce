@@ -1,7 +1,0 @@
-{
-    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
-    "workbench.settings.useSplitJSON": true
-}
-
-  "eslint.experimental.useFlatConfig": true,
