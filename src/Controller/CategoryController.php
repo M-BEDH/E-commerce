@@ -19,14 +19,14 @@ final class CategoryController extends AbstractController
     {
         // Récupération de toutes les catégories depuis le repository
         $categories = $categoryRepo->findAll();
-        
+
         // Envoi des catégories à la vue Twig
         return $this->render('category/category.html.twig', [
             'categories' => $categories
         ]);
     }
 
-#region add
+    #region add
 
     // Route pour créer une nouvelle catégorie
     #[Route('/category/new', name: 'app_category_new')]
@@ -44,7 +44,7 @@ final class CategoryController extends AbstractController
             // Enregistre la nouvelle catégorie en BDD
             $entityManager->persist($category);
             $entityManager->flush();
-         
+
             // Message flash de confirmation
             $this->addFlash('info', 'Categorie créée avec succès !');
 
@@ -57,11 +57,11 @@ final class CategoryController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-#endregion
+    #endregion
 
 
- 
-#region edit
+
+    #region edit
 
     // Route pour modifier une catégorie existante
     #[Route('/category/{id}/update', name: 'app_category_update')]
@@ -74,7 +74,7 @@ final class CategoryController extends AbstractController
         $form = $this->createForm(CategoryFromType::class, $category);
 
         // Traitement de la requête
-        $form->handleRequest($request);     
+        $form->handleRequest($request);
 
         // Si le formulaire est soumis et valide, on enregistre les modifications
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,9 +94,9 @@ final class CategoryController extends AbstractController
     }
     #endregion
 
-   
 
-   #region delete
+
+    #region delete
 
     // Route pour supprimer une catégorie
     #[Route('/category/delete/{id}', name: 'app_category_delete')]
@@ -108,10 +108,10 @@ final class CategoryController extends AbstractController
         // Suppression de la catégorie
         $entityManager->remove($category);
         $entityManager->flush();
-            
+
         // Message flash pour confirmer la suppression
-        $this->addFlash('danger','Suppression réussie !');
-            
+        $this->addFlash('danger', 'Suppression réussie !');
+
         // Redirection vers la liste
         return $this->redirectToRoute('app_category');
     }
