@@ -115,6 +115,12 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Commandes</a>
 					<ul class='dropdown-menu'>
+
+						<li>
+							<a class="dropdown-item text-secondary" href="{{ path('app_orders_show_all') }}">Toutes les
+								commandes</a>
+						</li>
+
 						<li><a class="dropdown-item text-secondary"
 								href="{{ path('app_orders_show',{'type':'is-completed'}) }}">
 								Commandes livrées </a>
@@ -155,9 +161,14 @@
 					<a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
 				</li>
 				{% endif %}
-
-
 			</ul>
+
+			<form class="d-flex " method="post" action="{{ path('app_search_engine')}}">
+				<input name="word" class="form-control me-2 navSearch" type="search" placeholder="Search"
+					aria-label="Search" />
+				<button data-turbo=false class="btn btn-outline-light" type="submit">Search</button>
+			</form>
+
 		</div>
 
 	</div>
