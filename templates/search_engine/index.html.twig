@@ -19,11 +19,10 @@
 
     <div class="card">
 
-         <img src="{{asset('uploads/images/' ~ product.image)}}" alt="">
+        <img src="{{asset('uploads/images/' ~ product.image)}}" alt="">
 
-        <a href="{{ path('app_home_product_show', {'id': product.id} )}}"> </a>
-        
         <div class="card-body">
+            <a href="{{ path('app_home_product_show', {'id': product.id} )}}" class="btn btn-outline-primary"> voir le produit </a>
 
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.price }} €</p>

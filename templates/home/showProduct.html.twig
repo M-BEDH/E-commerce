@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}voir le produit{% endblock %}
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}"
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -33,7 +34,7 @@
     </div>
   </div>
 
-  <h2 class="mt-5">Dernier produits ajoutés</h2>
+  <h2 class="mt-5">Derniers produits ajoutés</h2>
 
   <div class="row">
     {% for product in products %}
