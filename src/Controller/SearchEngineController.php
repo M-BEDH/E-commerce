@@ -10,12 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class SearchEngineController extends AbstractController
 {
-    #[Route('/search/engine', name: 'app_search_engine', methods: ['POST', 'GET'])]
+    #[Route('/search/engine', name: 'app_search_engine', methods: ['POST'])]
     public function index(Request $request, ProductRepository $productRepo): Response
     {
         if ($request->isMethod('GET')){
             //recupere les données de la requete
-            $data = $request->request->all();
+            $data = $request->query->all();
             //recupere le mot-cle de la recherche
             $word = $data['word'];
             // dd($word);
