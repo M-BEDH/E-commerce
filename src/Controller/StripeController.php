@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use App\Manager\OrderManager;
 use Symfony\Component\Mime\Email;
 use App\Repository\OrderRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\Mailer;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ final class StripeController extends AbstractController
     }
 
     #[Route('/stripe/notify', name: "app_stripe_notify")]
-    public function stripeNotify(Request $request, OrderRepository $orderRepo, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+    public function stripeNotify(Request $request, OrderRepository $orderRepo, MailerInterface $mailer, EntityManagerInterface $entityManager, OrderManager $om): Response
     {
 
         Stripe::setApiKey($_SERVER['STRIPE_SECRET_KEY']);
@@ -80,10 +81,12 @@ final class StripeController extends AbstractController
                 $orderId = $paymentIntent->metadata->orderid;
                 $order = $orderRepo->find($orderId);
                 $order->setIsPaymentCompleted(1);
+                
+                $om->stockUpdate($order);
+                
                 $entityManager->flush();
 
                         //  file_put_contents($fileName, $orderId);  
-
 
                 $order = $orderRepo->findOneBy(['id' => $orderId]);
                 $html = $this->renderView('mail/orderConfirm.html.twig', [
@@ -101,7 +104,7 @@ final class StripeController extends AbstractController
                 $paymentMethod = $event->data->object;
                 break;
             default :
-                        // 🔎 log tous les autres événements
+                        //  log tous les autres événements
                         // $fileName = 'stripe-event-' . uniqid() . '.txt';
                         // file_put_contents($fileName, "Event reçu : " . $event->type);
 

@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Service\Cart;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
+use App\Manager\OrderManager;
 use App\Service\StripePayment;
 use Symfony\Component\Mime\Email;
 use App\Repository\OrderRepository;
@@ -14,13 +15,13 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -36,7 +37,8 @@ final class OrderController extends AbstractController
         Request $request,
         SessionInterface $session,
         EntityManagerInterface $entityManager,
-        Cart $cart
+        Cart $cart,
+        OrderManager $om
     ): Response {
         $data = $cart->getCart($session);
         $order = new Order();
@@ -63,6 +65,7 @@ final class OrderController extends AbstractController
                     $orderProduct->setQuantity($value['quantity']);
                     $entityManager->persist($orderProduct);
                     $entityManager->flush();
+
                 }
                 if ($order->isPayOnDelivery()) {
 
@@ -76,6 +79,9 @@ final class OrderController extends AbstractController
                         ->subject('Confirmation de réception de commande')
                         ->html($html);
                     $this->mailer->send($email);
+                    
+                    $om->stockUpdate($order);
+                    $entityManager->flush();
 
                     return $this->redirectToRoute('order_message');
                 }

@@ -163,7 +163,7 @@
 				{% endif %}
 			</ul>
 
-			<form class="d-flex " method="post" action="{{ path('app_search_engine')}}">
+			<form class="d-flex " method="GET" action="{{ path('app_search_engine')}}">
 				<input name="word" class="form-control me-2 navSearch" type="search" placeholder="Search"
 					aria-label="Search" />
 				<button data-turbo=false class="btn btn-outline-light" type="submit">Search</button>

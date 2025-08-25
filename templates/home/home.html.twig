@@ -31,11 +31,16 @@
 
       {% if product.stock > 0 %}
       <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
+
+       {% if product.stock >= 1 %}
       <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'id': product.id})}}">Ajouter au panier</a>
+
       {# {% elseif product.stock > 0 %} #}
       {# <span class="badge bg-warning">Derniers exemplaires : {{ product.stock }}</span> #}
       {% else %}
       <span class="badge bg-danger">Rupture de stock</span>
+      {% endif %}
+
       {% endif %}
     </div>
   </div>

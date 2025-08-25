@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class SearchEngineController extends AbstractController
 {
-    #[Route('/search/engine', name: 'app_search_engine', methods: ['POST'])]
+    #[Route('/search/engine', name: 'app_search_engine', methods: ['GET','POST'])]
     public function index(Request $request, ProductRepository $productRepo): Response
     {
         if ($request->isMethod('GET')){
@@ -18,9 +18,15 @@ final class SearchEngineController extends AbstractController
             $data = $request->query->all();
             //recupere le mot-cle de la recherche
             $word = $data['word'];
-            // dd($word);
-            //appelle la method searchEngine du repo
+            
+            //appelle la method searchEngine du repo productRepository
             $results = $productRepo->searchEngine($word);
+// dd($results);
+            
+        }
+        if ($results == []) {  
+            $this->addFlash('warning', 'Ce produit n\'existe pas !');
+              return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('search_engine/index.html.twig', [
