@@ -148,13 +148,13 @@ final class OrderController extends AbstractController
 
     #region is completed order
     #[Route('/editor/order/{id}/is-completed/update', name: 'app_orders_is-completed-update')]
-    public function isCompletedUpdate($id, OrderRepository $orderRepository, EntityManagerInterface $entityManager)
+    public function isCompletedUpdate(Request $request, $id, OrderRepository $orderRepository, EntityManagerInterface $entityManager)
     {
         $order = $orderRepository->find($id);
         $order->setIsCompleted(true);
         $entityManager->flush();
         $this->addFlash('success', 'Modification effectuée');
-        return $this->redirectToRoute('app_orders_show', ["type" => "is-completed"]);
+        return $this->redirectToRoute($request->headers->get('referer'));
     }
 
     #[
