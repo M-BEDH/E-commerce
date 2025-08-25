@@ -19,23 +19,30 @@
       <th>Prix</th>
       <th>Quantité</th>
       <th>Prix total</th>
-      <th> Ajouter une quantité</th>
-      <th> Supprimer une quantité</th>
+      <th>Action</th>
     </tr>
     {% for item in items %}
     <tr>
       <td>{{item.product.name}}</td>
       <td>{{item.product.price}}</td>
-      <td>{{item.quantity}} </td>
-      <td>{{item.product.price * item.quantity}} €</td>
-
-       <td><a href="{{ path('app_shopping_cart_add', {'id': item.product.id}) }}"
-          class='text-success' style="font-weight: bold; font-size: 1.1rem; text-decoration: none;"> + 1 </a>
-          </td>
 
       <td><a href="{{ path('app_shopping_cart_delete', {'id': item.product.id}) }}"
-          class='text-danger' style="font-weight: bold; font-size: 1.1rem; text-decoration: none;"> - 1 </a>
+          class='text-danger' style="font-weight: bold; font-size: 1.2rem; text-decoration: none;"> - </a>
+
+          {{item.quantity}} 
+
+          <a href="{{ path('app_shopping_cart_add', {'id': item.product.id}) }}"
+          class='text-success' style="font-weight: bold; font-size: 1.2rem; text-decoration: none;"> + </a>
       </td>
+
+      <td>{{item.product.price * item.quantity}} €</td>
+
+       <td>
+       <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article du panier ?');" href="{{ path('app_cart_delete_product_id', {'id': item.product.id}) }}"
+          class='text-danger' style="text-decoration: none;"> Supprimer du panier  </a>
+          </td>
+
+      
 
          
 
@@ -51,7 +58,7 @@
 
   <div>
     <a data-turbo="false" href="{{ path('app_order')}}" class="btn btn-primary">Valider la commande</a>
-    <a href="{{ path('app_cart_delete') }}" class="btn btn-outline-danger">Supprimer le panier</a>
+    <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer tout le panier ?');" href="{{ path('app_cart_delete') }}" class="btn btn-outline-danger">Supprimer le panier</a>
   </div>
   {% endif %}
 </div>

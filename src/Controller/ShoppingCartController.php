@@ -49,7 +49,7 @@ final class ShoppingCartController extends AbstractController
 
       if($cart[$id] > $stock ) {
         $this->addFlash('warning', 'Pas assez de stock');
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_shopping_cart');
         
       } 
             $session->set('cart', $cart); // met à jour le panier dans la session
@@ -66,7 +66,7 @@ final class ShoppingCartController extends AbstractController
     {
 
         $cart = $session->get('cart', []);
-        
+
              if(!empty($cart[$id])) {
                 if($cart[$id] > 1 ){
                     $cart[$id] -- ;
@@ -76,14 +76,27 @@ final class ShoppingCartController extends AbstractController
                 $session->set('cart', $cart); // met à jour le panier dans la session
         }
 
-
-
         // $session->set('cart', $cart); // met à jour le panier dans la session
         
          $this->addFlash('danger', 'Produit supprimé !');
         return $this->redirectToRoute('app_shopping_cart'); // 
 
     }
+
+
+       #[Route('/delete/cart/{id}', name: 'app_cart_delete_product_id', methods: ['GET'])]
+public function deleteCartProduct(int $id, SessionInterface $session): Response
+{
+      $cart = $session->get('cart', []);
+
+        if( !empty($cart[$id])) { 
+             unset($cart[$id]);
+            $session->set('cart', $cart); 
+ 
+        }
+    return $this->redirectToRoute('app_shopping_cart');
+
+}
 
 
     #[Route('/delete/cart', name: 'app_cart_delete', methods: ['GET'])]
