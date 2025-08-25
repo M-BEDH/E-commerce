@@ -19,16 +19,27 @@
       <th>Prix</th>
       <th>Quantité</th>
       <th>Prix total</th>
-      <th>Action</th>
+      <th> Ajouter une quantité</th>
+      <th> Supprimer une quantité</th>
     </tr>
     {% for item in items %}
     <tr>
       <td>{{item.product.name}}</td>
       <td>{{item.product.price}}</td>
-      <td>{{item.quantity}}</td>
+      <td>{{item.quantity}} </td>
       <td>{{item.product.price * item.quantity}} €</td>
+
+       <td><a href="{{ path('app_shopping_cart_add', {'id': item.product.id}) }}"
+          class='text-success' style="font-weight: bold; font-size: 1.1rem; text-decoration: none;"> + 1 </a>
+          </td>
+
       <td><a href="{{ path('app_shopping_cart_delete', {'id': item.product.id}) }}"
-          class='text-danger text-decoration-none'>Supprimer du panier</a></td>
+          class='text-danger' style="font-weight: bold; font-size: 1.1rem; text-decoration: none;"> - 1 </a>
+      </td>
+
+         
+
+
     </tr>
     {% else %}
     <p class='text-danger' style="font-weight: bold; font-size: 20px;">Votre panier est vide</p>

@@ -38,6 +38,7 @@ final class OrderController extends AbstractController
         SessionInterface $session,
         EntityManagerInterface $entityManager,
         Cart $cart,
+        OrderRepository $orderRepo,
         OrderManager $om
     ): Response {
         $data = $cart->getCart($session);
@@ -79,8 +80,29 @@ final class OrderController extends AbstractController
                         ->subject('Confirmation de réception de commande')
                         ->html($html);
                     $this->mailer->send($email);
-                    
-                    $om->stockUpdate($order);
+
+
+                    // dd($order->getId());
+                    // $orderId = $order->getId();
+                    // $order = $orderRepo->find($orderid);
+
+
+                    // dd($order->getOrderProducts()->first());
+
+        // foreach($order->getOrderProducts() as $orderProduct) {
+        //     $quantity = $orderProduct->getQuantity();
+        //     dd($quantity);
+        //     $product = $orderProduct->getProduct();
+        //     $stock = $product->getStock();
+
+        //     $updateStock = $stock - $quantity;
+        //     $product->setStock($updateStock);
+        // };
+                    // dd($order);
+
+                    $om->stockUpdate($order); 
+            
+
                     $entityManager->flush();
 
                     return $this->redirectToRoute('order_message');
