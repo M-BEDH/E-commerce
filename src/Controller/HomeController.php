@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Entity\SubCategory;
 use App\Repository\ProductRepository;
 use App\Repository\CategoriesRepository;
 use App\Repository\SubCategoryRepository;
@@ -18,6 +17,10 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(ProductRepository $productRepository, CategoriesRepository $categoriesRepository, Request $request, PaginatorInterface $paginator): Response
     {
+
+        // $search = $productRepository->searchEngine('cb');
+        // dd($search);
+
         $data = $productRepository->findby([], ['id' => "DESC"]);
         $products = $paginator->paginate(
             $data,
@@ -35,13 +38,14 @@ final class HomeController extends AbstractController
 
 
     #[Route('/product/{id}/show', name: 'app_home_product_show', methods: ['GET'])]
-    public function showProduct(Product $product, ProductRepository $productRepository): Response
+    public function showProduct(Product $product, ProductRepository $productRepository, CategoriesRepository $categoriesRepository): Response
     {
         $lastProductAdd = $productRepository->findBy([], ['id' => 'DESC'], 5);
 
         return $this->render('home/showProduct.html.twig', [
             'product' => $product,
             'products' => $lastProductAdd,
+            'categories'=>$categoriesRepository->findAll()
         ]);
     }
 

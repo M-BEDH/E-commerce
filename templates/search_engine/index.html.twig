@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Result Recherche{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/category.css') }}">
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
+{% endblock %}
+
+{% block body %}
+
+
+<h1>Resultat de la recherche du mot {{ word }}</h1>
+
+<div class="container">
+    {% for product in products %}
+
+    <div class="card">
+
+        <img src="{{asset('uploads/images/' ~ product.image)}}" alt="">
+
+        <div class="card-body">
+            <a href="{{ path('app_home_product_show', {'id': product.id} )}}" class="btn btn-outline-primary"> voir le produit </a>
+
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.price }} €</p>
+            <p class="card-text">{{ product.description | slice(0,20) }}...</p>
+
+            {% if product.stock > 0 %}
+            <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
+            <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'id': product.id})}}">Ajouter au
+                panier</a>
+            {% else %}
+            <span class="badge bg-danger">Rupture de stock</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
