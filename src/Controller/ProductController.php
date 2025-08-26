@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 #[Route('/editor/product')]
 final class ProductController extends AbstractController
 {
+    // Affiche la liste des produits
     #[Route(name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
@@ -29,8 +30,7 @@ final class ProductController extends AbstractController
         ]);
     }
 
-
-#region add
+    // Création d'un nouveau produit
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
@@ -39,42 +39,29 @@ final class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // premet de recuperer l'image unploadée
+            // Gestion de l'image uploadée
             $image = $form->get('image')->getData();
-            
-            //on verifie que l'image existe
-            if($image) {
-                // on recupere le nom sans l'extention jpg, png ......
+            if ($image) {
                 $originalImageName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-
-                 // on slugg le nom pour remplacer accent, espaces, ... par un tiret (-)
                 $saveImageName = $slugger->slug($originalImageName);
-            
-                // ajoute un id unique et donc l'extention
                 $newFileImageName = $saveImageName.'_'.uniqid().'.'.$image->guessExtension();
 
-                try { //  on deplace l'image dans le dossier defini dans le parametres im_ages directory qui est dans yaml
-                    // le parametre images_directory est defini dans config/services.yaml
+                try {
                     $image->move(
                         $this->getParameter('images_directory'),
-                        $newFileImageName);
-
-                       
+                        $newFileImageName
+                    );
                 } catch (FileException $exception) {
-                    
-                     // messages d'erreurs si besoin
-                } 
-
-                 // on on sauvegarde le nom du fichier dans l'entity
-                    $product->setImage($newFileImageName);
-                
+                    // Gestion d'erreur upload image
+                }
+                $product->setImage($newFileImageName);
             }
 
+            // Persiste le produit
             $entityManager->persist($product);
             $entityManager->flush();
-            
-            // On crée un historique de l'ajout des produits
+
+            // Historique d'ajout de stock
             $stockHistory = new AddProductHistory();
             $stockHistory->setQuantity($product->getStock());
             $stockHistory->setProduct($product);
@@ -91,55 +78,44 @@ final class ProductController extends AbstractController
             'form' => $form,
         ]);
     }
-#endregion
 
-
-
-#region edit
-    #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
+    // Edition d'un produit existant
+    #[Route('/{id}-{slug}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProductUpdateType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-               
+            // Gestion de l'image uploadée
             $image = $form->get('image')->getData();
-                if($image) {
+            if ($image) {
                 $originalImageName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 $saveImageName = $slugger->slug($originalImageName);
                 $newFileImageName = $saveImageName.'_'.uniqid().'.'.$image->guessExtension();
-                try { 
-                 
+                try {
                     $image->move(
                         $this->getParameter('images_directory'),
-                        $newFileImageName);
-
+                        $newFileImageName
+                    );
                 } catch (FileException $exception) {
-                   
-                } 
-                    $product->setImage($newFileImageName);
+                    // Gestion d'erreur upload image
+                }
+                $product->setImage($newFileImageName);
             }
-               $entityManager->flush();
+            $entityManager->flush();
 
             $this->addFlash('success', 'Produit modifié avec succès !');
-              return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 
-          return $this->render('product/edit.html.twig', [
+        return $this->render('product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
         ]);
+    }
 
-        }
-
-      
-    
-#endregion
-
-
-
-#region delete
+    // Suppression d'un produit
     #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
@@ -148,81 +124,62 @@ final class ProductController extends AbstractController
             $entityManager->flush();
         }
 
-         $this->addFlash('danger', 'Produit supprimé avec succès !');
+        $this->addFlash('danger', 'Produit supprimé avec succès !');
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
-#endregion
 
-#region addProductHistory
-#[Route('add/product/{id}', name: 'app_add_product_stock', methods: ['GET', 'POST'])]
-    public function stockAdd($id, Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository) : Response 
+    // Ajout de stock à un produit (historique)
+    #[Route('add/product/{id}', name: 'app_add_product_stock', methods: ['GET', 'POST'])]
+    public function stockAdd($id, Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
     {
         $stockAdd = new AddProductHistory();
         $form = $this->createForm(AddProductHistoryType::class, $stockAdd);
-        $form->handleRequest($request); 
+        $form->handleRequest($request);
         $product = $productRepository->find($id);
 
-          if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($stockAdd->getQuantity() > 0) {
+                $newQuantity = $product->getStock() + $stockAdd->getQuantity();
+                $product->setStock($newQuantity);
 
-            if($stockAdd->getQuantity() > 0) {
-              $newQuantity = $product->getStock() + $stockAdd->getQuantity();
-              $product-> setStock($newQuantity);
+                $stockAdd->setCreatedAt(new DateTimeImmutable());
+                $stockAdd->setProduct($product);
+                $entityManager->persist($stockAdd);
+                $entityManager->flush();
 
-            // $dateType = new DatePoint();
-            $stockAdd->setCreatedAt(new DateTimeImmutable());
-            $stockAdd->setProduct($product);
-            $entityManager->persist($stockAdd);
-            $entityManager->flush();
-
-              $this->addFlash('success', 'Stock ajouté avec succès !');
+                $this->addFlash('success', 'Stock ajouté avec succès !');
                 return $this->redirectToRoute('app_product_index');
             } else {
                 $this->addFlash('danger', 'La quantité doit être supérieure à 0 !');
                 return $this->redirectToRoute('app_add_product_stock', ['id' => $product->getId()]);
-                        
-            }}
-
+            }
+        }
 
         return $this->render('product/addStock.html.twig', [
             'form' => $form->createView(),
             'product' => $product,
             'stockAdd' => $stockAdd,
         ]);
-
-        $this->addFlash('success', 'Le stock du produit à été modifié !');
-        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
-    #endregion
 
-
-#regionShowProductsHistory
-    #[Route('/add/product/{id}/stock/history', name: 'app_product_stock_add_history', methods: ['GET'])] 
+    // Affiche l'historique d'ajout de stock pour un produit
+    #[Route('/add/product/{id}/stock/history', name: 'app_product_stock_add_history', methods: ['GET'])]
     public function showStockHistory($id, ProductRepository $productRepository, AddProductHistoryRepository $addProductHistoryRepository): Response
-
     {
         $product = $productRepository->find($id);
-        $productAddHistory = $addProductHistoryRepository->findBy(['product' =>$product],['id' => 'DESC']);
-        
-        return $this->render('product/stockHistory.html.twig',[
-            'productsAdded'=>$productAddHistory
+        $productAddHistory = $addProductHistoryRepository->findBy(['product' => $product], ['id' => 'DESC']);
+
+        return $this->render('product/stockHistory.html.twig', [
+            'productsAdded' => $productAddHistory
         ]);
     }
-#endregion
 
-
-
-
-
-#region show
+    // Affiche le détail d'un produit
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
-
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
     }
-#endregion
-
-
 }

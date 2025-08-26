@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250822062118 extends AbstractMigration
+final class Version20250826163920 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,14 @@ final class Version20250822062118 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE `order` ADD is_payment_completed TINYINT(1) NOT NULL');
+        $this->addSql('DROP INDEX UNIQ_D34A04AD989D9B62 ON product');
+        $this->addSql('ALTER TABLE product CHANGE slug slug VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE `order` DROP is_payment_completed');
+        $this->addSql('ALTER TABLE product CHANGE slug slug VARCHAR(100) NOT NULL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_D34A04AD989D9B62 ON product (slug)');
     }
 }

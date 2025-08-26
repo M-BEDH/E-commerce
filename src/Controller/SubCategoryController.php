@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Entity\SubCategory;
 use App\Form\SubCategoryType;
-use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\SubCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 #[Route('/admin/sub/category')]
@@ -25,7 +26,7 @@ final class SubCategoryController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sub_category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $subCategory = new SubCategory();
         $form = $this->createForm(SubCategoryType::class, $subCategory);

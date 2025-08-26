@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Gedmo\Mapping\Annotation\Slug;
+
 use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,6 +19,9 @@ class Categories
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+    
+    #[ORM\Column(length: 100, unique: true)]
+    private ?string $slug = null;
 
     /**
      * @var Collection<int, SubCategory>
@@ -72,6 +77,18 @@ class Categories
                 $subCategory->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250820133550 extends AbstractMigration
+final class Version20250826162114 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,14 @@ final class Version20250820133550 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE `order` ADD is_payment_completed TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE sub_category ADD slug VARCHAR(100) NOT NULL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_BCE3F798989D9B62 ON sub_category (slug)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE `order` DROP is_payment_completed');
+        $this->addSql('DROP INDEX UNIQ_BCE3F798989D9B62 ON sub_category');
+        $this->addSql('ALTER TABLE sub_category DROP slug');
     }
 }

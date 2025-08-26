@@ -3,3 +3,11 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+category_show:
+    path: /categories/{id}-{slug}
+    controller: App\Controller\CategoryController::show
+
+entity_show:
+    path: /{entity}/{id}-{slug}
+    controller: App\Controller\EntityShowController::show
