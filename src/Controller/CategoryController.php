@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Form\CategoryFromType;
+use Gedmo\Mapping\Annotation\Slug;
 use App\Repository\CategoriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class CategoryController extends AbstractController
@@ -30,17 +32,21 @@ final class CategoryController extends AbstractController
 
     // Route pour créer une nouvelle catégorie
     #[Route('/category/new', name: 'app_category_new')]
-    public function newCategory(Request $request, EntityManagerInterface $entityManager): Response
+    public function newCategory(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slug): Response
     {
         // Création d'une nouvelle instance de Categories
         $category = new Categories();
-
+        $slug = new Slug();
         // Création du formulaire associé à l'entité
         $form = $this->createForm(CategoryFromType::class, $category);
         $form->handleRequest($request);
 
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $slug = $slug->slug($category->getName())->lower();
+            $category->setSlug($slug);
+
             // Enregistre la nouvelle catégorie en BDD
             $entityManager->persist($category);
             $entityManager->flush();
@@ -64,8 +70,8 @@ final class CategoryController extends AbstractController
     #region edit
 
     // Route pour modifier une catégorie existante
-    #[Route('/category/{id}/update', name: 'app_category_update')]
-    public function editCategory(Request $request, Categories $category, EntityManagerInterface $entityManager): Response
+    #[Route('/category/{slug}/update', name: 'app_category_update')]
+    public function editCategory(Request $request, Categories $category, EntityManagerInterface $entityManager, Slug $slug): Response
     {
         // $category = $entityManager->getRepository(Categories::class)->find($id); 
         // (Cette ligne est inutile ici car Symfony injecte déjà l'objet Categories correspondant à l'id)  --> grâce à param Converter
@@ -89,7 +95,9 @@ final class CategoryController extends AbstractController
 
         // Affichage du formulaire
         return $this->render('category/updateCategory.html.twig', [
+            'slug' => $slug->getSlug(),
             'form' => $form->createView(),
+            
         ]);
     }
     #endregion

@@ -21,7 +21,10 @@ services:
              -'..src/Entity/'
              -''../src/Kernel.php'
 
-    # app.cart:
+    App\EventListener\CategorySlugListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
     #     class: App\Services\Cart
     #     arguments: []
     # add more service definitions when explicit configuration is needed
