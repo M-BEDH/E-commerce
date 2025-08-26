@@ -89,15 +89,6 @@ final class OrderController extends AbstractController
 
                     // dd($order->getOrderProducts()->first());
 
-        // foreach($order->getOrderProducts() as $orderProduct) {
-        //     $quantity = $orderProduct->getQuantity();
-        //     dd($quantity);
-        //     $product = $orderProduct->getProduct();
-        //     $stock = $product->getStock();
-
-        //     $updateStock = $stock - $quantity;
-        //     $product->setStock($updateStock);
-        // };
                     // dd($order);
 
                     $om->stockUpdate($order); 

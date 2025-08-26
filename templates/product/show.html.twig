@@ -38,7 +38,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-warning" href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+    <a class="btn btn-warning" href="{{ path('app_product_edit', {'name': product.name}) }}">Modifier</a>
     {{ include('product/_delete_form.html.twig') }}
     <a class="btn btn-warning" style="background-color: #4caf50; border-color:#4caf50;"
         href="{{ path('app_product_stock_add_history', {'id': product.id}) }}">Historique
