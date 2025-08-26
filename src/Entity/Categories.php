@@ -21,7 +21,6 @@ class Categories
     private ?string $name = null;
     
     #[ORM\Column(length: 100, unique: true)]
-    #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug = null;
 
     /**

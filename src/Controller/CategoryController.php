@@ -44,9 +44,6 @@ final class CategoryController extends AbstractController
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $slug = $slug->slug($category->getName())->lower();
-            $category->setSlug($slug);
-
             // Enregistre la nouvelle catégorie en BDD
             $entityManager->persist($category);
             $entityManager->flush();
@@ -70,8 +67,8 @@ final class CategoryController extends AbstractController
     #region edit
 
     // Route pour modifier une catégorie existante
-    #[Route('/category/{slug}/update', name: 'app_category_update')]
-    public function editCategory(Request $request, Categories $category, EntityManagerInterface $entityManager, Slug $slug): Response
+    #[Route('/category/{id}{slug}/update', name: 'app_category_update')]
+    public function editCategory(Request $request, Categories $category, EntityManagerInterface $entityManager): Response
     {
         // $category = $entityManager->getRepository(Categories::class)->find($id); 
         // (Cette ligne est inutile ici car Symfony injecte déjà l'objet Categories correspondant à l'id)  --> grâce à param Converter
@@ -95,7 +92,6 @@ final class CategoryController extends AbstractController
 
         // Affichage du formulaire
         return $this->render('category/updateCategory.html.twig', [
-            'slug' => $slug->getSlug(),
             'form' => $form->createView(),
             
         ]);

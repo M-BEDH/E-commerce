@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\AddProductHistory;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Repository\AddProductHistoryRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**

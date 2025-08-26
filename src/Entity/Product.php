@@ -16,10 +16,10 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, unique:true)]  
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable:true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -28,7 +28,7 @@ class Product
     #[ORM\Column]
     private ?int $stock = null;
 
-    #[ORM\Column(length: 100, unique: true)]
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $slug = null;
 
     /**
@@ -72,7 +72,6 @@ class Product
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -84,7 +83,6 @@ class Product
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -96,7 +94,6 @@ class Product
     public function setPrice(int $price): static
     {
         $this->price = $price;
-
         return $this;
     }
 
@@ -113,14 +110,12 @@ class Product
         if (!$this->SubCategory->contains($subCategory)) {
             $this->SubCategory->add($subCategory);
         }
-
         return $this;
     }
 
     public function removeSubCategory(SubCategory $subCategory): static
     {
         $this->SubCategory->removeElement($subCategory);
-
         return $this;
     }
 
@@ -132,7 +127,6 @@ class Product
     public function setImage(?string $image): static
     {
         $this->image = $image;
-
         return $this;
     }
 
@@ -144,7 +138,6 @@ class Product
     public function setStock(int $stock): static
     {
         $this->stock = $stock;
-
         return $this;
     }
 
@@ -162,7 +155,6 @@ class Product
             $this->addProductHistories->add($addProductHistory);
             $addProductHistory->setProduct($this);
         }
-
         return $this;
     }
 
@@ -174,7 +166,6 @@ class Product
                 $addProductHistory->setProduct(null);
             }
         }
-
         return $this;
     }
 
@@ -192,7 +183,6 @@ class Product
             $this->orderProducts->add($orderProduct);
             $orderProduct->setProduct($this);
         }
-
         return $this;
     }
 
@@ -204,7 +194,6 @@ class Product
                 $orderProduct->setProduct(null);
             }
         }
-
         return $this;
     }
 
@@ -216,7 +205,6 @@ class Product
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
-
         return $this;
     }
 }

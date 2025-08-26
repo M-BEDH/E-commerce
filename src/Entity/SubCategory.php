@@ -22,6 +22,10 @@ class SubCategory
     #[ORM\JoinColumn(nullable: false)]
     private ?Categories $category = null;
 
+    
+    #[ORM\Column(length: 100, unique: true)]
+    private ?string $slug = null;
+
     /**
      * @var Collection<int, Product>
      */
@@ -85,6 +89,18 @@ class SubCategory
         if ($this->products->removeElement($product)) {
             $product->removeSubCategory($this);
         }
+
+        return $this;
+    }
+
+       public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }
