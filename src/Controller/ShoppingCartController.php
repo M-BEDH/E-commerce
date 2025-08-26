@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\Cart;
+use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -33,8 +34,10 @@ final class ShoppingCartController extends AbstractController
 
 
     #[Route('/add/shopping/cart/{id}', name: 'app_shopping_cart_add', methods: ['GET'])]
-    public function addProductCart(int $id, SessionInterface $session): Response
+    public function addProductCart(int $id, SessionInterface $session, Product $product ): Response
     {
+        $stock = $product->getStock();
+        // dd($stock);
 
         $cart = $session->get('cart', []);
 
@@ -43,11 +46,19 @@ final class ShoppingCartController extends AbstractController
         } else {
             $cart[$id]=1;
         }
-        $session->set('cart', $cart); // met à jour le panier dans la session
 
-        $this->addFlash('success', 'Produit ajouté');
+      if($cart[$id] > $stock ) {
+        $this->addFlash('warning', 'Pas assez de stock');
+        return $this->redirectToRoute('app_shopping_cart');
+        
+      } 
+            $session->set('cart', $cart); // met à jour le panier dans la session
+
+         $this->addFlash('success', 'Produit ajouté');
+       
         return $this->redirectToRoute('app_shopping_cart'); // redirige vers la page panier
     }
+
 
 
      #[Route('/delete/shopping/cart/{id}', name: 'app_shopping_cart_delete', methods: ['GET'])]
@@ -56,15 +67,36 @@ final class ShoppingCartController extends AbstractController
 
         $cart = $session->get('cart', []);
 
-        if( !empty($cart[$id])) { 
-            unset($cart[$id]);
+             if(!empty($cart[$id])) {
+                if($cart[$id] > 1 ){
+                    $cart[$id] -- ;
+                } else  {
+                 unset($cart[$id]);
+                }
+                $session->set('cart', $cart); // met à jour le panier dans la session
         }
-        $session->set('cart', $cart); // met à jour le panier dans la session
+
+        // $session->set('cart', $cart); // met à jour le panier dans la session
         
          $this->addFlash('danger', 'Produit supprimé !');
         return $this->redirectToRoute('app_shopping_cart'); // 
 
     }
+
+
+       #[Route('/delete/cart/{id}', name: 'app_cart_delete_product_id', methods: ['GET'])]
+public function deleteCartProduct(int $id, SessionInterface $session): Response
+{
+      $cart = $session->get('cart', []);
+
+        if( !empty($cart[$id])) { 
+             unset($cart[$id]);
+            $session->set('cart', $cart); 
+ 
+        }
+    return $this->redirectToRoute('app_shopping_cart');
+
+}
 
 
     #[Route('/delete/cart', name: 'app_cart_delete', methods: ['GET'])]
