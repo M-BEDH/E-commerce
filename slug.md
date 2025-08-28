@@ -10,3 +10,8 @@
 - new Slug à la création -> puis à ajouter à la route du new + PENSER AUX ROUTES du twig qui attendra {id} et {slug}
 
 - Créer un dossier dans src : EventListener puis fichier : SlugListener qui va permettre d'écouter et de créer directement les slugs
+
+
+ATTENTION : Si BDD déjà créée, risque de casse avec les anciennes donées dejà enregistrer. 
+
+* https://symfonycasts.com/screencast/symfony6-doctrine/sluggable
