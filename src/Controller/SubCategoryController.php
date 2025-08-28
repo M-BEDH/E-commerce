@@ -54,9 +54,11 @@ final class SubCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_sub_category_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, SubCategory $subCategory, EntityManagerInterface $entityManager): Response
+    #[Route('/{slug}/edit', name: 'app_sub_category_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, SubCategoryRepository $subCategoryRepo, EntityManagerInterface $entityManager): Response
     {
+        $subCategory = $subCategoryRepo->findOneBy(['slug' => $request->get('slug')]);
+        
         $form = $this->createForm(SubCategoryType::class, $subCategory);
         $form->handleRequest($request);
 

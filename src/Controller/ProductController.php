@@ -80,9 +80,10 @@ final class ProductController extends AbstractController
     }
 
     // Edition d'un produit existant
-    #[Route('/{id}-{slug}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    #[Route('/{slug}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, ProductRepository $productRepo, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
+        $product = $productRepo->findOneBy(['slug' => $request->get('slug')]);
         $form = $this->createForm(ProductUpdateType::class, $product);
         $form->handleRequest($request);
 

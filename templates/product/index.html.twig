@@ -41,11 +41,11 @@
                 </td>
                 <td>
                     <a class="btn btn-outline-success fw-bold"
-                        href="{{ path('app_product_show', {'id': product.id, 'slug': product.slug}) }}">Afficher</a>
+                        href="{{ path('app_product_show', {'slug': product.slug}) }}">Afficher</a>
                     <a class="btn btn-outline-warning fw-bold"
-                        href="{{ path('app_product_edit', {'id': product.id, 'slug': product.slug}) }}">Modifier</a>
+                        href="{{ path('app_product_edit', {'slug': product.slug}) }}">Modifier</a>
                     <a class="btn btn-outline-info fw-bold"
-                        href="{{ path('app_add_product_stock', {'id': product.id, 'slug': product.slug}) }}">Ajouter au stock</a>
+                        href="{{ path('app_add_product_stock', {'slug': product.slug}) }}">Ajouter au stock</a>
                 </td>
             </tr>
             {% else %}

@@ -66,12 +66,14 @@ final class CategoryController extends AbstractController
     #region edit
 
     // Route pour modifier une catégorie existante
-    #[Route('/category/{id}{slug}/update', name: 'app_category_update')]
-    public function editCategory(Request $request, Categories $category, EntityManagerInterface $entityManager): Response
+    #[Route('/category/{slug}/update', name: 'app_category_update')]
+    public function editCategory(Request $request, CategoriesRepository $categoryRepo, EntityManagerInterface $entityManager): Response
     {
         // $category = $entityManager->getRepository(Categories::class)->find($id); 
         // (Cette ligne est inutile ici car Symfony injecte déjà l'objet Categories correspondant à l'id)  --> grâce à param Converter
 
+        // Récupération de la catégorie à modifier via le slug
+        $category = $categoryRepo->findOneBy(['slug' => $request->get('slug')]);
         // Création du formulaire pré-rempli avec la catégorie existante
         $form = $this->createForm(CategoryFromType::class, $category);
 
