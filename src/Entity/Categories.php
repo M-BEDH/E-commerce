@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Gedmo\Mapping\Annotation\Slug;
+// use Gedmo\Mapping\Annotation\Slug;
 
 use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
