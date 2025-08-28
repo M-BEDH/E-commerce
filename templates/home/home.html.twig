@@ -42,7 +42,7 @@
 					{% endif %}
 
 				
-						<a class="btn btn-success" href="{{path('app_shopping_cart_add', {'id': product.id})}}">Ajouter au panier</a>
+						<a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug})}}">Ajouter au panier</a>
 				
 					{# {% elseif product.stock > 0 %} #}
 					{# <span class="badge bg-warning">Derniers exemplaires : {{ product.stock }}</span> #}
