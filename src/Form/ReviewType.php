@@ -20,12 +20,10 @@ class ReviewType extends AbstractType
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'id',
-                'data_class' => null
             ])
             ->add('product', EntityType::class, [
                 'class' => Product::class,
                 'choice_label' => 'id',
-                'data_class' => null
             ])
         ;
     }
@@ -33,8 +31,7 @@ class ReviewType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // 'data_class' => Review::class,
-            'data_class' => null
+            'data_class' => Review::class,
         ]);
     }
 }
