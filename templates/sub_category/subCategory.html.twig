@@ -30,9 +30,9 @@
 
                 <td id="btn">
                     <a class="btn btn-outline-info"
-                        href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">Afficher</a>
+                        href="{{ path('app_sub_category_show', {'id': sub_category.id, 'slug': sub_category.slug}) }}">Afficher</a>
                     <a class="btn btn-warning"
-                        href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">Modifier</a>
+                        href="{{ path('app_sub_category_edit', {'id': sub_category.id, 'slug': sub_category.slug}) }}">Modifier</a>
                 </td>
             </tr>
             {% else %}
