@@ -27,15 +27,15 @@ final class ShoppingCartController extends AbstractController
         return $this->render('shopping_cart/index.html.twig', [
             'items' => $data['cart'],
             'total' => $data['total']
-        ]);
-    
+        ]); 
     }
 
 
-
-    #[Route('/add/shopping/cart/{id}', name: 'app_shopping_cart_add', methods: ['GET'])]
-    public function addProductCart(int $id, SessionInterface $session, Product $product ): Response
+    #[Route('/add/shopping/cart/{slug:product}', name: 'app_shopping_cart_add', methods: ['GET'])]
+    public function addProductCart(SessionInterface $session, Product $product ): Response
     {
+
+        $id = $product->getId();
         $stock = $product->getStock();
         // dd($stock);
 

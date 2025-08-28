@@ -37,7 +37,7 @@ final class HomeController extends AbstractController
 
 
 
-    #[Route('/product/{id}{slug}/show', name: 'app_home_product_show', methods: ['GET'])]
+    #[Route('/product/{slug:product}/show', name: 'app_home_product_show', methods: ['GET'])]
     public function showProduct(Product $product, ProductRepository $productRepository, CategoriesRepository $categoriesRepository): Response
     {
         $lastProductAdd = $productRepository->findBy([], ['id' => 'DESC'], 5);

@@ -117,22 +117,23 @@ final class ProductController extends AbstractController
     }
 
     // Suppression d'un produit
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+    #[Route('/delete/{slug:product}', name: 'app_product_delete', methods: ['GET','POST'])]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->getPayload()->getString('_token'))) {
+            $id = $product->getId();
             $entityManager->remove($product);
             $entityManager->flush();
-        }
+        
 
         $this->addFlash('danger', 'Produit supprimé avec succès !');
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
 
     // Ajout de stock à un produit (historique)
-    #[Route('add/product/{id}', name: 'app_add_product_stock', methods: ['GET', 'POST'])]
-    public function stockAdd($id, Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
+    #[Route('add/product/{slug:product}', name: 'app_add_product_stock', methods: ['GET', 'POST'])]
+    public function stockAdd(Product $product, Request $request, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
     {
+        $id = $product->getId();
         $stockAdd = new AddProductHistory();
         $form = $this->createForm(AddProductHistoryType::class, $stockAdd);
         $form->handleRequest($request);
@@ -164,10 +165,9 @@ final class ProductController extends AbstractController
     }
 
     // Affiche l'historique d'ajout de stock pour un produit
-    #[Route('/add/product/{id}/stock/history', name: 'app_product_stock_add_history', methods: ['GET'])]
-    public function showStockHistory($id, ProductRepository $productRepository, AddProductHistoryRepository $addProductHistoryRepository): Response
+    #[Route('/add/product/{slug:product}/stock/history', name: 'app_product_stock_add_history', methods: ['GET'])]
+    public function showStockHistory(Product $product, AddProductHistoryRepository $addProductHistoryRepository): Response
     {
-        $product = $productRepository->find($id);
         $productAddHistory = $addProductHistoryRepository->findBy(['product' => $product], ['id' => 'DESC']);
 
         return $this->render('product/stockHistory.html.twig', [
@@ -176,8 +176,8 @@ final class ProductController extends AbstractController
     }
 
     // Affiche le détail d'un produit
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    #[Route('/{slug:product}', name: 'app_product_show', methods: ['GET'])]
+    public function show(Product $product, Request $request, ProductRepository $productRepo): Response
     {
         return $this->render('product/show.html.twig', [
             'product' => $product,

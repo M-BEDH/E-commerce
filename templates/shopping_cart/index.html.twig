@@ -31,7 +31,7 @@
 
           {{item.quantity}} 
 
-          <a href="{{ path('app_shopping_cart_add', {'id': item.product.id}) }}"
+          <a href="{{ path('app_shopping_cart_add', {'slug': item.product.slug}) }}" 
           class='text-success' style="font-weight: bold; font-size: 1.2rem; text-decoration: none;"> + </a>
       </td>
 
