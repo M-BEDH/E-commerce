@@ -1,54 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Description du produit{% endblock %}
+{% block title %}Description du produit
+{% endblock %}
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/main.css') }}">
-<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<div class="container">
-    <h1>{{ product.name }}</h1>
+	<div class="container">
+		<h1>{{ product.name }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td class="">{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td class="">{{ product.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td class="">{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td class="">{{ product.price }}</td>
-            </tr>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td class="">{{ product.id }}</td>
+				</tr>
+				<tr>
+					<th>Name</th>
+					<td class="">{{ product.name }}</td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td class="">{{ product.description }}</td>
+				</tr>
+				<tr>
+					<th>Price</th>
+					<td class="">{{ product.price }}</td>
+				</tr>
 
-            <tr>
-                <th>Image</th>
-                <td class=""> <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo"
-                        style="width: 100px;"> </td>
-            </tr>
-        </tbody>
-    </table>
+				<tr>
+					<th>Image</th>
+					<td>
+						<img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo" style="width: 100px;">
+					</td>
+				</tr>
+				<tr>
+					<th>Avis</th>
+					<td>
+						<a href="{{ path('app_review_show', {'slug': product.slug}) }}">avis</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
-    <a class="btn btn-warning" href="{{ path('app_product_edit', {'slug': product.slug}) }}">Modifier</a>
+		<a class="btn btn-warning" href="{{ path('app_product_edit', {'slug': product.slug}) }}">Modifier</a>
 
-     <a  onclick="return confirm('Etes-vous sûr de vouloir supprimer ce produit ?');" class="btn btn-danger" href="{{ path('app_product_delete', {'slug': product.slug }) }}">Supprimer</a>
-    
+		<a onclick="return confirm('Etes-vous sûr de vouloir supprimer ce produit ?');" class="btn btn-danger" href="{{ path('app_product_delete', {'slug': product.slug }) }}">Supprimer</a>
 
-    <a class="btn btn-warning" style="background-color: #4caf50; border-color:#4caf50;"
-        href="{{ path('app_product_stock_add_history', {'slug': product.slug}) }}">Historique
-        du stock</a> <br>
-    <a class="btn btn-outline-secondary" style="font-weight: bold;" style="font-weight: bold;"
-        style="font-weight: bold;" href="{{ path('app_product_index') }}">back to
-        list</a>
 
-</div>
+		<a class="btn btn-warning" style="background-color: #4caf50; border-color:#4caf50;" href="{{ path('app_product_stock_add_history', {'slug': product.slug}) }}">Historique
+			        du stock</a>
+		<br>
+		<a class="btn btn-outline-secondary" style="font-weight: bold;" style="font-weight: bold;" style="font-weight: bold;" href="{{ path('app_product_index') }}">back to
+			        list</a>
+
+	</div>
 {% endblock %}

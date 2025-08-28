@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Review;
+use App\Entity\Product;
 use App\Form\ReviewType;
 use App\Repository\ReviewRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,13 +52,14 @@ final class ReviewController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}', name: 'app_review_show', methods: ['GET'])]
-    // public function show(Review $review): Response
-    // {
-    //     return $this->render('review/show.html.twig', [
-    //         'review' => $review,
-    //     ]);
-    // }
+    #[Route('/{slug:product}', name: 'app_review_show', methods: ['GET'])]
+    public function show(Product $product, Review $review): Response
+    {
+        return $this->render('review/show.html.twig', [
+            'review' => $review,
+            'product' => $product,
+        ]);
+    }
 
     #[Route('/{id}/edit', name: 'app_review_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Review $review, EntityManagerInterface $entityManager): Response
