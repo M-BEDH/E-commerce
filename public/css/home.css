@@ -8,11 +8,11 @@
 
 .card {
     width: 17rem !important;
-    height: 470px;
-    /*taille à ajouter ci besoin */
+    height: max-content !important;
     margin: 0.8rem;
     padding: 0;
     border: 2mm ridge #facdff;
+    overflow: hidden;
 }
 
 .card-body {

@@ -6,12 +6,13 @@ use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class SearchEngineController extends AbstractController
 {
     #[Route('/search/engine', name: 'app_search_engine', methods: ['GET','POST'])]
-    public function index(Request $request, ProductRepository $productRepo): Response
+    public function index(Request $request, ProductRepository $productRepo, SluggerInterface $slug): Response
     {
         if ($request->isMethod('GET')){
             //recupere les données de la requete

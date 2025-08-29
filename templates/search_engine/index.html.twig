@@ -22,7 +22,7 @@
         <img src="{{asset('uploads/images/' ~ product.image)}}" alt="">
 
         <div class="card-body">
-            <a href="{{ path('app_home_product_show', {'id': product.id} )}}" class="btn btn-outline-primary"> voir le produit </a>
+            <a href="{{ path('app_product_show', {'slug': product.slug} )}}" class="btn btn-outline-primary"> Détails produit </a>
 
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.price }} €</p>
@@ -30,7 +30,7 @@
 
             {% if product.stock > 0 %}
             <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-            <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'id': product.id})}}">Ajouter au
+            <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug} )}}">Ajouter au
                 panier</a>
             {% else %}
             <span class="badge bg-danger">Rupture de stock</span>

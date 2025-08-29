@@ -14,10 +14,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td class="">{{ product.id }}</td>
-            </tr>
-            <tr>
                 <th>Name</th>
                 <td class="">{{ product.name }}</td>
             </tr>
@@ -25,9 +21,15 @@
                 <th>Description</th>
                 <td class="">{{ product.description }}</td>
             </tr>
+            
             <tr>
                 <th>Price</th>
                 <td class="">{{ product.price }}</td>
+            </tr>
+
+             <tr>
+                <th>Stock</th>
+                <td class="">{{ product.stock }}</td>
             </tr>
 
             <tr>
@@ -47,8 +49,7 @@
         href="{{ path('app_product_stock_add_history', {'slug': product.slug}) }}">Historique
         du stock</a> <br>
     <a class="btn btn-outline-secondary" style="font-weight: bold;" style="font-weight: bold;"
-        style="font-weight: bold;" href="{{ path('app_product_index') }}">back to
-        list</a>
+        style="font-weight: bold;" href="{{ path('app_home') }}">retour au produits</a>
 
 </div>
 {% endblock %}
