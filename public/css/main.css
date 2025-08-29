@@ -1,9 +1,10 @@
+body {
+    background: radial-gradient(circle, #ebebeb 56%, #d2b4de8a 80%);
+}
+
+
 h1, h2 {
     width: 100%;
     text-align: center;
     margin: 2rem 0 2rem 0;
-}
-
-body {
-    background: radial-gradient(circle, #ebebeb 56%, #d2b4de8a 80%);
 }

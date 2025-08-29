@@ -17,6 +17,7 @@ final class CityController extends AbstractController
     #[Route(name: 'app_city_index', methods: ['GET'])]
     public function index(CityRepository $cityRepository): Response
     {
+
         return $this->render('city/index.html.twig', [
             'cities' => $cityRepository->findAll(),
         ]);
@@ -33,6 +34,7 @@ final class CityController extends AbstractController
             $entityManager->persist($city);
             $entityManager->flush();
 
+            $this->addFlash('info', 'Ville ajoutée avec succès !');
             return $this->redirectToRoute('app_city_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -59,6 +61,7 @@ final class CityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Ville modifiée avec succès !');
             return $this->redirectToRoute('app_city_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,7 +79,7 @@ final class CityController extends AbstractController
             $entityManager->remove($city);
             $entityManager->flush();
         }
-
+        $this->addFlash('danger', 'Ville supprimée avec succès !');
         return $this->redirectToRoute('app_city_index', [], Response::HTTP_SEE_OTHER);
     }
 }

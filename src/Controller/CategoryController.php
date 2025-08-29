@@ -35,7 +35,7 @@ final class CategoryController extends AbstractController
     {
         // Création d'une nouvelle instance de Categories
         $category = new Categories();
-        $slug = new Slug();
+        // $slug = new Slug();
         // Création du formulaire associé à l'entité
         $form = $this->createForm(CategoryFromType::class, $category);
         $form->handleRequest($request);
