@@ -1,19 +1,17 @@
 <?php
-
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CategoriesRepository;
 use App\Entity\Categories;
 use App\Form\CategoryFromType;
-use Gedmo\Mapping\Annotation\Slug;
-use App\Repository\CategoriesRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-final class CategoryController extends AbstractController
+class CategoryController extends AbstractController
 {
     // Route pour afficher toutes les catégories
     #[Route('/admin/category', name: 'app_category')]
@@ -27,8 +25,6 @@ final class CategoryController extends AbstractController
             'categories' => $categories
         ]);
     }
-
-    #region add
 
     // Route pour créer une nouvelle catégorie
     #[Route('/category/new', name: 'app_category_new')]
@@ -60,11 +56,6 @@ final class CategoryController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    #endregion
-
-
-
-    #region edit
 
     // Route pour modifier une catégorie existante
     #[Route('/category/{slug}/update', name: 'app_category_update')]
@@ -95,14 +86,8 @@ final class CategoryController extends AbstractController
         // Affichage du formulaire
         return $this->render('category/updateCategory.html.twig', [
             'form' => $form->createView(),
-            
         ]);
     }
-    #endregion
-
-
-
-    #region delete
 
     // Route pour supprimer une catégorie
     #[Route('/category/delete/{id}', name: 'app_category_delete')]
@@ -121,5 +106,4 @@ final class CategoryController extends AbstractController
         // Redirection vers la liste
         return $this->redirectToRoute('app_category');
     }
-    #endregion
 }

@@ -1,79 +1,118 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}voir le produit{% endblock %}
+{% block title %}
+  {# Titre de la page affiché dans l'onglet du navigateur #}
+  voir le produit
+{% endblock %}
+
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/main.css') }}">
-<link rel="stylesheet" href="{{ asset('css/home.css') }}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}">
-<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
+  {# Inclusion des feuilles de style spécifiques à cette page #}
+  <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<h1>{{ product.name }}</h1>
-        {# <a class="btn btn-outline-primary" style="display: block" href="{{ path('app_review_index', {'slug': product.slug}) }}">voir les avis</a> #}
-        <a class="btn btn-outline-primary" style="display: block"href="{{ path('app_review_index', {'slug': product.slug}) }}">Voir les avis</a>
+  {# Affichage du nom du produit en titre principal #}
+  <h1>{{ product.name }}</h1>
+  			<a class="btn btn-outline-primary" style="display: block"href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary">Détails du produit</a>
 
-<div class="container  mt-5">
+   {# Bouton pour permettre à l'utilisateur de donner un avis sur ce produit #}
+         <p>
+            <a class="btn btn-outline-primary" style="display: block" href="{{ path('app_review_new', {'slug': product.slug}) }}">
+              Donner votre avis
+            </a>
+        </p> 
 
-  <div class="card containerProduct">
-    <img class="img-card" src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
-    <div class="card-body">
+  {# Bouton pour accéder à la page des avis du produit #}
+   <a class="btn btn-primary" style="display: block" href="{{ path('app_review_index', {'slug': product.slug}) }}">
+    Voir les avis
+  </a> 
 
-      <h5 class="card-title">{{ product.name }}</h5>
-      <span class="card-text">{{ product.price }} euros</span>
+  <div class="container">
 
-      <p class="card-text">{{ product.description }} 
-      </p>
-      <p>
-        <span>
-          <a class="btn btn-outline-primary" style="display: block" href="{{ path('app_review_new', {'slug': product.slug}) }}">Donner votre avis</a>
-        </span>
-      </p>
-
-      {% if product.stock > 0 %}
-      <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-      <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug}) }}">Ajouter au panier</a>
-      {% else %}
-      <span class="badge bg-danger">Rupture de stock</span>
-      {% endif %}
-
-      <a class="btn btn-outline-secondary" href="{{ path('app_home') }}">Retour aux produits</a>
-    </div>
-  </div>
-
-  <h2 class="mt-5">Derniers produits ajoutés</h2>
-
-  <div class="row">
-    {% for product in products %}
-    <div class="card">
-
-      <img class="img-card" src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
-
+    {# Carte principale contenant les informations détaillées du produit sélectionné #}
+    <div class="card containerProduct">
+      {# Image principale du produit #}
+      <img class="img-card" src="{{ asset('uploads/images/' ~ product.image) }}" alt="Photo">
       <div class="card-body">
 
-        <a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary">Voir
-          produit</a>
+        <h5 class="card-title">
+          {{ product.name }}
+          {# Affichage de la note moyenne du produit si elle existe, avec lien vers les avis #}
+          {% if product.averageRating is not null %}
+            <a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
+              <span class="average-rating ms-5"> ⭐ {{ product.averageRating }}/5</span>
+            </a>
+          {% endif %}
+        </h5>
 
-        <h5 class="card-title">{{ product.name }}</h5>
-
+        {# Affichage du prix du produit #}
+        <span class="card-text">{{ product.price }} euros</span>
+        {# Description détaillée du produit #}
         <p class="card-text">{{ product.description }}</p>
 
+        {# Affichage du stock disponible et bouton d'ajout au panier si le produit est en stock #}
         {% if product.stock > 0 %}
-        <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-        <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug})}}">Ajouter au
-          panier</a>
+          <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
+          <a class="btn btn-success" href="{{ path('app_shopping_cart_add', {'slug': product.slug}) }}">
+            Ajouter au panier
+          </a>
         {% else %}
-        <span class="badge bg-danger">Rupture de stock</span>
+          {# Message si le produit est en rupture de stock #}
+          <span class="badge bg-danger">Rupture de stock</span>
         {% endif %}
 
-        {# <a href="{{path('app_shopping_cart_add', {'id': product.id})}}" class="btn btn-success">Ajouter au panier</a>
-        #}
+        {# Bouton pour revenir à la liste des produits #}
+        <a class="btn btn-outline-secondary" href="{{ path('app_home') }}">
+          Retour aux produits
+        </a>
       </div>
     </div>
-    {% endfor %}
 
+    {# Section affichant les derniers produits ajoutés au catalogue #}
+    <h2 class="mt-5">Derniers produits ajoutés</h2>
 
+    <div class="row">
+      {# Boucle sur la liste des produits récents pour les afficher sous forme de cartes #}
+      {% for product in products %}
+        <div class="card cardProduct">
+          {# Image du produit #}
+          <img class="img-card" src="{{ asset('uploads/images/' ~ product.image) }}" alt="Photo">
+          <div class="card-body">
+
+            {# Lien vers la page de détails du produit #}
+            <a href="{{ path('app_home_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary">
+              Voir produit
+            </a>
+
+            <h5 class="card-title">
+              {{ product.name }}
+              {# Affichage de la note moyenne si disponible, avec lien vers les avis #}
+              {% if product.averageRating is not null %}
+                <a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
+                  <span class="average-rating ms-5"> ⭐ {{ product.averageRating }}/5</span>
+                </a>
+              {% endif %}
+            </h5>
+
+            {# Description courte du produit #}
+            <p class="card-text">{{ product.description }}</p>
+
+            {# Affichage du stock et bouton d'ajout au panier si disponible #}
+            {% if product.stock > 0 %}
+              <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
+              <a class="btn btn-success" href="{{ path('app_shopping_cart_add', {'slug': product.slug}) }}">
+                Ajouter au panier
+              </a>
+            {% else %}
+              <span class="badge bg-danger">Rupture de stock</span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
-</div>
 {% endblock %}

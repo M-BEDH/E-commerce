@@ -3,18 +3,18 @@
 {% block title %}Tous les produits{% endblock %}
 
 {% block stylesheets %}
+<!-- Inclusion des feuilles de style principales, formulaire et boutons -->
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 <link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
-
 
 {% block body %}
 
 <div class="container">
     <h1>Tous les produits</h1>
 
-    <table class="table table-striped">
+    <table class="table table-bordered table-hover align-middle text-center">
         <thead>
             <tr>
                 <th>Name</th>
@@ -25,35 +25,46 @@
             </tr>
         </thead>
         <tbody>
+            {# Boucle sur tous les produits pour les afficher dans le tableau #}
             {% for product in products %}
             <tr>
+                <!-- Affiche le nom du produit en gras -->
                 <td class="fw-bold">{{ product.name }}</td>
+                <!-- Affiche les 100 premiers caractères de la description -->
                 <td>{{ product.description |slice(0,100) }}...</td>
+                <!-- Affiche le prix du produit -->
                 <td>{{ product.price }} euros</td>
                 <td>
                     {% if product.stock > 0 %}
-                    {{ product.stock}}
+                        <!-- Affiche le stock disponible -->
+                        {{ product.stock}}
                     {% else %}
-                    <span class="text-danger fw-bold">Rupture de stock</span>
+                        <!-- Affiche un message rouge si le produit est en rupture de stock -->
+                        <span class="text-danger fw-bold">Rupture de stock</span>
                     {% endif %}
                 </td>
                 <td>
+                    <!-- Lien pour afficher le détail du produit -->
                     <a class="btn btn-outline-success fw-bold"
                         href="{{ path('app_product_show', {'slug': product.slug}) }}">Afficher</a>
+                    <!-- Lien pour modifier le produit -->
                     <a class="btn btn-outline-warning fw-bold"
                         href="{{ path('app_product_edit', {'slug': product.slug}) }}">Modifier</a>
+                    <!-- Lien pour ajouter du stock au produit -->
                     <a class="btn btn-info fw-bold"
                         href="{{ path('app_add_product_stock', {'slug': product.slug}) }}">Ajouter au stock</a>
                 </td>
             </tr>
             {% else %}
             <tr>
+                <!-- Affiche ce message si aucun produit n'est trouvé -->
                 <td colspan="5">no records found</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
+    <!-- Bouton pour créer un nouveau produit -->
     <a class="btn btn-primary" href="{{ path('app_product_new') }}">Nouveau produit</a>
 </div>
 {% endblock %}

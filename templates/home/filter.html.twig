@@ -2,6 +2,7 @@
 
 {% block title %}Filtre sous categories{% endblock %}
 {% block stylesheets %}
+    <!-- Inclusion des feuilles de style principales, page d'accueil et boutons -->
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/btn.css') }}">
@@ -9,20 +10,28 @@
 
 {% block body %}
 <div class="container">
+    <!-- Affiche le nom de la sous-catégorie filtrée -->
     <h1 class="mb-5 mt-5">{{ subCategory.name }}</h1>
     <div class="row">
+        {# Boucle sur tous les produits de la sous-catégorie pour les afficher sous forme de cartes #}
         {% for product in products %}
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ asset('uploads/images/'~product.image)}}" class="imgproduct card-img-top" alt="image des produits">
-                    <div class="card-body">
-                        <a class="titleProductLink" href="{{ path('app_home_product_show', {'slug': product.slug}) }} "><h5 class="card-title titleProduct">{{ product.name }}</h5></a>
-                        <p class="card-text">{{ product.description|slice(0,60) }}...</p>
-                        <h3>{{ product.price }} €</h3> <!-- altgr + e pour le sigle euro-->
-                        <a href="{{path('app_shopping_cart_add', {slug: product.slug}) }}" class="btn btn-outline-success">Ajouter au panier</a>
-                    </div>
+            <div class="card" style="width: 18rem;">
+                <!-- Affiche l'image du produit -->
+                <img src="{{ asset('uploads/images/'~product.image)}}" class="imgproduct card-img-top" alt="image des produits">
+                <div class="card-body">
+                    <!-- Lien vers la page de détail du produit -->
+                    <a class="titleProductLink" href="{{ path('app_home_product_show', {'slug': product.slug}) }} ">
+                        <h5 class="card-title titleProduct">{{ product.name }}</h5>
+                    </a>
+                    <!-- Affiche une partie de la description du produit -->
+                    <p class="card-text">{{ product.description|slice(0,60) }}...</p>
+                    <!-- Affiche le prix du produit -->
+                    <h3>{{ product.price }} €</h3> <!-- altgr + e pour le sigle euro-->
+                    <!-- Bouton pour ajouter le produit au panier -->
+                    <a href="{{path('app_shopping_cart_add', {slug: product.slug}) }}" class="btn btn-outline-success">Ajouter au panier</a>
+                </div>
             </div>
         {% endfor %}
-      
     </div>
 </div>
 {% endblock %}

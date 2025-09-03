@@ -41,12 +41,6 @@
        <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article du panier ?');" href="{{ path('app_cart_delete_product_id', {'id': item.product.id}) }}"
           class='text-danger' style="text-decoration: none;"> Supprimer du panier  </a>
           </td>
-
-      
-
-         
-
-
     </tr>
     {% else %}
     <p class='text-danger' style="font-weight: bold; font-size: 20px;">Votre panier est vide</p>

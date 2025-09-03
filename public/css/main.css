@@ -7,3 +7,7 @@ h1, h2 {
 body {
     background: radial-gradient(circle, #ebebeb 56%, #d2b4de8a 80%);
 }
+
+.card.cardProduct {
+    width: 18rem !important;
+}

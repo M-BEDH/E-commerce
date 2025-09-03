@@ -1,12 +1,14 @@
 {% block stylesheets %}
+<!-- Inclusion de la feuille de style spécifique à la pagination -->
 <link rel="stylesheet" href="{{ asset('css/paginator.css') }}">
 {% endblock %}
 
+{# Vérifie s'il y a plus d'une page à afficher #}
 {% if pageCount > 1 %}
 <nav aria-label="Pagination">
   <ul class="pagination">
 
-    {# Lien précédent #}
+    {# Affiche le lien vers la page précédente si elle existe #}
     {% if previous is defined %}
     <li class="page-item">
       <a class="page-link" href="{{ path(route, query | merge({(pageParameterName): previous})) }}"
@@ -17,19 +19,30 @@
     </li>
     {% endif %}
 
-    {# Boucle sur les pages #}
+    {# Boucle sur toutes les pages à afficher dans la pagination #}
     {% for page in pagesInRange %}
     {% if page == current %}
+    {# Si la page courante, on l'affiche comme active (non cliquable) #}
     <li class="page-item active"><a class="page-link" href="#">{{ page }}</a>
     </li>
     {% else %}
+    {# Sinon, lien vers la page correspondante #}
     <li class="page-item">
+      {#
+      Crée un lien de pagination vers une page spécifique :
+      - path(route, ...) : génère l'URL de la route courante (par exemple, la liste paginée)
+      - route : nom de la route utilisée pour la pagination (ex : 'app_product_index')
+      - query : tableau des paramètres actuels de l'URL (ex : filtres, recherche, etc.)
+      - merge({(pageParameterName): page}) : ajoute ou remplace le paramètre de page dans l'URL (ex : ?page=2)
+      Ainsi, chaque bouton de pagination pointe vers la bonne page tout en conservant les autres paramètres de la
+      requête.
+      #}
       <a class="page-link" href="{{ path(route, query | merge({(pageParameterName): page})) }}">{{ page }}</a>
     </li>
     {% endif %}
     {% endfor %}
 
-    {# Lien suivant #}
+    {# Affiche le lien vers la page suivante si elle existe #}
     {% if next is defined %}
     <li class="page-item">
       <a class="page-link" href="{{ path(route, query | merge({(pageParameterName): next})) }}" aria-label="Suivant">

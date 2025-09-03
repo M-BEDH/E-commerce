@@ -13,46 +13,53 @@ class ProductRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
+        // Appelle le constructeur parent avec la classe Product
         parent::__construct($registry, Product::class);
     }
 
-    //    /**
-    //     * @return Product[] Returns an array of Product objects
-    //     */
+    // Exemple de méthode personnalisée générée par Symfony (commentée)
+    // /**
+    //  * @return Product[] Returns an array of Product objects
+    //  */
+    // public function findByIdUp($value): array
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->andWhere('p.id > :val')
+    //         ->setParameter('val', $value)
+    //         ->orderBy('p.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 
-    //    public function findByIdUp($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.id > :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    // Exemple de méthode personnalisée générée par Symfony (commentée)
+    // public function findOneBySomeField($value): ?Product
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->andWhere('p.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
 
-    //    public function findOneBySomeField($value): ?Product
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
-
-          public function searchEngine(string $query){
-            //crée un objet de la requete qui permet de construire la requete de recherche
-            return $this->createQueryBuilder('p')
-            //recherche les elements dont le nom contient la requete de la recherche
-                ->where('p.name LIKE :query')
-                // OU recherche les elements dont la description contient la requete de recherche
-                ->orWhere('p.description LIKE :query')
-                //defini la valeur de la variable "query" pour la requete
-                ->setParameter('query', '%' . $query . '%')
-                //execute la requete et recupere les resultats
-                ->getQuery()
-                ->getResult();
-        }
+    /**
+     * Recherche les produits dont le nom ou la description contient la chaîne passée en paramètre.
+     * @param string $query Le mot-clé recherché par l'utilisateur
+     * @return Product[] Retourne un tableau d'objets Product correspondant à la recherche
+     */
+    public function searchEngine(string $query){
+        // Crée un QueryBuilder pour construire dynamiquement la requête de recherche
+        return $this->createQueryBuilder('p')
+            // Recherche les produits dont le nom contient la requête
+            ->where('p.name LIKE :query')
+            // Ou dont la description contient la requête
+            ->orWhere('p.description LIKE :query')
+            // Définit la valeur du paramètre "query" avec des % pour la recherche partielle
+            ->setParameter('query', '%' . $query . '%')
+            // Exécute la requête et retourne les résultats
+            ->getQuery()
+            ->getResult();
+    }
 }

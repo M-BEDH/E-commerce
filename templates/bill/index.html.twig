@@ -1,61 +1,73 @@
-{# ici pas de block title ni d'extends de la base twig ou de block stylesheets car sert à la transformation en pdf en
-vue d'impression #}
+{# 
+  Ce template ne contient pas de block title, ni d'extends de la base twig, 
+  ni de block stylesheets car il sert uniquement à la génération de PDF pour l'impression de la facture.
+#}
 
 {% block body %}
 
 <div class="container">
-	<h1>Facture n°
-		{{order.id}}</h1>
+    <!-- Affiche le numéro de la facture correspondant à l'ID de la commande -->
+    <h1>Facture n°
+        {{order.id}}</h1>
 
-	<div>Prénom : {{ order.firstName }}</div>
-	<div>Nom : {{ order.lastName }}</div>
-	<div>Telephone : {{ order.phone }}</div>
-	<div>Adresse : {{ order.adress }}</div>
-	<div>Ville : {{ order.city.name }}</div>
-	<div>Commande du : {{ order.createdAt | date('d-m-y H:i')}}</div>
-	<br>
-	<table class="table table-bordered">
-		<tr>
-			<th>Dénomination</th>
-			<th>prix</th>
-			<th>quantité</th>
-			<th>prix total</th>
-		</tr>
-		{% for orderProduct in order.orderProducts %}
-		<tr>
-			<td>{{ orderProduct.product.name }}</td>
-			<td>{{ orderProduct.product.price }}€</td>
-			<td>{{ orderProduct.quantity }}</td>
-			<td>{{ (orderProduct.product.price * orderProduct.quantity) }}€</td>
-		</tr>
-		{% endfor %}
-	</table>
-	<br>
+    <!-- Informations du client -->
+    <div>Prénom : {{ order.firstName }}</div>
+    <div>Nom : {{ order.lastName }}</div>
+    <div>Telephone : {{ order.phone }}</div>
+    <div>Adresse : {{ order.adress }}</div>
+    <div>Ville : {{ order.city.name }}</div>
+    <div>Commande du : {{ order.createdAt | date('d-m-y H:i')}}</div>
+    <br>
+    <!-- Tableau récapitulatif des produits commandés -->
+    <table class="table table-bordered">
+        <tr>
+            <th>Dénomination</th>
+            <th>prix</th>
+            <th>quantité</th>
+            <th>prix total</th>
+        </tr>
+        {% for orderProduct in order.orderProducts %}
+        <tr>
+            <!-- Nom du produit -->
+            <td>{{ orderProduct.product.name }}</td>
+            <!-- Prix unitaire du produit -->
+            <td>{{ orderProduct.product.price }}€</td>
+            <!-- Quantité commandée -->
+            <td>{{ orderProduct.quantity }}</td>
+            <!-- Prix total pour ce produit (prix unitaire * quantité) -->
+            <td>{{ (orderProduct.product.price * orderProduct.quantity) }}€</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
 
-	<div>Frais de livraison : {{ order.city.shippingCost}}€</div>
-	<h3>Total de la facture : {{ order.totalPrice + order.city.shippingCost }}€</dh3>
+    <!-- Affiche les frais de livraison -->
+    <div>Frais de livraison : {{ order.city.shippingCost}}€</div>
+    <!-- Affiche le total de la facture (total des produits + frais de livraison) -->
+    <h3>Total de la facture : {{ order.totalPrice + order.city.shippingCost }}€</h3>
 
 </div>
 {% endblock %}
 
 <style>
-	table {
-		width: 100%;
-		border-collapse: collapse;
-	}
+    /* Mise en forme du tableau pour l'impression PDF */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-	th,
-	td {
-		border: 1px solid #ddd;
-		padding: 8px;
-		text-align: left;
-	}
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
 
-	thead {
-		background-color: #f2f2f2
-	}
+    thead {
+        background-color: #f2f2f2
+    }
 
-	tbody tr:nth-child(odd) {
-		background-color: #f9f9f9
-	}
+    tbody tr:nth-child(odd) {
+        background-color: #f9f9f9
+    }
 </style>

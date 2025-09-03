@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Toutes les categories{% endblock %}
+
 {% block stylesheets %}
+<!-- Inclusion des feuilles de style principales et des boutons -->
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 <link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
@@ -12,35 +14,36 @@
 
 <div class="category-item">
 
-  <table class="table">
+  <table class="table table-hover align-middle text-center">
     <thead>
       <tr>
-        <th scope="col"></th>
-        <th scope="col">Categories</th>
-        <th scope="col">Action</th>
+        <th></th>
+        <th>Categories</th>
+        <th>Action</th>
       </tr>
     </thead>
 
     <tbody>
+      {# Boucle sur toutes les catégories pour les afficher dans le tableau #}
       {% for category in categories %}
       <tr>
         <th scope="row"></th>
-
+        <!-- Affiche le nom de la catégorie -->
         <td>{{category.name}}</td>
-
         <td id="btn">
+          <!-- Lien pour modifier la catégorie -->
           <a class="btn btn-outline btn-warning"
             href="{{ path('app_category_update', {'slug': category.slug}) }}">Modifier</a>
+          <!-- Lien pour supprimer la catégorie avec confirmation JS -->
           <a onclick="return confirm('Etes-vous sûr de vouloir supprimer cette catégorie ?');" class="btn btn-danger"
             href="{{ path('app_category_delete', {'id': category.id}) }}">Supprimer</a>
         </td>
-
       </tr>
       {% endfor %}
-
     </tbody>
   </table>
 
+  <!-- Bouton pour ajouter une nouvelle catégorie -->
   <a href="{{ path('app_category_new', { 'categories': categories }) }}" class="btn btn-primary">Ajouter</a>
 
 </div>
