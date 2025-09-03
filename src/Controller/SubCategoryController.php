@@ -83,9 +83,13 @@ final class SubCategoryController extends AbstractController
             // Sauvegarde les modifications en base de données
             $entityManager->flush();
 
+<<<<<<< HEAD
             // Message de succès pour l'utilisateur
             $this->addFlash('info', 'Sous catégorie modifiée avec succès !');
             // Redirige vers la liste des sous-catégories
+=======
+             $this->addFlash('success', 'Sous catégorie modifiée avec succès !');
+>>>>>>> b991ab3e07ec6376ac77967d96c228380286e13e
             return $this->redirectToRoute('app_sub_category_subCategory', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -107,9 +111,13 @@ final class SubCategoryController extends AbstractController
             $entityManager->flush();
         }
 
+<<<<<<< HEAD
         // Message d'information pour l'utilisateur
         $this->addFlash('info', 'Sous catégorie supprimée avec succès !');
         // Redirige vers la liste des sous-catégories
+=======
+         $this->addFlash('danger', 'Sous catégorie supprimée avec succès !');
+>>>>>>> b991ab3e07ec6376ac77967d96c228380286e13e
         return $this->redirectToRoute('app_sub_category_subCategory', [], Response::HTTP_SEE_OTHER);
     }
 }

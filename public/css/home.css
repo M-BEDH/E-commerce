@@ -7,9 +7,14 @@
 }
 
 .card {
+<<<<<<< HEAD
     width: 20rem !important;
     height: 500px;
     /*taille à ajouter ci besoin */
+=======
+    width: 17rem !important;
+    height: max-content !important;
+>>>>>>> b991ab3e07ec6376ac77967d96c228380286e13e
     margin: 0.8rem;
     padding: 0;
     border: 2mm ridge #facdff;

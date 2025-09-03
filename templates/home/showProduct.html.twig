@@ -31,7 +31,38 @@
     Voir les avis
   </a> 
 
+<<<<<<< HEAD
   <div class="container">
+=======
+      <h5 class="card-title">{{ product.name }}</h5>
+
+      <a style="background-color: #cca6ffff; border-color: #cca6ffff; padding: 0.3"  href="{{ path('app_product_show', {'slug': product.slug} )}}" class="btn btn-outline-primary"> Détails</a>
+
+      <p class="card-text">{{ product.description }}</p>
+      <p class="card-text">{{ product.price }} euros</p>
+
+      {% if product.stock > 0 %}
+       <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span> 
+      <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug}) }}">Ajouter au panier</a>
+      {% else %}
+      <span class="badge bg-danger">Rupture de stock</span>
+      {% endif %}
+
+      {# <a href="{{path('app_shopping_cart_add', {'id': product.id})}}" class="btn btn-success">Ajouter au panier</a>
+      #}
+
+      <a class="btn btn-outline-secondary" style="border:none" href="{{ path('app_home') }}">Retour aux produits</a>
+    </div>
+  </div>
+
+  <h2 class="mt-5">Derniers produits ajoutés</h2>
+
+  <div class="row">
+    {% for product in products %}
+    <div class="card">
+
+      <img class="img-card" src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
+>>>>>>> b991ab3e07ec6376ac77967d96c228380286e13e
 
     {# Carte principale contenant les informations détaillées du produit sélectionné #}
     <div class="card containerProduct">
@@ -39,6 +70,7 @@
       <img class="img-card" src="{{ asset('uploads/images/' ~ product.image) }}" alt="Photo">
       <div class="card-body">
 
+<<<<<<< HEAD
         <h5 class="card-title">
           {{ product.name }}
           {# Affichage de la note moyenne du produit si elle existe, avec lien vers les avis #}
@@ -48,6 +80,12 @@
             </a>
           {% endif %}
         </h5>
+=======
+        <a href="{{ path('app_home_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary">Voir
+          produit</a>
+
+        <h5 class="card-title">{{ product.name }}</h5>
+>>>>>>> b991ab3e07ec6376ac77967d96c228380286e13e
 
         {# Affichage du prix du produit #}
         <span class="card-text">{{ product.price }} euros</span>
