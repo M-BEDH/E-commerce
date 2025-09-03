@@ -4,24 +4,32 @@
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}"
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 <link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 {% block body %}
 
 <h1>{{ product.name }}</h1>
+        {# <a class="btn btn-outline-primary" style="display: block" href="{{ path('app_review_index', {'slug': product.slug}) }}">voir les avis</a> #}
+        <a class="btn btn-outline-primary" style="display: block"href="{{ path('app_review_index', {'slug': product.slug}) }}">Voir les avis</a>
 
 <div class="container  mt-5">
 
   <div class="card containerProduct">
-    <img src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
+    <img class="img-card" src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
     <div class="card-body">
 
       <h5 class="card-title">{{ product.name }}</h5>
+      <span class="card-text">{{ product.price }} euros</span>
 
-      <p class="card-text">{{ product.description }}</p>
-      <p class="card-text">{{ product.price }} euros</p>
+      <p class="card-text">{{ product.description }} 
+      </p>
+      <p>
+        <span>
+          <a class="btn btn-outline-primary" style="display: block" href="{{ path('app_review_new', {'slug': product.slug}) }}">Donner votre avis</a>
+        </span>
+      </p>
 
       {% if product.stock > 0 %}
       <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
@@ -29,10 +37,8 @@
       {% else %}
       <span class="badge bg-danger">Rupture de stock</span>
       {% endif %}
-      {# <a href="{{path('app_shopping_cart_add', {'id': product.id})}}" class="btn btn-success">Ajouter au panier</a>
-      #}
 
-      <a class="btn btn-outline-secondary" style="border:none" href="{{ path('app_home') }}">Retour aux produits</a>
+      <a class="btn btn-outline-secondary" href="{{ path('app_home') }}">Retour aux produits</a>
     </div>
   </div>
 
@@ -55,7 +61,8 @@
 
         {% if product.stock > 0 %}
         <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-        <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug})}}">Ajouter au panier</a>
+        <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug})}}">Ajouter au
+          panier</a>
         {% else %}
         <span class="badge bg-danger">Rupture de stock</span>
         {% endif %}

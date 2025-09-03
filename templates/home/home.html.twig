@@ -27,7 +27,13 @@
 
 					<a href="{{ path('app_home_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary">Voir produit</a>
 
-					<h5 class="card-title">{{ product.name }}</h5>
+					<h5 class="card-title">{{ product.name }} 
+						 {% if product.averageRating is not null %}
+						 <a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
+      				  <span class="average-rating ms-5"> ⭐ {{ product.averageRating }}/5</span> 
+					</a>
+   					 	{% endif %}
+					</h5>
 
 					<p class="card-text">{{ product.description }}</p>
 					<p class="card-text">{{ product.price }}

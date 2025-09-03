@@ -8,6 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SubCategoryRepository::class)]
+#[ORM\Table(
+    name: "sub_category",
+    uniqueConstraints: [
+        new ORM\UniqueConstraint(name: "sub_category_slug_category_unique", columns: ["slug", "category_id"])
+    ]
+)]
+
 class SubCategory
 {
     #[ORM\Id]
@@ -23,7 +30,7 @@ class SubCategory
     private ?Categories $category = null;
 
     
-    #[ORM\Column(length: 100, unique: true)]
+    #[ORM\Column(length: 100)]
     private ?string $slug = null;
 
     /**

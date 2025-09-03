@@ -29,10 +29,14 @@
                 <td>{{ sub_category.category.name }}</td>
 
                 <td id="btn">
+                    {% if sub_category.slug %}
                     <a class="btn btn-outline-info"
                         href="{{ path('app_sub_category_show', {'id': sub_category.id, 'slug': sub_category.slug}) }}">Afficher</a>
                     <a class="btn btn-warning"
                         href="{{ path('app_sub_category_edit', {'id': sub_category.id, 'slug': sub_category.slug}) }}">Modifier</a>
+                    {% else %}
+                    <span class="text-danger">Slug manquant</span>
+                    {% endif %}
                 </td>
             </tr>
             {% else %}

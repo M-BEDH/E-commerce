@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categories;
 use App\Form\CategoryFromType;
+use Gedmo\Mapping\Annotation\Slug;
 use App\Repository\CategoriesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;

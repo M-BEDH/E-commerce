@@ -1,37 +1,61 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
+{% endblock %}
+
 {% block title %}Review index{% endblock %}
 
 {% block body %}
-    <h1>Les commentaires du produit : </h1>
+<div class="container my-5">
+    <h1 class="mb-4 text-center">Les commentaires du produit {{ product.name }}:</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Comment</th>
-                <th>Note</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for review in reviews %}
-            <tr>
-                <td>{{ review.id }}</td>
-                <td>{{ review.comment }}</td>
-                <td>{{ review.note }}</td>
-                <td>
-                    <a href="{{ path('app_review_show', {'id': review.id}) }}">show</a>
-                    <a href="{{ path('app_review_edit', {'id': review.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead>
+                <tr>
+                    <th>Auteur</th>
+                    <th>Commentaire</th>
+                    <th>Note</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td>{{ review.user.firstName }}</td>
+                    <td class="text-break" style="max-width: 300px;">{{ review.comment }}</td>
+                    <td>
+                        <span class="badge bg-success fs-6">{{ review.note }}/5</span>
+                    </td>
+                    <td>
+                        <div class="w-100">
 
-    <a href="{{ path('app_review_new') }}">Create new</a>
+                             <a class="btn btn-outline-info btn-sm"
+                                href="{{ path('app_review_show', {'id': review.id, 'slug': review.product.slug}) }}">Voir</a>
+                            {% if app.user and review.user and app.user.id == review.user.id %}
+                            <a class="btn btn-outline-warning btn-sm"
+                                href="{{ path('app_review_edit', {'id': review.id}) }}">Modifier</a>
+                            {{ include('review/_delete_form.html.twig') }}
+                            {% endif %}
+
+                           
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Aucun commentaire trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a class="btn btn-primary mt-4 d-block" style="width: 220px;"
+        href="{{ path('app_review_new', {'slug': product.slug}) }}">
+        Nouveau commentaire
+    </a>
+</div>
 {% endblock %}

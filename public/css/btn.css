@@ -26,6 +26,11 @@
     margin-top: 20px;
 }
 
+#btnReview {
+   display: flex;
+   justify-content: center;
+}
+
 .btn-outline-info,
 .btn-outline-success {
     color: #6e0e79;
@@ -75,4 +80,10 @@
     background-color: #6e0e79;
     color: #fff;
     border-color: #6e0e79;
+}
+
+.btnReview {
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
 }
