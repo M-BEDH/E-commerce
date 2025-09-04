@@ -13,13 +13,15 @@
 	<div class="container mt-5">
 
 		<h1 style="color:#6E0E79">
-			Bienvenue sur la page d'accueil de soin de soi ! <br>Le site propose une large gamme de produits pour votre bien-être.
+		<strong>Soin de soi !</strong> 
 		</h1>
 
-		<h2 style="color: #504f4f; text-decoration: underline;">Nos produits!</h2>
+		<p class="indexHome">
+		Découvrez une large gamme de produits pour votre bien-être.
+		</p>
 
 		{% for product in products %}
-			<div class="card m-2">
+			<div class="card">
 
 				<img class="img-card" src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
 
@@ -44,10 +46,9 @@
 					<p class="card-text">{{ product.price }}
 						€</p>
 
-
 					{% if product.stock > 0 %}
-						{# <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-												 #}
+						 <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
+												 
 						<a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug})}}">Ajouter au panier</a>
 					{% else %}
 						<span class="badge bg-danger">Rupture de stock</span>
@@ -60,6 +61,7 @@
 				</div>
 			</div>
 		{% endfor %}
+
 		{{ knp_pagination_render(products, 'layouts/_paginator.html.twig') }}
 	</div>
 {% endblock %}

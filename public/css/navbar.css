@@ -1,5 +1,9 @@
 .navbar {
+    height: 7rem;
     background: radial-gradient(circle, #6e0e79 40%, #f3def5 93%);
+    position: sticky;
+    top: 0px;
+    z-index: 10;
 }
 
 a.navbar-brand.title {
@@ -16,6 +20,12 @@ a.nav-link .dropdown-toggle {
 
 a.nav-link {
     color: white !important;
+}
+
+a.nav-link:hover {
+    background-color: #f3def5;
+    color: #6e0e79 !important;
+    border-radius: 0.5rem !important;
 }
 
 .text-primary {
