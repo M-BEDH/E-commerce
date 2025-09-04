@@ -8,14 +8,11 @@ h1, h2 {
     text-align: center;
     margin: 2rem 0 2rem 0;
 }
-<<<<<<< HEAD
 
 body {
     background: radial-gradient(circle, #ebebeb 56%, #d2b4de8a 80%);
 }
 
 .card.cardProduct {
-    width: 18rem !important;
+    width: 17rem !important;
 }
-=======
->>>>>>> b991ab3e07ec6376ac77967d96c228380286e13e

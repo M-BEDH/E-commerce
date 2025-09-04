@@ -19,7 +19,7 @@
 		<h2>Tous nos produits</h2>
 
 		{% for product in products %}
-			<div class="card">
+			<div class="card m-2">
 
 				<img class="img-card" src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
 
@@ -30,7 +30,7 @@
 					<h5 class="card-title">{{ product.name }} 
 						 {% if product.averageRating is not null %}
 						 <a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
-      				  <span class="average-rating ms-5"> ⭐ {{ product.averageRating }}/5</span> 
+      				  <span class="average-rating"> ⭐ {{ product.averageRating }}/5</span> 
 					</a>
    					 	{% endif %}
 					</h5>
