@@ -15,7 +15,7 @@
 }
 
 .btn-primary:hover {
-    background-color: #f3def5;
+    background-color: #fff3cd;
     color: #6e0e79;
     border-color: #6e0e79;
 }
@@ -39,7 +39,7 @@
 
 .btn-outline-info:hover,
 .btn-outline-success:hover {
-    background-color: #f3def5;
+    background-color: #fff3cd;
     border-color: #6e0e79;
     color: #6e0e79;
 }
@@ -66,7 +66,7 @@
 }
 
 .btn-success:hover {
-    background-color: #fdebff;
+    background-color: #fff3cd;
     color: #6e0e79;
     border-color: #6e0e79;
 }
@@ -77,13 +77,11 @@
 }
 
 .btn-outline-primary:hover {
-    background-color: #6e0e79;
-    color: #fff;
+    background-color: #fff3cd;
     border-color: #6e0e79;
 }
 
-.btnReview {
+/* .btnReview {
     display: flex;
-    /* justify-content: space-around; */
     align-items: center;
-}
+} */

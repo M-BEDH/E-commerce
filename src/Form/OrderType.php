@@ -14,22 +14,22 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstName', null, [
-                'attr'=>[
-                    'class'=>'form form-control',
-                    'value' => 'cc'
-                ]
-            ])
             ->add('lastName', null, [
                 'attr'=>[
                     'class'=>'form form-control',
-                    'value' => 'cc'
+                    'value' => 'nom'
+                ]
+            ])
+            ->add('firstName', null, [
+                'attr'=>[
+                    'class'=>'form form-control',
+                    'value' => 'prenom'
                 ]
             ])
              ->add('email', null, [
                 'attr'=>[
                     'class'=>'form form-control',
-                    'value' => 'cc@mail'
+                    'value' => 'mail@mail'
                 ]
             ])
             ->add('phone', null, [
@@ -41,7 +41,7 @@ class OrderType extends AbstractType
             ->add('adress', null, [
                 'attr'=>[
                     'class'=>'form form-control',
-                    'value' => 'cc'
+                    'value' => 'adresse'
                 ]
             ])
 

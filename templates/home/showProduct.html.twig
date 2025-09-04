@@ -1,84 +1,98 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-{{ product.name }}
+	{{ product.name }}
 {% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/main.css') }}">
-<link rel="stylesheet" href="{{ asset('css/home.css') }}">
-<link rel="stylesheet" href="{{ asset('css/form.css') }}">
-<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/form.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/btn.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<h1>{{ product.name }}</h1>
-<div class="mb-4">
-  <a class="btn btn-primary" style="display: block;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
-    Voir les avis
-  </a>
-  <a class="btn btn-outline-primary" style="display: block;"
-    href="{{ path('app_review_new', {'slug': product.slug}) }}">
-    Laisser un avis
-  </a>
-  <a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary mt-2"
-    style="display: block;">Détails du produit</a>
-</div>
+	<h1>{{ product.name }}</h1>
 
-<div class="container">
-  <div class="col-md-3 mb-4">
-    <div class="card cardProduct">
-      <img class="img-card" src="{{ asset('uploads/images/' ~ product.image) }}" alt="Photo">
-      <div class="card-body">
-        <h5 class="card-title">{{ product.name }}
-          {% if product.averageRating is not null %}
-          <a style="color: inherit; text-decoration: none;"
-            href="{{ path('app_review_index', {'slug': product.slug}) }}">
-            <span class="average-rating"> ⭐ {{ product.averageRating }}/5</span>
-          </a>
-          {% endif %}
-        </h5>
-        <p class="card-text">{{ product.description }}</p>
-        {% if product.stock > 0 %}
-        <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-        <a class="btn btn-success" href="{{ path('app_shopping_cart_add', {'slug': product.slug}) }}">Ajouter au
-          panier</a>
-        {% else %}
-        <span class="badge bg-danger">Rupture de stock</span>
-        {% endif %}
-        {# <a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary mt-2">Voir
-          produit</a> #}
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<div class="md-3 mb-4">
+			<div class="card cardProduct">
+				<img class="img-card" src="{{ asset('uploads/images/' ~ product.image) }}" alt="Photo">
+				<div class="card-body">
+					<h5 class="card-title">{{ product.name }}
+						{% if product.averageRating is not null %}
+							<a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
+								<span class="average-rating">
+									⭐
+									{{ product.averageRating }}/5</span>
+							</a>
+						{% endif %}
+					</h5>
+					{% if product.description is not empty %}
+						<p class="card-text">{{ product.description }}</p>
+					{% else %}
+						<p class="text-muted fst-italic">Pas de description</p>
+					{% endif %}
 
-  <h2 class="mt-5">Derniers produits ajoutés</h2>
-  <div class="row">
-    {% for p in products %}
-    <div class="col-md-3 mb-4">
-      <div class="card cardProduct">
-        <img class="img-card" src="{{ asset('uploads/images/' ~ p.image) }}" alt="Photo">
-        <div class="card-body">
-          <h5 class="card-title">{{ p.name }}</h5>
-          {% if p.averageRating is not null %}
-          <a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': p.slug}) }}">
-            <span class="average-rating"> ⭐ {{ p.averageRating }}/5</span>
-          </a>
-          {% endif %}
-          <p class="card-text">{{ p.description }}</p>
-          {% if p.stock > 0 %}
-          <span class="badge bg-success">Disponible ({{ p.stock }} en stock)</span>
-          <a class="btn btn-success" href="{{ path('app_shopping_cart_add', {'slug': p.slug}) }}">Ajouter au panier</a>
-          {% else %}
-          <span class="badge bg-danger">Rupture de stock</span>
-          {% endif %}
-          <a href="{{ path('app_product_show', {'slug': p.slug}) }}" class="btn btn-outline-primary mt-2">Voir
-            produit</a>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
+					{% if product.stock > 0 %}
+						<span class="badge bg-success">Disponible ({{ product.stock }}
+							en stock)</span>
+						<a class="btn btn-outline-success" href="{{ path('app_shopping_cart_add', {'slug': product.slug}) }}">Ajouter au panier</a>
+
+						<a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary" style="display: block; background-color: #F2DDF4">Détails du produit
+						</a>
+
+					{% else %}
+						<span class="badge bg-danger">Rupture de stock</span>
+					{% endif %}
+
+					<div class="mb-4">
+						<a class="btn btn-primary" style="display: block;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
+							Voir les avis
+						</a>
+						<a class="btn btn-outline-success" style="display: block;" href="{{ path('app_review_new', {'slug': product.slug}) }}">
+							Laisser un avis
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<h2 class="mt-5">Derniers produits ajoutés</h2>
+		<div style="display: flex;">
+			{% for p in products %}
+				<div class="m-4">
+					<div class="card cardProduct">
+						<img class="img-card" src="{{ asset('uploads/images/' ~ p.image) }}" alt="Photo">
+						<div class="card-body">
+							<h5 class="card-title">{{ p.name }}</h5>
+							{% if p.averageRating is not null %}
+								<a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': p.slug}) }}">
+									<span class="average-rating">⭐
+										{{ p.averageRating }}/5</span>
+								</a>
+							{% endif %}
+							{% if p.description is not empty %}
+								<p class="card-text">{{ p.description }}</p>
+							{% else %}
+								<p class="text-muted fst-italic">Pas de description</p>
+							{% endif %}
+
+							{% if p.stock > 0 %}
+								<span class="badge bg-success">Disponible ({{ p.stock }}
+									en stock)</span>
+								<a href="{{ path('app_home_product_show', {'slug': p.slug}) }}" class="btn btn-outline-success mt-2">Voir le produit</a>
+								<a class="btn btn-success" href="{{ path('app_shopping_cart_add', {'slug': p.slug}) }}">Ajouter au panier</a>
+							{% else %}
+								<span class="badge bg-danger">Rupture de stock</span>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

@@ -19,36 +19,41 @@
 		<h2 style="color: #504f4f; text-decoration: underline;">Nos produits!</h2>
 
 		{% for product in products %}
-			<div class="card">
+			<div class="card m-2">
 
 				<img class="img-card" src="{{asset('uploads/images/' ~ product.image) }}" alt="Photo">
 
 				<div class="card-body">
 
-					<a href="{{ path('app_home_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary">Voir produit</a>
+					<a href="{{ path('app_home_product_show', {'slug': product.slug}) }}" class="btn btn-outline-success">Voir produit</a>
 
-					<h5 class="card-title">{{ product.name }} 
-						 {% if product.averageRating is not null %}
-						 <a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
-      				  <span class="average-rating ms-5"> ⭐ {{ product.averageRating }}/5</span> 
-					</a>
-   					 	{% endif %}
+					<h5 class="card-title">{{ product.name }}
+						{% if product.averageRating is not null %}
+							<a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
+								<span class="average-rating">
+									⭐
+									{{ product.averageRating }}/5</span>
+							</a>
+						{% endif %}
 					</h5>
-
-					<p class="card-text">{{ product.description }}</p>
+					{% if product.description is not empty %}
+						<p class="card-text">{{ product.description }}</p>
+					{% else %}
+						<p class="text-muted fst-italic">Pas de description</p>
+					{% endif %}
 					<p class="card-text">{{ product.price }}
 						€</p>
 
 
 					{% if product.stock > 0 %}
 						{# <span class="badge bg-success">Disponible ({{ product.stock }} en stock)</span>
-						 #}
-						 <a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug})}}">Ajouter au panier</a>
+												 #}
+						<a class="btn btn-success" href="{{path('app_shopping_cart_add', {'slug': product.slug})}}">Ajouter au panier</a>
 					{% else %}
 						<span class="badge bg-danger">Rupture de stock</span>
 
 					{% endif %}
-				
+
 					{# {% elseif product.stock > 0 %} #}
 					{# <span class="badge bg-warning">Derniers exemplaires : {{ product.stock }}</span> #}
 

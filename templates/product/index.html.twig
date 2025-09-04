@@ -30,8 +30,13 @@
             <tr>
                 <!-- Affiche le nom du produit en gras -->
                 <td class="fw-bold">{{ product.name }}</td>
+
+                {% if product.description is not empty %}
                 <!-- Affiche les 100 premiers caractères de la description -->
                 <td>{{ product.description |slice(0,100) }}...</td>
+                {% else %}
+                <td class="text-muted fst-italic">Pas de description</td>
+                {% endif %}
                 <!-- Affiche le prix du produit -->
                 <td>{{ product.price }} euros</td>
                 <td>
