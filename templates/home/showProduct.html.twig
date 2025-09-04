@@ -29,13 +29,18 @@
 							</a>
 						{% endif %}
 					</h5>
-					<p class="card-text">{{ product.description }}</p>
+					{% if product.description is not empty %}
+						<p class="card-text">{{ product.description }}</p>
+					{% else %}
+						<p class="text-muted fst-italic">Pas de description</p>
+					{% endif %}
+
 					{% if product.stock > 0 %}
 						<span class="badge bg-success">Disponible ({{ product.stock }}
 							en stock)</span>
 						<a class="btn btn-outline-success" href="{{ path('app_shopping_cart_add', {'slug': product.slug}) }}">Ajouter au panier</a>
 
-						<a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary" style="display: block;background-color: #cca6ffff; border-color: #cca6ffff">Détails du produit
+						<a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary" style="display: block; background-color: #F2DDF4">Détails du produit
 						</a>
 
 					{% else %}
@@ -46,30 +51,18 @@
 						<a class="btn btn-primary" style="display: block;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
 							Voir les avis
 						</a>
-						<a class="btn btn-outline-primary" style="display: block;" href="{{ path('app_review_new', {'slug': product.slug}) }}">
+						<a class="btn btn-outline-success" style="display: block;" href="{{ path('app_review_new', {'slug': product.slug}) }}">
 							Laisser un avis
 						</a>
 					</div>
-
-					{# <a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary mt-2">Voir
-																				          produit</a> #}
 				</div>
 			</div>
 		</div>
 	</div>
 
-	{# <div class="mb-4">
-						<a class="btn btn-primary" style="display: block;" href="{{ path('app_review_index', {'slug': product.slug}) }}">
-							Voir les avis
-						</a>
-						<a class="btn btn-outline-primary" style="display: block;" href="{{ path('app_review_new', {'slug': product.slug}) }}">
-							Laisser un avis
-						</a>
-					</div> #}
-
 	<div class="container">
 		<h2 class="mt-5">Derniers produits ajoutés</h2>
-		<div style="display: flex; flex-wrap: wrap;">
+		<div style="display: flex;">
 			{% for p in products %}
 				<div class="m-4">
 					<div class="card cardProduct">
@@ -78,12 +71,16 @@
 							<h5 class="card-title">{{ p.name }}</h5>
 							{% if p.averageRating is not null %}
 								<a style="color: inherit; text-decoration: none;" href="{{ path('app_review_index', {'slug': p.slug}) }}">
-									<span class="average-rating">⭐ {{ p.averageRating }}/5</span>
+									<span class="average-rating">⭐
+										{{ p.averageRating }}/5</span>
 								</a>
 							{% endif %}
-							{# <a href="{{ path('app_home_product_show', {'slug': p.slug}) }}" class="btn btn-outline-success mt-2">Voir le produit</a> #}
+							{% if p.description is not empty %}
+								<p class="card-text">{{ p.description }}</p>
+							{% else %}
+								<p class="text-muted fst-italic">Pas de description</p>
+							{% endif %}
 
-							<p class="card-text">{{ p.description }}</p>
 							{% if p.stock > 0 %}
 								<span class="badge bg-success">Disponible ({{ p.stock }}
 									en stock)</span>

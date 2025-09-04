@@ -7,8 +7,8 @@
 }
 
 .card {
-    width: 20rem !important;
-    height: 500px;
+    width: 17rem !important;
+    height: 535px;
     /*taille à ajouter ci besoin */
     margin: 0.8rem;
     padding: 0;
@@ -28,7 +28,7 @@
 }
 
 .img-card {
-    max-height: 190px;
+    max-height: 170px;
     width: 100%;
     object-fit: cover;
 

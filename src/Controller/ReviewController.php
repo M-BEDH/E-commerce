@@ -43,7 +43,7 @@ final class ReviewController extends AbstractController
     // Route pour créer un nouvel avis ou éditer un avis existant
     #[Route('/product/{slug}/new', name: 'app_review_new', methods: ['GET', 'POST'])] #[IsGranted('ROLE_USER')]
     #[Route('/{id}/edit', name: 'app_review_edit', methods: ['GET', 'POST'])]
-    #[Route('/product/{slug}/new', name: 'app_review_new', methods: ['GET', 'POST'])]
+    // #[Route('/product/{slug}/new', name: 'app_review_new', methods: ['GET', 'POST'])]
     public function newOrEdit(
         #[CurrentUser] User $user,
         Request $request,

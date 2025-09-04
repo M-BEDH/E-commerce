@@ -3,6 +3,7 @@
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 <link rel="stylesheet" href="{{ asset('css/btn.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form.css') }}">
 {% endblock %}
 
 {% block title %}Voir le commentaire{% endblock %}
@@ -10,7 +11,7 @@
 {% block body %}
     <h1>{{ review.product.name }}</h1>
 
-    <table class="table table-striped container">
+    <table class="table table-striped containerForm">
         <tbody>
             <tr>
                 <th>Auteur</th>
@@ -22,7 +23,7 @@
             </tr>
             <tr>
                 <th>Note</th>
-                <td>{{ review.note }}</td>
+                <td><span class="badge bg-success fs-6">{{ review.note }}/5</span></td>
             </tr>
         </tbody>
     </table>

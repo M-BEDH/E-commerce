@@ -23,8 +23,12 @@
                     <a class="titleProductLink" href="{{ path('app_home_product_show', {'slug': product.slug}) }} ">
                         <h5 class="card-title titleProduct">{{ product.name }}</h5>
                     </a>
-                    <!-- Affiche une partie de la description du produit -->
-                    <p class="card-text">{{ product.description|slice(0,60) }}...</p>
+                    {% if product.description is not empty %}
+                <!-- Affiche les 100 premiers caractères de la description -->
+                <td>{{ product.description |slice(0,100) }}...</td>
+                {% else %}
+                <td class="text-muted fst-italic">Pas de description</td>
+                {% endif %}
                     <!-- Affiche le prix du produit -->
                     <h3>{{ product.price }} €</h3> <!-- altgr + e pour le sigle euro-->
                     <!-- Bouton pour ajouter le produit au panier -->

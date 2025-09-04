@@ -8,14 +8,11 @@
 {% endfor %}
 {% endfor %}  #}
 
-{% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/main.css') }}">
-{% endblock %}
 
 {% for type, messages in app.flashes(['info', 'success', 'warning', 'danger']) %}
 	{% for message in messages %}
 
-		<div class="alert alert-{{ type }} position-fixed bottom-0 start-0 w-25 m-4">
+		<div class="alert alert-{{ type }} position-fixed top-25 w-25 start-0 m-2">
 			<div class="toast-header">
 
 				<strong class="me-auto">Soin de Soi</strong>
