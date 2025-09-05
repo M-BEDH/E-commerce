@@ -15,7 +15,7 @@
 }
 
 .btn-primary:hover {
-    background-color: #fff3cd;
+    background-color: #fff3cd70;
     color: #6e0e79;
     border-color: #6e0e79;
 }
@@ -39,7 +39,7 @@
 
 .btn-outline-info:hover,
 .btn-outline-success:hover {
-    background-color: #fff3cd;
+    background-color: #fff3cd70;
     border-color: #6e0e79;
     color: #6e0e79;
 }
@@ -66,7 +66,7 @@
 }
 
 .btn-success:hover {
-    background-color: #fff3cd;
+    background-color: #fff3cd70;
     color: #6e0e79;
     border-color: #6e0e79;
 }
@@ -77,11 +77,16 @@
 }
 
 .btn-outline-primary:hover {
-    background-color: #fff3cd;
+    background-color: #fff3cd70;
     border-color: #6e0e79;
 }
 
-/* .btnReview {
-    display: flex;
-    align-items: center;
-} */
+.detailProduct {
+    display: block; 
+    background-color: #facdff99;
+    background-color: #F3DDF4;
+}
+
+.detailProduct:hover {
+    color: #6e0e79;
+}

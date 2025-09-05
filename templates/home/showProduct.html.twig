@@ -40,8 +40,7 @@
 							en stock)</span>
 						<a class="btn btn-outline-success" href="{{ path('app_shopping_cart_add', {'slug': product.slug}) }}">Ajouter au panier</a>
 
-						<a href="{{ path('app_product_show', {'slug': product.slug}) }}" class="btn btn-outline-primary" style="display: block; background-color: #F2DDF4">Détails du produit
-						</a>
+						<a class="btn btn-outline-primary detailProduct" href="{{ path('app_product_show', {'slug': product.slug}) }}">Détails du produit</a>
 
 					{% else %}
 						<span class="badge bg-danger">Rupture de stock</span>
