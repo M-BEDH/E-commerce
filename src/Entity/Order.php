@@ -55,6 +55,10 @@ class Order
     #[ORM\Column]
     private ?bool $isPaymentCompleted = false;
 
+    #[ORM\ManyToOne(inversedBy: 'orderHistory')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->orderProducts = new ArrayCollection();
@@ -223,6 +227,18 @@ class Order
     public function setIsPaymentCompleted(bool $isPaymentCompleted): static
     {
         $this->isPaymentCompleted = $isPaymentCompleted;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

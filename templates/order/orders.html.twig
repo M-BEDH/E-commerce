@@ -4,74 +4,87 @@
 {% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<div class='container'>
-	<h1>Historique des commandes</h1>
+	<div class='container'>
+		<h1>Historique des commandes</h1>
 
-	{% for order in orders %}
+		{% for order in orders %}
 
-	<h2 class="text-secondary">Commande n° {{order.id }} </h2>
+			<h2 class="text-secondary">Commande n°
+				{{order.id }}
+			</h2>
 
-	{% if order.isCompleted == true %}
-	<span class="text-success" style="font-weight: bold; font-size: 20px;">Commande livrée</span>
-	{% else %}
-	<span class="text-danger" style="font-weight: bold; font-size: 18px;">Commande non livrée</span>
-	{% endif %}
-	<br>
+			{% if order.isCompleted == true %}
+				<span class="text-success" style="font-weight: bold; font-size: 20px;">Commande livrée</span>
+			{% else %}
+				<span class="text-danger" style="font-weight: bold; font-size: 18px;">Commande non livrée</span>
+			{% endif %}
+			<br>
 
-	<p style="font-weight: bold; font-size: 18px;">Informations du client : </p>
+			<p style="font-weight: bold; font-size: 18px;">Informations du client :
+			</p>
 
-	<table class="table table-bordered">
-		<tbody>
-			<tr>
-				<th>Nom</th>
-				<th>Prénom</th>
-				<th>Téléphone</th>
-				<th>Adresse</th>
-				<th>Ville</th>
-				<th>Crée le :</th>
-			</tr>
 
-			<tr>
-				<td style="font-size: 18px;">{{ order.lastName }}</td>
-				<td style="font-size: 18px;">{{ order.firstName }}</td>
-				<td style="font-size: 18px;">{{ order.phone }}</td>
-				<td style="font-size: 18px;">{{ order.adress }}</td>
-				<td style="font-size: 18px;">{{ order.city.name }}</td>
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Téléphone</th>
+						<th>Adresse</th>
+						<th>Ville</th>
+						<th>Crée le :</th>
+						<th>Produit(s) acheté(s)</th>
+					</tr>
 
-				<td>{{ order.createdAt | date('d-m-y H:i')}}</td>
-			</tr>
-		</tbody>
-	</table>
+					<tr>
+						<td style="font-size: 18px;">{{ order.lastName }}</td>
+						<td style="font-size: 18px;">{{ order.firstName }}</td>
+						<td style="font-size: 18px;">{{ order.phone }}</td>
+						<td style="font-size: 18px;">{{ order.adress }}</td>
+						<td style="font-size: 18px;">{{ order.city.name }}</td>
+						<td>{{ order.createdAt | date('d-m-y H:i')}}</td>
 
-	<h5>Frais de livraison : {{ order.city.shippingCost}} </h5>
-	<h5 class='mb-5'>Total à payer : {{order.totalPrice + order.city.shippingCost}} </h5>
-	<a class='btn btn-outline-info' href="{{ path('app_bill',{'id':order.id}) }}">Imprimer la facture</a>
+						{% for orderProduct in order.getOrderProducts() %}
+						<td style="font-size: 18px;">{{ orderProduct.getProduct().getName() }}
+							(x{{ orderProduct.getQuantity() }})
+							</td>
+						{% endfor %}
+						
+					</tr>
+				</tbody>
+			</table>
 
-	{% if order.isCompleted != true %}
-	<a href="{{ path('app_order_is-completed-update', {'id':order.id}) }}"
-		class='btn btn-outline-primary col-2 m-lg-1'>Marquer comme livrée</a>
-	{% endif %}
+			<h5>Frais de livraison :
+				{{ order.city.shippingCost}}
+			</h5>
+			<h5 class='mb-5'>Total à payer :
+				{{order.totalPrice + order.city.shippingCost}}
+			</h5>
+			<a class='btn btn-outline-info' href="{{ path('app_bill',{'id':order.id}) }}">Imprimer la facture</a>
 
-	{% if type is not empty %}
-	<a onclick="return confirm('Etes-vous sûr de vouloir supprimer cette commande ?');" class="btn btn-danger"
-		href="{{ path ('app_order_delete_type', {'id':order.id, 'type':type}) }}" class='btn btn-danger col-2 m-lg-1'>
-		Supprimer la commande</a>
-	{% else %}
+			{% if order.isCompleted != true %}
+				<a href="{{ path('app_orders_is-completed-update', {'id':order.id}) }}" class='btn btn-outline-primary col-2 m-lg-1'>Marquer comme livrée</a>
+			{% endif %}
 
-	<a onclick="return confirm('Etes-vous sûr de vouloir supprimer cette commande ?');" class="btn btn-danger"
-		href="{{ path ('app_order_delete', {'id':order.id}) }}" class='btn btn-danger col-2 m-lg-1'> Supprimer la
-		commande</a>
-	{% endif %}
+			{% if type is not empty %}
+				<a onclick="return confirm('Etes-vous sûr de vouloir supprimer cette commande ?');" class="btn btn-danger" href="{{ path ('app_orders_delete_type', {'id':order.id, 'type':type}) }}" class='btn btn-danger col-2 m-lg-1'>
+					Supprimer la commande</a>
+			{% else %}
 
-	{% endfor %}
+				<a onclick="return confirm('Etes-vous sûr de vouloir supprimer cette commande ?');" class="btn btn-danger" href="{{ path ('app_orders_delete', {'id':order.id}) }}" class='btn btn-danger col-2 m-lg-1'>
+					Supprimer la
+							commande</a>
+			{% endif %}
 
-	{{ knp_pagination_render(orders, 'layouts/_paginator.html.twig') }}
+		{% endfor %}
 
-</div>
+		{{ knp_pagination_render(orders, 'layouts/_paginator.html.twig') }}
+
+	</div>
 
 {% endblock %}

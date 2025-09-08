@@ -1,6 +1,6 @@
 body {
     background: radial-gradient(circle, #ebebeb 56%, #d2b4de8a 80%);
-    font-size: large;
+    font-family: Georgia, serif;
 }
 
 h1, h2 {
@@ -30,3 +30,13 @@ p.indexHome {
 strong {
     font-size: 2.8rem;
 }
+
+.btn-close {   /*Bouton de fermeture des alertes*/
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    color: #6e0e79;
+}
+
+
+

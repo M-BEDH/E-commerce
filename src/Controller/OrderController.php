@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\City;
+use App\Entity\User;
 use App\Entity\Order;
 use App\Service\Cart;
+use App\Entity\Product;
 use App\Form\OrderType;
 use App\Entity\OrderProducts;
 use App\Manager\OrderManager;
@@ -49,6 +51,10 @@ final class OrderController extends AbstractController
         OrderRepository $orderRepo,
         OrderManager $om
     ): Response {
+
+        $user = $this->getUser();
+        // dd($user);
+
         // Récupère les données du panier depuis la session utilisateur
         $data = $cart->getCart($session);
 
@@ -66,6 +72,8 @@ final class OrderController extends AbstractController
             if (!empty($data['total'])) {
                 // Calcule le prix total (produits + frais de livraison)
                 $totalPrice = $data['total'] + $order->getCity()->getShippingCost();
+                // dd($this->getUser());
+                $order->setUser($user);
                 $order->setTotalPrice($totalPrice);
                 $order->setCreatedAt(new \DateTimeImmutable());
                 $order->setIsPaymentCompleted(0); // Paiement non effectué par défaut
@@ -170,11 +178,10 @@ final class OrderController extends AbstractController
      * Affiche la liste des commandes selon le filtre choisi (toutes, livrées, en attente, etc.).
      * Utilise la pagination pour lister les commandes.
      */
-    #[ 
-        Route('/editor/order', name: 'app_orders_show_all'),
+    #[  Route('/editor/order', name: 'app_orders_show_all'),
         Route('/editor/order/{type}', name: 'app_orders_show')
     ]
-    public function getAllOrder(?string $type, OrderRepository $orderRepository, PaginatorInterface $paginator, Request $request): Response
+    public function getAllOrder(?string $type, OrderRepository $orderRepository, PaginatorInterface $paginator, Request $request, Product $product,): Response
     {
         // Filtrage des commandes selon le type passé en paramètre d'URL
         if ($type == 'is-completed') {
@@ -188,11 +195,12 @@ final class OrderController extends AbstractController
             $orders = $orderRepository->findBy(['isCompleted' => 1, 'payOnDelivery' => 0, 'isPaymentCompleted' => 1], ['id' => 'DESC']);
         } else if ($type == 'no_delivery') {
             // Commandes non livrées et non payées en ligne
-            $orders = $orderRepository->findBy(['isCompleted' => null, 'payOnDelivery' => 0, 'isPaymentCompleted' => 0], ['id' => 'DESC']);
+            $orders = $orderRepository->findBy(['isCompleted' => null, 'payOnDelivery' => 1, 'isPaymentCompleted' => 0], ['id' => 'DESC']);
         } else {
             // Toutes les commandes
             $orders = $orderRepository->findAll();
         }
+
 
         // Paginer les résultats (12 commandes par page)
         $orders = $paginator->paginate(
@@ -201,10 +209,19 @@ final class OrderController extends AbstractController
             12
         );
 
+        //    // Récupère les produits (pour affichage dans la vue)
+        // $products = [];
+        // foreach ($orders as $order) {
+        //     foreach ($order->getOrderProducts() as $orderProduct) {
+        //         $products[] = $orderProduct->getProduct()->getName();
+        //     }
+        // }
+
         // Affiche la vue avec la liste paginée des commandes
         return $this->render('order/orders.html.twig', [
             "orders" => $orders,
-            "type" => $type
+            "type" => $type,
+            // "products" => $products
         ]);
     }
     #endregion
@@ -214,7 +231,7 @@ final class OrderController extends AbstractController
     /**
      * Marque une commande comme livrée (isCompleted = true).
      */
-    #[Route('/editor/order/{id}/is-completed/update', name: 'app_order_is-completed-update')]
+    #[Route('/editor/order/{id}/is-completed/update', name: 'app_orders_is-completed-update')]
     public function isCompletedUpdate(Request $request, $id, OrderRepository $orderRepository, EntityManagerInterface $entityManager)
     {
         // Récupère la commande par son ID
@@ -238,8 +255,8 @@ final class OrderController extends AbstractController
      * Redirige selon le type de filtre en cours.
      */
     #[
-        Route('/editor/order/{id}/delete', name: 'app_order_delete'),
-        Route('/editor/order/{id}/delete/{type}', name: 'app_order_delete_type')
+        Route('/editor/order/{id}/delete', name: 'app_orders_delete'),
+        Route('/editor/order/{id}/delete/{type}', name: 'app_orders_delete_type')
     ]
     public function deleteOrder(?string  $type, $id, OrderRepository $orderRepository, EntityManagerInterface $entityManager)
     {

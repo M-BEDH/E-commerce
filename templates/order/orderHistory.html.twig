@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des commandes
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+
+
+	<div class='container'>
+		<h1>Historique des commandes</h1>
+
+		{# {{ dump(orders)}} #}
+		{% for order in orders %}
+
+			<h2 class="text-secondary">Commande n°
+				{{order.id }}
+			</h2>
+
+
+			<p style="font-weight: bold; font-size: 18px;">Informations du client :
+			</p>
+
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Téléphone</th>
+						<th>Adresse</th>
+						<th>Ville</th>
+						<th>Crée le :</th>
+						<th>Produit(s) acheté(s)</th>
+					</tr>
+
+					<tr>
+						<td style="font-size: 18px;">{{ order.lastName }}</td>
+						<td style="font-size: 18px;">{{ order.firstName }}</td>
+						<td style="font-size: 18px;">{{ order.phone }}</td>
+						<td style="font-size: 18px;">{{ order.adress }}</td>
+						<td style="font-size: 18px;">{{ order.city.name }}</td>
+                        <td>{{ order.createdAt | date('d-m-y H:i')}}</td>
+						{% for orderProduct in order.getOrderProducts() %}
+							<td style="font-size: 18px;">{{ orderProduct.getProduct().getName() }}
+								(x{{ orderProduct.getQuantity() }})
+							</td>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		{% endfor %}
+	</div>
+
+{% endblock %}

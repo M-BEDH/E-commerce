@@ -1,7 +1,7 @@
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-<link rel="stylesheet" href="{{ asset('css/category.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/category.css') }}">
 {% endblock %}
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -9,13 +9,13 @@
 		<a class="navbar-brand title" href="{{ path('app_home') }}">Soin de Soi</a>
 
 		<!-- Bouton burger -->
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-			aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarScroll">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+			<ul
+				class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
 
 				<!-- Accueil -->
 				<li class="nav-item">
@@ -25,148 +25,154 @@
 				<!-- Catégories (si définies) -->
 				{% if categories is defined %}
 
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Catégories</a>
-					<ul class="dropdown-menu">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Catégories</a>
+						<ul class="dropdown-menu">
 
-						{% for category in categories %}
-						 {# {{ dump(category)}}  #}
-						<li>
-							<a class="dropdown-item text-primary fw-bold categoryTitle" href="#">{{ category.name }}</a>
-						</li>
+							{% for category in categories %}
+								{# {{ dump(category)}}  #}
+								<li>
+									<a class="dropdown-item text-primary fw-bold categoryTitle" href="#">{{ category.name }}</a>
+								</li>
 
-						{% for subCategory in category.SubCategories %}
+								{% for subCategory in category.SubCategories %}
 
-						<li>
-							<a class="dropdown-item text-secondary"
-								href="{{ path('app_home_product_filter', {'id': subCategory.id} )}} ">
-								{{ subCategory.name }}</a>
-						</li>
+									<li>
+										<a class="dropdown-item text-secondary" href="{{ path('app_home_product_filter', {'id': subCategory.id} )}} ">
+											{{ subCategory.name }}</a>
+									</li>
 
-						{% endfor %}
+								{% endfor %}
 
-						<li class="dropdown-divider"></li>
+								<li class="dropdown-divider"></li>
 
-						{% endfor %}
-					</ul>
-				</li>
+							{% endfor %}
+						</ul>
+					</li>
 				{% endif %}
 
 
 				<!-- Si ADMIN -->
 				{% if is_granted('ROLE_ADMIN') %}
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Admin</a>
-					<ul class="dropdown-menu">
-						<li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_category') }}">Catégories</a>
-						</li>
-						<li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_category_new') }}">Ajouter une
-								catégorie</a>
-						</li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-						<li>
-							<a class="dropdown-item text-secondary"
-								href="{{ path('app_sub_category_subCategory')}}">Sous-catégories</a>
-						</li>
-						<li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_sub_category_new')}}">Ajouter une
-								sous-catégorie</a>
-						</li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-						<li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_product_index')}}">Produits</a>
-						</li>
-						<li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_product_new')}}">Ajouter un
-								produit</a>
-						</li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-						<li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_user') }}">Utilisateurs</a>
-						</li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-						<li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_city_index') }}">Frais de
-								port</a>
-						</li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-						{# <li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_orders_show_all') }}">Toutes les
-								commandes</a>
-						</li> #}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Admin</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_category') }}">Catégories</a>
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_category_new') }}">Ajouter une
+																	catégorie</a>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_sub_category_subCategory')}}">Sous-catégories</a>
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_sub_category_new')}}">Ajouter une
+																	sous-catégorie</a>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_product_index')}}">Produits</a>
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_product_new')}}">Ajouter un
+																	produit</a>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_user') }}">Utilisateurs</a>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_city_index') }}">Frais de
+																	port</a>
+							</li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							{# <li>
+														<a class="dropdown-item text-secondary" href="{{ path('app_orders_show_all') }}">Toutes les
+															commandes</a>
+													</li> #}
 
-					</ul>
-				</li>
+						</ul>
+					</li>
 				{% endif %}
 
 				{% if is_granted("ROLE_EDITOR") %}
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Commandes</a>
-					<ul class='dropdown-menu'>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Commandes</a>
+						<ul class='dropdown-menu'>
 
-						<li>
-							<a class="dropdown-item text-secondary" href="{{ path('app_orders_show_all') }}">Toutes les
-								commandes</a>
-						</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_orders_show_all') }}">Toutes les
+																	commandes</a>
+							</li>
 
-						<li><a class="dropdown-item text-secondary"
-								href="{{ path('app_orders_show',{'type':'is-completed'}) }}">
-								Commandes livrées </a>
-						</li>
-						<li><a class="dropdown-item text-secondary"
-								href="{{ path('app_orders_show',{'type':'no_delivery'}) }}">Commandes non livrées</a>
-						</li>
-						<li><a class="dropdown-item text-secondary"
-								href="{{ path('app_orders_show',{'type':'pay-on-stripe-not-delivered'}) }}">Commandes
-								payées en ligne non livrées</a>
-						</li>
-						<li><a class="dropdown-item text-secondary"
-								href="{{ path('app_orders_show',{'type':'pay-on-stripe-is-delivered'}) }}">Commandes
-								payées en ligne livrées</a>
-						</li>
-					</ul>
-				</li>
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_orders_show',{'type':'is-completed'}) }}">
+									Commandes livrées
+								</a>
+							</li>
+
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_orders_show',{'type':'no_delivery'}) }}">Commandes non livrées</a>
+							</li>
+
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_orders_show',{'type':'pay-on-stripe-not-delivered'}) }}">Commandes
+																	payées en ligne non livrées</a>
+							</li>
+
+							<li>
+								<a class="dropdown-item text-secondary" href="{{ path('app_orders_show',{'type':'pay-on-stripe-is-delivered'}) }}">Commandes
+																	payées en ligne livrées</a>
+							</li>
+						</ul>
+					</li>
 				{% endif %}
 
 				<!-- Si CONNECTÉ -->
 				{% if app.user %}
 
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
-				</li>
+					<li class="nav-item">
+						<a href=" {{ path('app_user_order_history', {id: app.user.id})}}" class="nav-link">
+							Historique</a>
+					</li>
 
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_shopping_cart')}}">Panier</a>
-				</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_shopping_cart')}}">Panier</a>
+					</li>
 
 				{% else %}
 
-				<!-- Si NON CONNECTÉ -->
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
-				</li>
+					<!-- Si NON CONNECTÉ -->
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+					</li>
 				{% endif %}
 			</ul>
 
 			<form class="d-flex " method="GET" action="{{ path('app_search_engine')}}">
-				<input name="word" class="form-control me-2 navSearch" type="search" placeholder="Search"
-					aria-label="Search" />
-				<button data-turbo=false class="btn btn-outline-light" type="submit">Search</button>
+				<input name="word" class="form-control me-2 navSearch" type="search" placeholder="Search" aria-label="Search"/>
+				<button data-turbo="false" class="btn btn-outline-light" type="submit">Search</button>
 			</form>
 
 		</div>

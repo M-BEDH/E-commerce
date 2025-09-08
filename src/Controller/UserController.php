@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -105,5 +106,23 @@ final class UserController extends AbstractController
         return $this->redirectToRoute('app_user');
     }
 
+       #[IsGranted("ROLE_USER")]
+    #[Route('/order/history/{id}', name: 'app_user_order_history')]
+    public function orderHistory(User $user, UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+
+        $ordersList = $user->getOrderHistory();
+
+        $orders = $paginator->paginate(
+            $ordersList, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('order/orderHistory.html.twig', [
+            'orders' => $orders,
+            'user' => $user,
+        ]);
+    }
 
 }
