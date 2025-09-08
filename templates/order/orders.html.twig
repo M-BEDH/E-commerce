@@ -10,9 +10,11 @@
 {% block body %}
 
 	<div class='container'>
+
+		{# {{ dump(orders)}} #}
 	
 		{% if orders is empty %}
-			<p>Aucune commande enregistrée</p>
+			<p class="mt-5" style="font-weight: bold; font-size: 18px;">Aucune commande enregistrée</p>
 
 				{% else %}
 					<h1>Liste des commandes</h1>
@@ -58,11 +60,10 @@
 						<td style="font-size: 18px;">{{ order.city.name }}</td>
 						<td>{{ order.createdAt | date('d-m-y H:i')}}</td>
 
-						{% for orderProduct in order.getOrderProducts() %}
-							<td style="font-size: 18px;">{{ orderProduct.getProduct().getName() }}
-								(x{{ orderProduct.getQuantity() }})
-							</td>
+						<td style="font-size: 18px;">{% for orderProduct in order.getOrderProducts() %}	
+							{{ orderProduct.getProduct().getName() }} (x{{ orderProduct.getQuantity() }}) <br>
 						{% endfor %}
+					</td>
 
 					</tr>
 				</tbody>

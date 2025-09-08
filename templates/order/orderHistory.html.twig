@@ -10,8 +10,8 @@
 {% block body %}
 
 
-	<div class='container'>
-		<h1>Commandes passées</h1>
+	<div class='container w-50 m-auto mt-5'>
+		<h1>Vos commandes passées</h1>
 
 		{# {{ dump(orders)}} #}
 		{% for order in orders %}
@@ -20,7 +20,7 @@
 				{{order.id }}
 			</h2>
 
-			<table class="table table-striped">
+			<table class="table table-striped w-75 m-auto">
 				<tbody>
 					<tr>
 						<th>Commande effectuée le :</th>
@@ -31,17 +31,12 @@
 
 						<td class="text-muted">{{ order.createdAt | date('d-m-y H:i')}}</td>
 
-						<td style="font-size: 18px;">
-
-							{% for orderProduct in order.getOrderProducts() %}	
-							{{ orderProduct.getProduct().getName() }} 
-
-								(x{{ orderProduct.getQuantity() }}) <br>
-								{% endfor %}
-							</td>
-						
-					</tr>
-				</tbody>
+						<td style="font-size: 18px;">{% for orderProduct in order.getOrderProducts() %}	
+							{{ orderProduct.getProduct().getName() }} (x{{ orderProduct.getQuantity() }}) <br>
+						{% endfor %}
+					</td>
+				</tr>
+			</tbody>
 			</table>
 		{% endfor %}
 	</div>
