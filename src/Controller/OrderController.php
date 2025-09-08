@@ -244,7 +244,7 @@ final class OrderController extends AbstractController
         $entityManager->flush();
 
         // Ajoute un message flash de succès
-        $this->addFlash('success', 'Modification effectuée');
+        $this->addFlash('success', 'Commande marquée comme livrée');
 
         // Redirige vers la liste des commandes livrées
         return $this->redirectToRoute('app_orders_show_all', ["type" =>"is-completed"]);

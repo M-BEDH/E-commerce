@@ -1,9 +1,19 @@
-body {
+/* body {
     background: radial-gradient(circle, #ebebeb 56%, #d2b4de8a 80%);
     font-family: Georgia, serif;
+} */
+
+body {
+    background: url('../uploads/images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Georgia, serif;
+    margin: 0;
+    padding: 0;
 }
 
-h1, h2 {
+
+h1,
+h2 {
     width: 100%;
     text-align: center;
     margin: 2rem 0 2rem 0;
@@ -31,12 +41,10 @@ strong {
     font-size: 2.8rem;
 }
 
-.btn-close {   /*Bouton de fermeture des alertes*/
+.btn-close {
+    /*Bouton de fermeture des alertes*/
     position: absolute;
     right: 1rem;
     top: 1rem;
     color: #6e0e79;
 }
-
-
-
