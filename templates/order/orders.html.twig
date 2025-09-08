@@ -9,7 +9,7 @@
 
 {% block body %}
 
-	<div class='container'>
+	<div class='container mb-5'>
 
 		{# {{ dump(orders)}} #}
 	
@@ -30,13 +30,13 @@
 		</h2>
 
 			{% if order.isCompleted == true %}
-			<span class="text-success" style="font-weight: bold; font-size: 20px;">Commande livrée</span>
+			<span class="text-success" style="font-weight: bold; font-size: 20px; background: #d4edda; padding: 2px;">Commande livrée</span>
 			{% else %}
-			<span class="text-danger" style="font-weight: bold; font-size: 18px;">Commande non livrée</span>
+			<span class="text-danger" style="font-weight: bold; font-size: 18px; background: #f8d7da; padding: 2px;">Commande non livrée</span>
 			{% endif %}
 			<br>
 
-			<p style="font-weight: bold; font-size: 18px;">Informations du client :
+			<p style="font-weight: bold; font-size: 18px; width:max-content; background: #cef4f5d0; padding: 2px;">Informations du client :
 			</p>
 
 
@@ -75,10 +75,10 @@
 			<h5 class='mb-5'>Total à payer :
 				{{order.totalPrice + order.city.shippingCost}}
 			</h5>
-			<a class='btn btn-info' href="{{ path('app_bill',{'id':order.id}) }}">Imprimer la facture</a>
+			<a class='btn btn-secondary' href="{{ path('app_bill',{'id':order.id}) }}">Imprimer la facture</a>
 
 			{% if order.isCompleted != true %}
-				<a href="{{ path('app_orders_is-completed-update', {'id':order.id}) }}" class='btn btn-outline-primary'>Marquer comme livrée</a>
+				<a href="{{ path('app_orders_is-completed-update', {'id':order.id}) }}" class='btn btn-success'>Marquer comme livrée</a>
 			{% endif %}
 
 			{% if type is not empty %}
