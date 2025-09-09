@@ -40,8 +40,10 @@
 							en stock)</span>
 						<a class="btn btn-outline-success" href="{{ path('app_shopping_cart_add', {'slug': product.slug}) }}">Ajouter au panier</a>
 
+					{% if is_granted('ROLE_EDITOR') %}
 						<a class="btn btn-outline-primary detailProduct" href="{{ path('app_product_show', {'slug': product.slug}) }}">Détails du produit</a>
-
+					{% endif %} 
+					
 					{% else %}
 						<span class="badge bg-danger">Rupture de stock</span>
 					{% endif %}
