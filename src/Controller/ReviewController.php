@@ -44,7 +44,7 @@ final class ReviewController extends AbstractController
     #[Route('/product/{slug}/new', name: 'app_review_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     #[Route('/{id}/edit', name: 'app_review_edit', methods: ['GET', 'POST'])]
-    // #[Route('/product/{slug}/new', name: 'app_review_new', methods: ['GET', 'POST'])]
+
     public function newOrEdit(
         #[CurrentUser] User $user,
         Request $request,
@@ -103,13 +103,13 @@ final class ReviewController extends AbstractController
 
     // Affiche le détail d'un avis
     #[Route('/{id}', name: 'app_review_show', methods: ['GET'])]
-    public function show(#[CurrentUser] User $user, Review $review): Response
+    public function show(Review $review): Response
     {
         // Affichage de la vue avec les détails de l'avis
         return $this->render('review/show.html.twig', [
             'id' => $review->getId(),
             'review' => $review,
-            'user' => $user,
+            // 'user' => $user,
         ]);
     }
 
